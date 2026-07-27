@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrailGuard", "TrailGuard\TrailGuard.csproj", "{06788813-A4D2-4230-BFF0-5AE0BB85884D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database Script", "Database Script", "{8DB35012-CA17-4AC2-8775-5D18AE629E5A}"
+	ProjectSection(SolutionItems) = preProject
+		CreateDatabase.sql = CreateDatabase.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55760F6A-B85A-4BEF-9430-4F70F38B8CF2}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06788813-A4D2-4230-BFF0-5AE0BB85884D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06788813-A4D2-4230-BFF0-5AE0BB85884D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06788813-A4D2-4230-BFF0-5AE0BB85884D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06788813-A4D2-4230-BFF0-5AE0BB85884D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5FB09A2A-881B-4A4C-8CF1-858EC52AD6CF}
+	EndGlobalSection
+EndGlobal
