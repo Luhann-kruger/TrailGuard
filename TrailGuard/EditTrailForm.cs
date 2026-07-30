@@ -13,7 +13,7 @@ namespace TrailGuard
 {
     public partial class EditTrailForm : Form
     {
-        // remember to add more event handling, make sure that max hikers is above zero
+        
         //Stores the ID of the trail to be editted.
         private int editTrailID;
 
@@ -106,7 +106,11 @@ namespace TrailGuard
                 MessageBox.Show("Maximum Hikers must be a positive integer .", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            // if number is less than zero, also show an error 
+            if(maxHikers < 0){
+                 MessageBox.Show("Maximum Hikers must be greater than zero .", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             // check if the user actually wants to go ahead with changes 
             // this is done to ensure no uncertain changes are stored 
             DialogResult confirm = MessageBox.Show("Are you sure you want to update this trail?", "Do you want to update?", MessageBoxButtons.YesNo,
@@ -123,7 +127,7 @@ namespace TrailGuard
             {
                 conn.Open();
                 // change single quotes into two quotes 
-                // this helps with sql similar to using // for new line characters and backslashes
+                // this helps with sql similar to using // for new line characters and backslashes prevents a previous bug
                 string trailName = txtChangeTrailName.Text.Replace("'", "''");
                 string status = comboBoxChangeStatus.SelectedItem.ToString();
                 // had a logic error here was reading from the wrong text box
