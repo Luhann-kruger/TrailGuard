@@ -197,11 +197,7 @@ namespace TrailGuard
                 SqlDataAdapter dataAdapter = new SqlDataAdapter("SELECT TrailID, TrailName FROM Trail WHERE ParkID = " + parkId, conn);
                 DataTable dataTableTrail = new DataTable();
                 dataAdapter.Fill(dataTableTrail);
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> ad0bf67 (Updated build no unsaved work)
                 comboBoxSelectTrail.DisplayMember = "TrailName";
                 comboBoxSelectTrail.ValueMember = "TrailID";
                 comboBoxSelectTrail.DataSource = dataTableTrail;
