@@ -45,7 +45,7 @@ namespace TrailGuard
             try
             {
                 conn.Open();
-                // populate Select Park from the database
+                // populate Selected Park from the database
                 // the user have the option to select another park even though the action button is on a particular park
                 SqlDataAdapter dataAdapter = new SqlDataAdapter("SELECT ParkID, ParkName FROM Park", conn);
                 DataTable dataTable = new DataTable();
