@@ -13,6 +13,7 @@ namespace TrailGuard
 {
     public partial class EditTrailForm : Form
     {
+        // remember to add more event handling, make sure that max hikers is above zero
         //Stores the ID of the trail to be editted.
         private int editTrailID;
 
