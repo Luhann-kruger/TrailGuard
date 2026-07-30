@@ -179,8 +179,6 @@ namespace TrailGuard
                 return;
             }
 
-
-
             int trailId = (int)comboBoxSelectTrail.SelectedValue;
             editTrailID = trailId;
             LoadTrailDetails(trailId);
