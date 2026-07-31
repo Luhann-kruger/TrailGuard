@@ -34,7 +34,7 @@
             lblEditTrailTitle = new Label();
             btnCancel = new ReaLTaiizor.Controls.ForeverButton();
             btnSaveTrail = new ReaLTaiizor.Controls.ForeverButton();
-            comboBoxSelectPark = new ReaLTaiizor.Controls.MetroComboBox();
+            txtParkName = new ReaLTaiizor.Controls.MaterialMaskedTextBox();
             txtChangeTrailName = new ReaLTaiizor.Controls.MaterialMaskedTextBox();
             txtChangeMaximumHikers = new ReaLTaiizor.Controls.MaterialMaskedTextBox();
             comboBoxSelectDificultyLevel = new ReaLTaiizor.Controls.MetroComboBox();
@@ -45,7 +45,7 @@
             dungeonLabel1 = new ReaLTaiizor.Controls.DungeonLabel();
             dungeonLabel2 = new ReaLTaiizor.Controls.DungeonLabel();
             lblSelectTrail = new ReaLTaiizor.Controls.DungeonLabel();
-            comboBoxSelectTrail = new ReaLTaiizor.Controls.MetroComboBox();
+            txtTrailName = new ReaLTaiizor.Controls.MaterialMaskedTextBox();
             pnlHeader.SuspendLayout();
             SuspendLayout();
             // 
@@ -119,34 +119,47 @@
             btnSaveTrail.TextColor = Color.FromArgb(243, 243, 243);
             btnSaveTrail.Click += btnSaveTrail_Click;
             // 
-            // comboBoxSelectPark
+            // txtParkName
             // 
-            comboBoxSelectPark.AllowDrop = true;
-            comboBoxSelectPark.ArrowColor = Color.FromArgb(150, 150, 150);
-            comboBoxSelectPark.BackColor = Color.Transparent;
-            comboBoxSelectPark.BackgroundColor = Color.FromArgb(238, 238, 238);
-            comboBoxSelectPark.BorderColor = Color.FromArgb(150, 150, 150);
-            comboBoxSelectPark.CausesValidation = false;
-            comboBoxSelectPark.DisabledBackColor = Color.FromArgb(204, 204, 204);
-            comboBoxSelectPark.DisabledBorderColor = Color.FromArgb(155, 155, 155);
-            comboBoxSelectPark.DisabledForeColor = Color.FromArgb(136, 136, 136);
-            comboBoxSelectPark.DrawMode = DrawMode.OwnerDrawFixed;
-            comboBoxSelectPark.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxSelectPark.Font = new Font("Microsoft Sans Serif", 11F);
-            comboBoxSelectPark.FormattingEnabled = true;
-            comboBoxSelectPark.IsDerivedStyle = true;
-            comboBoxSelectPark.ItemHeight = 20;
-            comboBoxSelectPark.Location = new Point(39, 181);
-            comboBoxSelectPark.Name = "comboBoxSelectPark";
-            comboBoxSelectPark.SelectedItemBackColor = Color.FromArgb(65, 177, 225);
-            comboBoxSelectPark.SelectedItemForeColor = Color.White;
-            comboBoxSelectPark.Size = new Size(250, 26);
-            comboBoxSelectPark.Style = ReaLTaiizor.Enum.Metro.Style.Light;
-            comboBoxSelectPark.StyleManager = null;
-            comboBoxSelectPark.TabIndex = 11;
-            comboBoxSelectPark.ThemeAuthor = "Taiizor";
-            comboBoxSelectPark.ThemeName = "MetroLight";
-            comboBoxSelectPark.SelectedIndexChanged += comboBoxSelectPark_SelectedIndexChanged;
+            txtParkName.AllowPromptAsInput = true;
+            txtParkName.AnimateReadOnly = false;
+            txtParkName.AsciiOnly = false;
+            txtParkName.BackgroundImageLayout = ImageLayout.None;
+            txtParkName.BeepOnError = false;
+            txtParkName.CutCopyMaskFormat = MaskFormat.IncludeLiterals;
+            txtParkName.Depth = 0;
+            txtParkName.Enabled = false;
+            txtParkName.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtParkName.HidePromptOnLeave = false;
+            txtParkName.HideSelection = true;
+            txtParkName.InsertKeyMode = InsertKeyMode.Default;
+            txtParkName.LeadingIcon = null;
+            txtParkName.Location = new Point(39, 181);
+            txtParkName.Mask = "";
+            txtParkName.MaxLength = 32767;
+            txtParkName.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            txtParkName.Name = "txtParkName";
+            txtParkName.PasswordChar = '\0';
+            txtParkName.PrefixSuffixText = null;
+            txtParkName.PromptChar = '_';
+            txtParkName.ReadOnly = true;
+            txtParkName.RejectInputOnFirstFailure = false;
+            txtParkName.ResetOnPrompt = true;
+            txtParkName.ResetOnSpace = true;
+            txtParkName.RightToLeft = RightToLeft.No;
+            txtParkName.SelectedText = "";
+            txtParkName.SelectionLength = 0;
+            txtParkName.SelectionStart = 0;
+            txtParkName.ShortcutsEnabled = true;
+            txtParkName.Size = new Size(250, 48);
+            txtParkName.SkipLiterals = true;
+            txtParkName.TabIndex = 11;
+            txtParkName.TabStop = false;
+            txtParkName.TextAlign = HorizontalAlignment.Left;
+            txtParkName.TextMaskFormat = MaskFormat.IncludeLiterals;
+            txtParkName.TrailingIcon = null;
+            txtParkName.UseSystemPasswordChar = false;
+            txtParkName.ValidatingType = null;
             // 
             // txtChangeTrailName
             // 
@@ -162,7 +175,7 @@
             txtChangeTrailName.HideSelection = true;
             txtChangeTrailName.InsertKeyMode = InsertKeyMode.Default;
             txtChangeTrailName.LeadingIcon = null;
-            txtChangeTrailName.Location = new Point(699, 181);
+            txtChangeTrailName.Location = new Point(371, 181);
             txtChangeTrailName.Mask = "";
             txtChangeTrailName.MaxLength = 32767;
             txtChangeTrailName.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
@@ -183,7 +196,6 @@
             txtChangeTrailName.SkipLiterals = true;
             txtChangeTrailName.TabIndex = 20;
             txtChangeTrailName.TabStop = false;
-            txtChangeTrailName.Text = "Change Trail Name";
             txtChangeTrailName.TextAlign = HorizontalAlignment.Left;
             txtChangeTrailName.TextMaskFormat = MaskFormat.IncludeLiterals;
             txtChangeTrailName.TrailingIcon = null;
@@ -204,7 +216,7 @@
             txtChangeMaximumHikers.HideSelection = true;
             txtChangeMaximumHikers.InsertKeyMode = InsertKeyMode.Default;
             txtChangeMaximumHikers.LeadingIcon = null;
-            txtChangeMaximumHikers.Location = new Point(699, 287);
+            txtChangeMaximumHikers.Location = new Point(371, 290);
             txtChangeMaximumHikers.Mask = "";
             txtChangeMaximumHikers.MaxLength = 32767;
             txtChangeMaximumHikers.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
@@ -225,7 +237,6 @@
             txtChangeMaximumHikers.SkipLiterals = true;
             txtChangeMaximumHikers.TabIndex = 21;
             txtChangeMaximumHikers.TabStop = false;
-            txtChangeMaximumHikers.Text = "Change Maximum Hikers";
             txtChangeMaximumHikers.TextAlign = HorizontalAlignment.Left;
             txtChangeMaximumHikers.TextMaskFormat = MaskFormat.IncludeLiterals;
             txtChangeMaximumHikers.TrailingIcon = null;
@@ -250,7 +261,7 @@
             comboBoxSelectDificultyLevel.IsDerivedStyle = true;
             comboBoxSelectDificultyLevel.ItemHeight = 20;
             comboBoxSelectDificultyLevel.Items.AddRange(new object[] { "1", "2", "3", "4", "5" });
-            comboBoxSelectDificultyLevel.Location = new Point(363, 287);
+            comboBoxSelectDificultyLevel.Location = new Point(699, 290);
             comboBoxSelectDificultyLevel.Name = "comboBoxSelectDificultyLevel";
             comboBoxSelectDificultyLevel.SelectedItemBackColor = Color.FromArgb(65, 177, 225);
             comboBoxSelectDificultyLevel.SelectedItemForeColor = Color.White;
@@ -279,7 +290,7 @@
             comboBoxChangeStatus.IsDerivedStyle = true;
             comboBoxChangeStatus.ItemHeight = 20;
             comboBoxChangeStatus.Items.AddRange(new object[] { "Open", "Closed" });
-            comboBoxChangeStatus.Location = new Point(363, 181);
+            comboBoxChangeStatus.Location = new Point(699, 181);
             comboBoxChangeStatus.Name = "comboBoxChangeStatus";
             comboBoxChangeStatus.SelectedItemBackColor = Color.FromArgb(65, 177, 225);
             comboBoxChangeStatus.SelectedItemForeColor = Color.White;
@@ -298,9 +309,9 @@
             lblSelectPark.ForeColor = Color.FromArgb(76, 76, 77);
             lblSelectPark.Location = new Point(39, 147);
             lblSelectPark.Name = "lblSelectPark";
-            lblSelectPark.Size = new Size(80, 20);
+            lblSelectPark.Size = new Size(36, 20);
             lblSelectPark.TabIndex = 31;
-            lblSelectPark.Text = "Select Park";
+            lblSelectPark.Text = "Park";
             // 
             // lblChangeDifficulty
             // 
@@ -308,7 +319,7 @@
             lblChangeDifficulty.BackColor = Color.Transparent;
             lblChangeDifficulty.Font = new Font("Segoe UI", 11F);
             lblChangeDifficulty.ForeColor = Color.FromArgb(76, 76, 77);
-            lblChangeDifficulty.Location = new Point(363, 255);
+            lblChangeDifficulty.Location = new Point(699, 255);
             lblChangeDifficulty.Name = "lblChangeDifficulty";
             lblChangeDifficulty.Size = new Size(161, 20);
             lblChangeDifficulty.TabIndex = 32;
@@ -320,7 +331,7 @@
             lblChangeTrailStatus.BackColor = Color.Transparent;
             lblChangeTrailStatus.Font = new Font("Segoe UI", 11F);
             lblChangeTrailStatus.ForeColor = Color.FromArgb(76, 76, 77);
-            lblChangeTrailStatus.Location = new Point(363, 147);
+            lblChangeTrailStatus.Location = new Point(699, 147);
             lblChangeTrailStatus.Name = "lblChangeTrailStatus";
             lblChangeTrailStatus.Size = new Size(135, 20);
             lblChangeTrailStatus.TabIndex = 33;
@@ -332,7 +343,7 @@
             dungeonLabel1.BackColor = Color.Transparent;
             dungeonLabel1.Font = new Font("Segoe UI", 11F);
             dungeonLabel1.ForeColor = Color.FromArgb(76, 76, 77);
-            dungeonLabel1.Location = new Point(699, 147);
+            dungeonLabel1.Location = new Point(371, 147);
             dungeonLabel1.Name = "dungeonLabel1";
             dungeonLabel1.Size = new Size(135, 20);
             dungeonLabel1.TabIndex = 34;
@@ -344,7 +355,7 @@
             dungeonLabel2.BackColor = Color.Transparent;
             dungeonLabel2.Font = new Font("Segoe UI", 11F);
             dungeonLabel2.ForeColor = Color.FromArgb(76, 76, 77);
-            dungeonLabel2.Location = new Point(699, 255);
+            dungeonLabel2.Location = new Point(371, 255);
             dungeonLabel2.Name = "dungeonLabel2";
             dungeonLabel2.Size = new Size(174, 20);
             dungeonLabel2.TabIndex = 35;
@@ -358,38 +369,51 @@
             lblSelectTrail.ForeColor = Color.FromArgb(76, 76, 77);
             lblSelectTrail.Location = new Point(39, 255);
             lblSelectTrail.Name = "lblSelectTrail";
-            lblSelectTrail.Size = new Size(81, 20);
+            lblSelectTrail.Size = new Size(37, 20);
             lblSelectTrail.TabIndex = 36;
-            lblSelectTrail.Text = "Select Trail";
+            lblSelectTrail.Text = "Trail";
             // 
-            // comboBoxSelectTrail
+            // txtTrailName
             // 
-            comboBoxSelectTrail.AllowDrop = true;
-            comboBoxSelectTrail.ArrowColor = Color.FromArgb(150, 150, 150);
-            comboBoxSelectTrail.BackColor = Color.Transparent;
-            comboBoxSelectTrail.BackgroundColor = Color.FromArgb(238, 238, 238);
-            comboBoxSelectTrail.BorderColor = Color.FromArgb(150, 150, 150);
-            comboBoxSelectTrail.CausesValidation = false;
-            comboBoxSelectTrail.DisabledBackColor = Color.FromArgb(204, 204, 204);
-            comboBoxSelectTrail.DisabledBorderColor = Color.FromArgb(155, 155, 155);
-            comboBoxSelectTrail.DisabledForeColor = Color.FromArgb(136, 136, 136);
-            comboBoxSelectTrail.DrawMode = DrawMode.OwnerDrawFixed;
-            comboBoxSelectTrail.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxSelectTrail.Font = new Font("Microsoft Sans Serif", 11F);
-            comboBoxSelectTrail.FormattingEnabled = true;
-            comboBoxSelectTrail.IsDerivedStyle = true;
-            comboBoxSelectTrail.ItemHeight = 20;
-            comboBoxSelectTrail.Location = new Point(39, 287);
-            comboBoxSelectTrail.Name = "comboBoxSelectTrail";
-            comboBoxSelectTrail.SelectedItemBackColor = Color.FromArgb(65, 177, 225);
-            comboBoxSelectTrail.SelectedItemForeColor = Color.White;
-            comboBoxSelectTrail.Size = new Size(250, 26);
-            comboBoxSelectTrail.Style = ReaLTaiizor.Enum.Metro.Style.Light;
-            comboBoxSelectTrail.StyleManager = null;
-            comboBoxSelectTrail.TabIndex = 37;
-            comboBoxSelectTrail.ThemeAuthor = "Taiizor";
-            comboBoxSelectTrail.ThemeName = "MetroLight";
-            comboBoxSelectTrail.SelectedIndexChanged += comboBoxSelectTrail_SelectedIndexChanged;
+            txtTrailName.AllowPromptAsInput = true;
+            txtTrailName.AnimateReadOnly = false;
+            txtTrailName.AsciiOnly = false;
+            txtTrailName.BackgroundImageLayout = ImageLayout.None;
+            txtTrailName.BeepOnError = false;
+            txtTrailName.CutCopyMaskFormat = MaskFormat.IncludeLiterals;
+            txtTrailName.Depth = 0;
+            txtTrailName.Enabled = false;
+            txtTrailName.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtTrailName.HidePromptOnLeave = false;
+            txtTrailName.HideSelection = true;
+            txtTrailName.InsertKeyMode = InsertKeyMode.Default;
+            txtTrailName.LeadingIcon = null;
+            txtTrailName.Location = new Point(39, 287);
+            txtTrailName.Mask = "";
+            txtTrailName.MaxLength = 32767;
+            txtTrailName.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            txtTrailName.Name = "txtTrailName";
+            txtTrailName.PasswordChar = '\0';
+            txtTrailName.PrefixSuffixText = null;
+            txtTrailName.PromptChar = '_';
+            txtTrailName.ReadOnly = true;
+            txtTrailName.RejectInputOnFirstFailure = false;
+            txtTrailName.ResetOnPrompt = true;
+            txtTrailName.ResetOnSpace = true;
+            txtTrailName.RightToLeft = RightToLeft.No;
+            txtTrailName.SelectedText = "";
+            txtTrailName.SelectionLength = 0;
+            txtTrailName.SelectionStart = 0;
+            txtTrailName.ShortcutsEnabled = true;
+            txtTrailName.Size = new Size(250, 48);
+            txtTrailName.SkipLiterals = true;
+            txtTrailName.TabIndex = 37;
+            txtTrailName.TabStop = false;
+            txtTrailName.TextAlign = HorizontalAlignment.Left;
+            txtTrailName.TextMaskFormat = MaskFormat.IncludeLiterals;
+            txtTrailName.TrailingIcon = null;
+            txtTrailName.UseSystemPasswordChar = false;
+            txtTrailName.ValidatingType = null;
             // 
             // EditTrailForm
             // 
@@ -397,7 +421,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ScrollBar;
             ClientSize = new Size(1004, 557);
-            Controls.Add(comboBoxSelectTrail);
+            Controls.Add(txtTrailName);
             Controls.Add(lblSelectTrail);
             Controls.Add(dungeonLabel2);
             Controls.Add(dungeonLabel1);
@@ -408,7 +432,7 @@
             Controls.Add(comboBoxSelectDificultyLevel);
             Controls.Add(txtChangeMaximumHikers);
             Controls.Add(txtChangeTrailName);
-            Controls.Add(comboBoxSelectPark);
+            Controls.Add(txtParkName);
             Controls.Add(btnSaveTrail);
             Controls.Add(btnCancel);
             Controls.Add(lblEditTrailTitle);
@@ -430,7 +454,7 @@
         private Label lblEditTrailTitle;
         private ReaLTaiizor.Controls.ForeverButton btnCancel;
         private ReaLTaiizor.Controls.ForeverButton btnSaveTrail;
-        private ReaLTaiizor.Controls.MetroComboBox comboBoxSelectPark;
+        private ReaLTaiizor.Controls.MaterialMaskedTextBox txtParkName;
         private ReaLTaiizor.Controls.MaterialMaskedTextBox txtChangeTrailName;
         private ReaLTaiizor.Controls.MaterialMaskedTextBox txtChangeMaximumHikers;
         private ReaLTaiizor.Controls.MetroComboBox comboBoxSelectDificultyLevel;
@@ -441,6 +465,6 @@
         private ReaLTaiizor.Controls.DungeonLabel dungeonLabel1;
         private ReaLTaiizor.Controls.DungeonLabel dungeonLabel2;
         private ReaLTaiizor.Controls.DungeonLabel lblSelectTrail;
-        private ReaLTaiizor.Controls.MetroComboBox comboBoxSelectTrail;
+        private ReaLTaiizor.Controls.MaterialMaskedTextBox txtTrailName;
     }
 }
