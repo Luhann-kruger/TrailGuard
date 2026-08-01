@@ -75,6 +75,7 @@
             btnRefresh.TabIndex = 8;
             btnRefresh.Text = "Refresh";
             btnRefresh.TextColor = Color.Black;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // dgvParks
             // 
@@ -97,6 +98,7 @@
             btnSearch.TabIndex = 3;
             btnSearch.Text = "Search";
             btnSearch.TextColor = Color.FromArgb(243, 243, 243);
+            btnSearch.Click += btnSearch_Click;
             // 
             // btnCreatePark
             // 
