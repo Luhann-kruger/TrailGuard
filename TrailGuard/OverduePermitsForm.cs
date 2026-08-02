@@ -86,7 +86,7 @@ namespace TrailGuard
 
             dataGridViewOverduePermits.Columns.Add(btnColumn);
         }
-
+    // same logic used on previous forms
         private void dataGridViewOverduePermits_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
