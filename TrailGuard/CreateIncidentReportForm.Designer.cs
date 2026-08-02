@@ -32,12 +32,6 @@
             lblModeTitle = new Label();
             lblTitle = new Label();
             lblCreateIncidentReportTitle = new Label();
-            lblPermitID = new Label();
-            lblPermitIDValue = new Label();
-            lblDescription = new Label();
-            txtDescription = new TextBox();
-            lblActionTaken = new Label();
-            txtActionTaken = new TextBox();
             btnCancel = new ReaLTaiizor.Controls.ForeverButton();
             btnCreateIncidentReport = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
@@ -60,7 +54,7 @@
             lblModeTitle.ForeColor = Color.White;
             lblModeTitle.Location = new Point(360, 10);
             lblModeTitle.Name = "lblModeTitle";
-            lblModeTitle.Size = new Size(129, 25);
+            lblModeTitle.Size = new Size(130, 25);
             lblModeTitle.TabIndex = 1;
             lblModeTitle.Text = "Rescue Mode";
             // 
@@ -71,7 +65,7 @@
             lblTitle.ForeColor = Color.White;
             lblTitle.Location = new Point(12, 10);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(105, 25);
+            lblTitle.Size = new Size(106, 25);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "TrailGuard";
             // 
@@ -81,71 +75,9 @@
             lblCreateIncidentReportTitle.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblCreateIncidentReportTitle.Location = new Point(60, 65);
             lblCreateIncidentReportTitle.Name = "lblCreateIncidentReportTitle";
-            lblCreateIncidentReportTitle.Size = new Size(240, 30);
+            lblCreateIncidentReportTitle.Size = new Size(230, 30);
             lblCreateIncidentReportTitle.TabIndex = 1;
             lblCreateIncidentReportTitle.Text = "Create Incident report";
-            // 
-            // lblPermitID
-            // 
-            lblPermitID.AutoSize = true;
-            lblPermitID.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPermitID.Location = new Point(60, 105);
-            lblPermitID.Name = "lblPermitID";
-            lblPermitID.Size = new Size(70, 19);
-            lblPermitID.TabIndex = 2;
-            lblPermitID.Text = "Permit ID:";
-            // 
-            // lblPermitIDValue
-            // 
-            lblPermitIDValue.AutoSize = true;
-            lblPermitIDValue.Font = new Font("Segoe UI", 10F);
-            lblPermitIDValue.Location = new Point(136, 105);
-            lblPermitIDValue.Name = "lblPermitIDValue";
-            lblPermitIDValue.Size = new Size(14, 19);
-            lblPermitIDValue.TabIndex = 3;
-            lblPermitIDValue.Text = "-";
-            // 
-            // lblDescription
-            // 
-            lblDescription.AutoSize = true;
-            lblDescription.Font = new Font("Segoe UI", 10F);
-            lblDescription.Location = new Point(60, 140);
-            lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(215, 19);
-            lblDescription.TabIndex = 4;
-            lblDescription.Text = "Enter incident description.";
-            // 
-            // txtDescription
-            // 
-            txtDescription.BackColor = Color.White;
-            txtDescription.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDescription.Location = new Point(60, 165);
-            txtDescription.Multiline = true;
-            txtDescription.Name = "txtDescription";
-            txtDescription.ScrollBars = ScrollBars.Vertical;
-            txtDescription.Size = new Size(380, 160);
-            txtDescription.TabIndex = 5;
-            // 
-            // lblActionTaken
-            // 
-            lblActionTaken.AutoSize = true;
-            lblActionTaken.Font = new Font("Segoe UI", 10F);
-            lblActionTaken.Location = new Point(60, 340);
-            lblActionTaken.Name = "lblActionTaken";
-            lblActionTaken.Size = new Size(210, 19);
-            lblActionTaken.TabIndex = 6;
-            lblActionTaken.Text = "Enter actions that will be taken";
-            // 
-            // txtActionTaken
-            // 
-            txtActionTaken.BackColor = Color.White;
-            txtActionTaken.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtActionTaken.Location = new Point(60, 365);
-            txtActionTaken.Multiline = true;
-            txtActionTaken.Name = "txtActionTaken";
-            txtActionTaken.ScrollBars = ScrollBars.Vertical;
-            txtActionTaken.Size = new Size(380, 90);
-            txtActionTaken.TabIndex = 7;
             // 
             // btnCancel
             // 
@@ -183,12 +115,6 @@
             ClientSize = new Size(864, 581);
             Controls.Add(btnCreateIncidentReport);
             Controls.Add(btnCancel);
-            Controls.Add(txtActionTaken);
-            Controls.Add(lblActionTaken);
-            Controls.Add(txtDescription);
-            Controls.Add(lblDescription);
-            Controls.Add(lblPermitIDValue);
-            Controls.Add(lblPermitID);
             Controls.Add(lblCreateIncidentReportTitle);
             Controls.Add(pnlHeader);
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -210,12 +136,6 @@
         private Label lblModeTitle;
         private Label lblTitle;
         private Label lblCreateIncidentReportTitle;
-        private Label lblPermitID;
-        private Label lblPermitIDValue;
-        private Label lblDescription;
-        private TextBox txtDescription;
-        private Label lblActionTaken;
-        private TextBox txtActionTaken;
         private ReaLTaiizor.Controls.ForeverButton btnCancel;
         private ReaLTaiizor.Controls.ForeverButton btnCreateIncidentReport;
     }

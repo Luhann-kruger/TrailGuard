@@ -54,7 +54,7 @@ namespace TrailGuard
                 MessageBox.Show(ex.Message);
             }
         }
-
+        // follows the styling on previous forms
         private void styleDataGridViewOverduePermits()
         {
             dataGridViewOverduePermits.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -64,10 +64,11 @@ namespace TrailGuard
             dataGridViewOverduePermits.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             dataGridViewOverduePermits.RowTemplate.Height = 30;
 
-            // give ExpectedReturnTime more breathing room
+            // increas the width of the epected return time
             dataGridViewOverduePermits.Columns["ExpectedReturnTime"].FillWeight = 180;
         }
 
+        // the action button follows all other forms
         private void AddActionColumn()
         {
             if (dataGridViewOverduePermits.Columns.Contains("Action"))
@@ -86,7 +87,7 @@ namespace TrailGuard
 
             dataGridViewOverduePermits.Columns.Add(btnColumn);
         }
-
+        // the logic is similar to all other forms as well, anytime the cells on the datat gridview are clicked an event loads
         private void dataGridViewOverduePermits_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)

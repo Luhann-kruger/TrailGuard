@@ -258,7 +258,7 @@ namespace TrailGuard
             return false;
         }
 
-       
+
         private bool closeRescue(int selectedIncidentReportID, int selectedPermitID)
         {
             try
