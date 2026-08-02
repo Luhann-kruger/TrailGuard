@@ -64,7 +64,7 @@ namespace TrailGuard
             dataGridViewOverduePermits.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             dataGridViewOverduePermits.RowTemplate.Height = 30;
 
-            // give ExpectedReturnTime more breathing room
+            // increase the space for the colomn
             dataGridViewOverduePermits.Columns["ExpectedReturnTime"].FillWeight = 180;
         }
 
