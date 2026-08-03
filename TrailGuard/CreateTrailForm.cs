@@ -76,7 +76,7 @@ namespace TrailGuard
                 MessageBox.Show("Please enter a valid park name.", "No Park Name Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
             string trailName = txtTrailName.Text;
 
             if (string.IsNullOrEmpty(trailName))
@@ -85,9 +85,9 @@ namespace TrailGuard
                 return;
             }
 
-            int difficultyLevel = (int) numDifficultyLevel.Value;
+            int difficultyLevel = (int)numDifficultyLevel.Value;
 
-            int maxHikers = (int) numMaxHikers.Value;
+            int maxHikers = (int)numMaxHikers.Value;
 
             if (maxHikers <= 0)
             {
@@ -150,6 +150,11 @@ namespace TrailGuard
             {
                 MessageBox.Show(exx.Message);
             }
+
+        }
+
+        private void lblDifficulty_Click(object sender, EventArgs e)
+        {
 
         }
     }
