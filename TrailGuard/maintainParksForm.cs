@@ -98,6 +98,7 @@ namespace TrailGuard
         {
             CreateParkForm form = new CreateParkForm();
             form.ShowDialog();
+            loadParks();
         }
 
         private void dgvParks_CellContentClick(object sender, DataGridViewCellEventArgs e)
