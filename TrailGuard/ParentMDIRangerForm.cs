@@ -16,5 +16,55 @@ namespace TrailGuard
         {
             InitializeComponent();
         }
+
+        private void ParentMDIRangerForm_Load(object sender, EventArgs e)
+        {
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Height = 70;
+            pnlSidebarMenu.Width = 200;
+            pnlSidebarMenu.Dock = DockStyle.Left;
+
+            //Also load the maintainPermits child form when the ParentMDIRangerForm loads
+            loadMaintainPermitsForm();
+        }
+
+        //Function that helps with the opening and closing of MDI child forms.
+        private void OpenChild(Form childForm)
+        {
+            foreach (Form form in this.MdiChildren)
+            {
+                //Close all the current MDI children beform loading a new child form
+                form.Close();
+            }
+
+            childForm.MdiParent = this;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.ControlBox = false;
+            childForm.Text = "";
+            childForm.Dock = DockStyle.Fill;
+            childForm.Show();
+
+        }
+
+        private void loadMaintainPermitsForm()
+        {
+            OpenChild(new maintainPermitsForm());
+        }
+
+        private void loadMaintainHikersForm()
+        {
+            //Merge hikers form into this and implement
+            MessageBox.Show("Hikers child should appear here");
+        }
+
+        private void btnMaintainPermits_Click(object sender, EventArgs e)
+        {
+            loadMaintainPermitsForm();
+        }
+
+        private void btnMaintainHikers_Click(object sender, EventArgs e)
+        {
+            loadMaintainHikersForm();
+        }
     }
 }

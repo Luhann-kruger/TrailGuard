@@ -107,6 +107,7 @@
             btnMaintainHikers.TabIndex = 3;
             btnMaintainHikers.Text = "Maintain Hikers";
             btnMaintainHikers.TextColor = Color.FromArgb(243, 243, 243);
+            btnMaintainHikers.Click += btnMaintainHikers_Click;
             // 
             // btnMaintainPermits
             // 
@@ -120,6 +121,7 @@
             btnMaintainPermits.TabIndex = 2;
             btnMaintainPermits.Text = "Maintain Permits";
             btnMaintainPermits.TextColor = Color.FromArgb(243, 243, 243);
+            btnMaintainPermits.Click += btnMaintainPermits_Click;
             // 
             // ParentMDIRangerForm
             // 
@@ -131,6 +133,7 @@
             IsMdiContainer = true;
             Name = "ParentMDIRangerForm";
             Text = "TrailGuard";
+            Load += ParentMDIRangerForm_Load;
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             pnlSidebarMenu.ResumeLayout(false);
