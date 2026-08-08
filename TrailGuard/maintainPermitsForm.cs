@@ -20,12 +20,13 @@ namespace TrailGuard
         SqlConnection conn;
 
         //Variable that save the Id of the selected Trail in the data grid view
-        private int selectedTrailID;
+        private int selectedPermitID;
         public maintainPermitsForm()
         {
             InitializeComponent();
         }
 
+        //Function that loads the the createPermitForm
         private void btnCreatePermit_Click(object sender, EventArgs e)
         {
             CreatePermitForm form = new CreatePermitForm();
@@ -102,10 +103,10 @@ namespace TrailGuard
         }
 
 
-        
+
         private void dgvTrails_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -129,7 +130,7 @@ namespace TrailGuard
                 return;
 
             // Set the selected Trail ID based on the row's which Actions button is clicked on.
-            selectedTrailID = Convert.ToInt32(
+            selectedPermitID = Convert.ToInt32(
                 dgvPermits.Rows[e.RowIndex]
                 .Cells["PermitID"].Value);
 
@@ -193,6 +194,147 @@ namespace TrailGuard
                     cellRect.Left,
                     cellRect.Bottom);
             }
+        }
+
+
+        //determine what happens when an option is clicked on te datagridview buttons
+        private void cmsPermitActions_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            cmsPermitActions.Close();
+
+            string action = e.ClickedItem.Text;
+
+            switch (action)
+            {
+                case "Edit":
+                    EditPermit(selectedPermitID);
+                    break;
+                case "Check-Out":
+                    //reload the datagridview if updated successfully
+                    if (checkOutPermit(selectedPermitID))
+                    {
+                        loadPermits();
+                    }
+                    break;
+                case "Check-In":
+                    if (checkInPermit(selectedPermitID)) {
+                        loadPermits();
+                    }
+                    break;
+                case "Cancel":
+                    if (cancelPermit(selectedPermitID)) {
+                        loadPermits();
+                    }
+                    break;
+
+                case "View Details":
+                    viewDetails(selectedPermitID);
+                    break;
+            }
+        }
+
+        //function that opens the edit form to edit a trail
+        private void EditPermit(int selectedPermitID)
+        {
+            editPermitForm form = new editPermitForm(selectedPermitID);
+
+            form.ShowDialog();
+
+            loadPermits();
+
+        }
+
+        private void viewDetails(int selectedPermitID)
+        {
+            viewDetailsForm form = new viewDetailsForm(selectedPermitID);
+
+            form.ShowDialog();
+
+            loadPermits();
+
+        }
+
+        private bool checkOutPermit(int selectedPermitID)
+        {
+            try
+            {
+                conn = new SqlConnection(connString);
+                conn.Open();
+
+                string sqlQuery = "UPDATE Permit SET Status = 'Completed' WHERE PermitID = @PermitID";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+
+                cmd.Parameters.AddWithValue("@PermitID", selectedPermitID);
+
+                //execute and confirm that it sucessfully updated
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                conn.Close();
+                return rowsAffected > 0;
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return false;
+        }
+
+        private bool checkInPermit(int selectedPermitID) {
+            try
+            {
+                conn = new SqlConnection(connString);
+                conn.Open();
+
+                string sqlQuery = "UPDATE Permit SET Status = 'Active' WHERE PermitID = @PermitID";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+
+                cmd.Parameters.AddWithValue("@PermitID", selectedPermitID);
+
+                //execute and confirm that it sucessfully updated
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                conn.Close();
+                return rowsAffected > 0;
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return false;
+        }
+
+        private bool cancelPermit(int selectedPermitID)
+        {
+            try
+            {
+                conn = new SqlConnection(connString);
+                conn.Open();
+
+                string sqlQuery = "UPDATE Permit SET Status = 'Cancelled' WHERE PermitID = @PermitID";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+
+                cmd.Parameters.AddWithValue("@PermitID", selectedPermitID);
+
+                //execute and confirm that it sucessfully updated
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                conn.Close();
+                return rowsAffected > 0;
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return false;
         }
     }
 }

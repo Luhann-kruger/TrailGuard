@@ -228,7 +228,8 @@
             // cmsPermitActions
             // 
             cmsPermitActions.Name = "cmsPermitActions";
-            cmsPermitActions.Size = new Size(61, 4);
+            cmsPermitActions.Size = new Size(181, 26);
+            cmsPermitActions.ItemClicked += cmsPermitActions_ItemClicked;
             // 
             // maintainPermitsForm
             // 
