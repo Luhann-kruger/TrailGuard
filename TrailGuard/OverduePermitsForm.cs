@@ -38,6 +38,8 @@ namespace TrailGuard
                 conn = new SqlConnection(connString);
                 conn.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter();
+                // this command joins the date and time and checks if the permit is overdue if it is less than getdate and the status is still active
+                // cast is the equivalent of type cast in sql
                 SqlCommand command = new SqlCommand(@"SELECT PermitID, TrailID, CheckInTime, ExpectedReturnTime, Date, Status FROM Permit WHERE CAST(Date AS DATETIME) + CAST(ExpectedReturnTime AS DATETIME) < GETDATE() AND Status = 'Active'", conn);
                 DataTable dataTable = new DataTable();
 
@@ -98,6 +100,12 @@ namespace TrailGuard
             if (dataGridViewOverduePermits.Columns[e.ColumnIndex].Name != "Action")
             {
                 return;
+            }
+            object permitIdValue = dataGridViewOverduePermits.Rows[e.RowIndex].Cells["PermitID"].Value;
+            // if there is nothing in the table dont fail just do nothing avoids clicking the action button by mistake
+            if (permitIdValue == DBNull.Value || permitIdValue == null)
+            {
+                return; 
             }
 
             selectedPermitID = Convert.ToInt32(

@@ -48,11 +48,11 @@ namespace TrailGuard
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 string sqlQuery = @"SELECT IncidentReportID, PermitID, DateReported, Description, ActionTaken, Status FROM IncidentReport";
                 SqlCommand comm = new SqlCommand(sqlQuery, conn);
-                DataTable dt = new DataTable();
+                DataTable dataTable = new DataTable();
 
                 adapter.SelectCommand = comm;
-                adapter.Fill(dt);
-                dataGridViewRescues.DataSource = dt;
+                adapter.Fill(dataTable);
+                dataGridViewRescues.DataSource = dataTable;
 
                 //Load Action columns
                 AddActionColumn();
