@@ -139,6 +139,7 @@
             btnFilterCloseStatus.TabIndex = 5;
             btnFilterCloseStatus.Text = "Close";
             btnFilterCloseStatus.TextColor = Color.Black;
+            btnFilterCloseStatus.Click += btnFilterCloseStatus_Click;
             // 
             // btnFilterOpenStatus
             // 
@@ -166,12 +167,13 @@
             btnSearch.TabIndex = 3;
             btnSearch.Text = "Search";
             btnSearch.TextColor = Color.FromArgb(243, 243, 243);
+            btnSearch.Click += btnSearch_Click;
             // 
             // cmsTrailActions
             // 
             cmsTrailActions.MinimumSize = new Size(50, 0);
             cmsTrailActions.Name = "cmsTrailActions";
-            cmsTrailActions.Size = new Size(181, 26);
+            cmsTrailActions.Size = new Size(61, 4);
             cmsTrailActions.ItemClicked += cmsTrailActions_ItemClicked;
             // 
             // mantainTrailsForm

@@ -13,7 +13,7 @@ namespace TrailGuard
 {
     public partial class maintainParksForm : Form
     {
-       
+
         string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=TrailGuardDB;Integrated Security=True;";
         SqlConnection conn;
 
@@ -26,7 +26,7 @@ namespace TrailGuard
 
         private void maintainParksForm_Load(object sender, EventArgs e)
         {
-            txtSearchPark.PlaceholderText = "Search a park...";
+            txtSearchPark.PlaceholderText = "Search a park by name...";
 
             //call function to load the Park data into the data grid view
             loadParks();
@@ -98,6 +98,7 @@ namespace TrailGuard
         {
             CreateParkForm form = new CreateParkForm();
             form.ShowDialog();
+            loadParks();
         }
 
         private void dgvParks_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -121,16 +122,54 @@ namespace TrailGuard
             EditParkForm form = new EditParkForm(selectedParkID);
 
             //Display the form and also reload the data in dgvParks when the form closes
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                loadParks();
-            }
+            form.ShowDialog();
+            loadParks();
+            
 
         }
 
         private void pnlFormContent_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string searchString = txtSearchPark.Text.Trim();
+
+                conn = new SqlConnection(connString);
+                conn.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+
+                string sqlQuery = @"SELECT ParkID, ParkName, Province, OfficeNumber FROM Park WHERE ParkName LIKE @search";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                cmd.Parameters.AddWithValue("@search", "%" + searchString + "%");
+
+                DataTable dt = new DataTable();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dt);
+
+                dgvParks.DataSource = dt;
+                AddActionColumn();
+
+                conn.Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            loadParks();
+
+            txtSearchPark.Text = "";
+            txtSearchPark.PlaceholderText = "Search a park by name...";
         }
     }
 }

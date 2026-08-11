@@ -31,7 +31,7 @@ namespace TrailGuard
 
         private void mantainTrails_Load(object sender, EventArgs e)
         {
-            txtSearchTrail.PlaceholderText = "Search a trail...";
+            txtSearchTrail.PlaceholderText = "Search a trail by name...";
             //Load the form data into the data gridview when the form loads
             loadTrails();
             // style the data grid view when the form loads
@@ -104,9 +104,38 @@ namespace TrailGuard
             dgvTrails.Columns.Add(btnColumn);
         }
 
+        // Function that filters the data view grid based on the status of the trail
+        private void FilterTrailsByStatus(string trailStatus)
+        {
+            try
+            {
+                conn = new SqlConnection(connString);
+                conn.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                string sqlQuery = @"SELECT TrailID, ParkID, TrailName, DifficultyLevel, MaximumHikers, Status FROM Trail WHERE Status = @status";
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                cmd.Parameters.AddWithValue("@status", trailStatus);
+                DataTable dt = new DataTable();
 
+                adapter.SelectCommand = cmd;
 
-        private void btnFilterOpenStatus_Click(object sender, EventArgs e) { }
+                adapter.Fill(dt);
+                dgvTrails.DataSource = dt;
+
+                AddActionColumn();
+
+                conn.Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnFilterOpenStatus_Click(object sender, EventArgs e)
+        {
+            FilterTrailsByStatus("Open");
+        }
 
         private void pnlFormContent_Paint(object sender, PaintEventArgs e)
         {
@@ -117,6 +146,11 @@ namespace TrailGuard
         {
             //reload all the trail data
             loadTrails();
+
+            //Reset the search box
+            txtSearchTrail.Text = "";
+            txtSearchTrail.PlaceholderText = "Search a trail by name...";
+
         }
 
         //load the context menu strip named cmsTails with action options based on the Status of the trail in the row of te DGV
@@ -194,18 +228,21 @@ namespace TrailGuard
 
             string action = e.ClickedItem.Text;
 
-            switch (action) {
+            switch (action)
+            {
                 case "Edit":
                     EditTrail(selectedTrailID);
                     break;
                 case "Close":
                     //reload the datagridview if updated successfully
-                    if (closeTrail(selectedTrailID)) {
+                    if (closeTrail(selectedTrailID))
+                    {
                         loadTrails();
                     }
                     break;
                 case "Open":
-                    if (openTrail(selectedTrailID)) {
+                    if (openTrail(selectedTrailID))
+                    {
                         loadTrails();
                     }
                     break;
@@ -213,12 +250,14 @@ namespace TrailGuard
         }
 
         //function that opens the edit form to edit a trail
-        private void EditTrail( int selectedTrailID) { 
+        private void EditTrail(int selectedTrailID)
+        {
             EditTrailForm form = new EditTrailForm(selectedTrailID);
 
-            if (form.ShowDialog() == DialogResult.OK) {
-                loadTrails();
-            }
+            form.ShowDialog();
+            
+            loadTrails();
+            
         }
         //function that set the status of a trail to closes
         private bool closeTrail(int selectedTrailID)
@@ -227,21 +266,22 @@ namespace TrailGuard
             {
                 conn = new SqlConnection(connString);
                 conn.Open();
-                
+
                 string sqlQuery = "UPDATE Trail SET Status = 'Closed' WHERE TrailID = @TrailID";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@TrailID", selectedTrailID);
-               
+
                 //execute and confirm that it sucessfully updated
                 int rowsAffected = cmd.ExecuteNonQuery();
 
                 conn.Close();
                 return rowsAffected > 0;
-               
+
             }
-            catch (SqlException ex) {
+            catch (SqlException ex)
+            {
                 MessageBox.Show(ex.Message);
             }
 
@@ -267,12 +307,46 @@ namespace TrailGuard
                 conn.Close();
                 return rowsAffected > 0;
             }
-            catch (SqlException ex) {
+            catch (SqlException ex)
+            {
                 MessageBox.Show(ex.Message);
             }
 
             return false;
         }
 
+        private void btnFilterCloseStatus_Click(object sender, EventArgs e)
+        {
+            FilterTrailsByStatus("Closed");
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string searchString = txtSearchTrail.Text.Trim();
+
+                conn = new SqlConnection(connString);
+                conn.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                string sqlQuery = @"SELECT TrailID, ParkID, TrailName, DifficultyLevel, MaximumHikers, Status FROM Trail WHERE TrailName LIKE @search";
+
+                SqlCommand cmd = new SqlCommand( sqlQuery, conn);
+                cmd.Parameters.AddWithValue("@search", "%" + searchString + "%");
+
+                DataTable dt = new DataTable(); 
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dt);
+
+                dgvTrails.DataSource = dt;
+                AddActionColumn();
+
+                conn.Close();
+            }
+            catch (SqlException ex) { 
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
