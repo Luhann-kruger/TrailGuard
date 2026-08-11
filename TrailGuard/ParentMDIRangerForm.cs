@@ -54,7 +54,7 @@ namespace TrailGuard
         private void loadMaintainHikersForm()
         {
             //Merge hikers form into this and implement
-            MessageBox.Show("Hikers child should appear here");
+            OpenChild(new MaintainHikersForm());
         }
 
         private void btnMaintainPermits_Click(object sender, EventArgs e)
