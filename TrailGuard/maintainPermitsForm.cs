@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace TrailGuard
 {
@@ -112,7 +113,9 @@ namespace TrailGuard
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             loadPermits();
-            txtSearchPark.PlaceholderText = "Search permit by ID...";
+            txtSearchPermit.Clear();
+            txtSearchPermit.PlaceholderText = "Search permit by ID...";
+            
         }
 
 
@@ -217,12 +220,14 @@ namespace TrailGuard
                     }
                     break;
                 case "Check-In":
-                    if (checkInPermit(selectedPermitID)) {
+                    if (checkInPermit(selectedPermitID))
+                    {
                         loadPermits();
                     }
                     break;
                 case "Cancel":
-                    if (cancelPermit(selectedPermitID)) {
+                    if (cancelPermit(selectedPermitID))
+                    {
                         loadPermits();
                     }
                     break;
@@ -282,7 +287,8 @@ namespace TrailGuard
             return false;
         }
 
-        private bool checkInPermit(int selectedPermitID) {
+        private bool checkInPermit(int selectedPermitID)
+        {
             try
             {
                 conn = new SqlConnection(connString);
@@ -335,6 +341,99 @@ namespace TrailGuard
             }
 
             return false;
+        }
+
+        // Function that filters the data view grid based on the status of the permit
+        private void FilterPermitsByStatus(string permitStatus)
+        {
+            try
+            {
+                conn = new SqlConnection(connString);
+                conn.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter();
+
+                string sqlQuery = @"SELECT PermitID, TrailID, Date, CheckInTime, ExpectedReturnTime, Status FROM Permit WHERE Status = @status";
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                cmd.Parameters.AddWithValue("@status", permitStatus);
+                DataTable dt = new DataTable();
+
+                adapter.SelectCommand = cmd;
+
+                adapter.Fill(dt);
+                dgvPermits.DataSource = dt;
+
+                AddActionColumn();
+
+                conn.Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnRegistered_Click(object sender, EventArgs e)
+        {
+            FilterPermitsByStatus("Registered");
+        }
+
+        private void btnCancelled_Click(object sender, EventArgs e)
+        {
+            FilterPermitsByStatus("Cancelled");
+        }
+
+        private void btnActive_Click(object sender, EventArgs e)
+        {
+            FilterPermitsByStatus("Active");
+        }
+
+        private void btnCompleted_Click(object sender, EventArgs e)
+        {
+            FilterPermitsByStatus("Completed");
+        }
+
+        private void btnOverdue_Click(object sender, EventArgs e)
+        {
+            FilterPermitsByStatus("Overdue");
+        }
+
+        private void btnRescued_Click(object sender, EventArgs e)
+        {
+            FilterPermitsByStatus("Rescued");
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!int.TryParse(txtSearchPermit.Text.Trim(), out int permitID)) {
+                    MessageBox.Show("Please enter a valid Permit ID.");
+                    return;
+                }
+
+                conn = new SqlConnection(connString);
+                conn.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                
+                string sqlQuery = @"SELECT PermitID, TrailID, Date, CheckInTime, ExpectedReturnTime, Status FROM Permit WHERE PermitID = @permitID";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                cmd.Parameters.AddWithValue("@permitID",  permitID);
+
+                DataTable dt = new DataTable();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dt);
+
+                dgvPermits.DataSource = dt;
+                AddActionColumn();
+
+                conn.Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
