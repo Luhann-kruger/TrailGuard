@@ -211,6 +211,7 @@ namespace TrailGuard
             {
                 case "Edit":
                     EditPermit(selectedPermitID);
+                    
                     break;
                 case "Check-Out":
                     //reload the datagridview if updated successfully
