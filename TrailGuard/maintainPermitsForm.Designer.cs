@@ -35,14 +35,14 @@
             btnRescued = new ReaLTaiizor.Controls.ForeverButton();
             btnOverdue = new ReaLTaiizor.Controls.ForeverButton();
             btnCompleted = new ReaLTaiizor.Controls.ForeverButton();
-            btnCheckedIn = new ReaLTaiizor.Controls.ForeverButton();
+            btnActive = new ReaLTaiizor.Controls.ForeverButton();
             btnCancelled = new ReaLTaiizor.Controls.ForeverButton();
             btnRegistered = new ReaLTaiizor.Controls.ForeverButton();
             btnRefresh = new ReaLTaiizor.Controls.ForeverButton();
             dgvPermits = new DataGridView();
             btnSearch = new ReaLTaiizor.Controls.ForeverButton();
             btnCreatePermit = new ReaLTaiizor.Controls.ForeverButton();
-            txtSearchPark = new TextBox();
+            txtSearchPermit = new TextBox();
             cmsPermitActions = new ContextMenuStrip(components);
             pnlFormContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPermits).BeginInit();
@@ -65,14 +65,14 @@
             pnlFormContent.Controls.Add(btnRescued);
             pnlFormContent.Controls.Add(btnOverdue);
             pnlFormContent.Controls.Add(btnCompleted);
-            pnlFormContent.Controls.Add(btnCheckedIn);
+            pnlFormContent.Controls.Add(btnActive);
             pnlFormContent.Controls.Add(btnCancelled);
             pnlFormContent.Controls.Add(btnRegistered);
             pnlFormContent.Controls.Add(btnRefresh);
             pnlFormContent.Controls.Add(dgvPermits);
             pnlFormContent.Controls.Add(btnSearch);
             pnlFormContent.Controls.Add(btnCreatePermit);
-            pnlFormContent.Controls.Add(txtSearchPark);
+            pnlFormContent.Controls.Add(txtSearchPermit);
             pnlFormContent.Location = new Point(12, 78);
             pnlFormContent.Name = "pnlFormContent";
             pnlFormContent.Size = new Size(1191, 473);
@@ -100,6 +100,7 @@
             btnRescued.TabIndex = 14;
             btnRescued.Text = "Rescued";
             btnRescued.TextColor = Color.Black;
+            btnRescued.Click += btnRescued_Click;
             // 
             // btnOverdue
             // 
@@ -113,6 +114,7 @@
             btnOverdue.TabIndex = 13;
             btnOverdue.Text = "Overdue";
             btnOverdue.TextColor = Color.Black;
+            btnOverdue.Click += btnOverdue_Click;
             // 
             // btnCompleted
             // 
@@ -126,19 +128,21 @@
             btnCompleted.TabIndex = 12;
             btnCompleted.Text = "Completed";
             btnCompleted.TextColor = Color.Black;
+            btnCompleted.Click += btnCompleted_Click;
             // 
-            // btnCheckedIn
+            // btnActive
             // 
-            btnCheckedIn.BackColor = Color.Transparent;
-            btnCheckedIn.BaseColor = Color.Silver;
-            btnCheckedIn.Font = new Font("Segoe UI", 12F);
-            btnCheckedIn.Location = new Point(508, 156);
-            btnCheckedIn.Name = "btnCheckedIn";
-            btnCheckedIn.Rounded = false;
-            btnCheckedIn.Size = new Size(122, 29);
-            btnCheckedIn.TabIndex = 11;
-            btnCheckedIn.Text = "Checked-In";
-            btnCheckedIn.TextColor = Color.Black;
+            btnActive.BackColor = Color.Transparent;
+            btnActive.BaseColor = Color.Silver;
+            btnActive.Font = new Font("Segoe UI", 12F);
+            btnActive.Location = new Point(508, 156);
+            btnActive.Name = "btnActive";
+            btnActive.Rounded = false;
+            btnActive.Size = new Size(122, 29);
+            btnActive.TabIndex = 11;
+            btnActive.Text = "Active";
+            btnActive.TextColor = Color.Black;
+            btnActive.Click += btnActive_Click;
             // 
             // btnCancelled
             // 
@@ -152,6 +156,7 @@
             btnCancelled.TabIndex = 10;
             btnCancelled.Text = "Cancelled";
             btnCancelled.TextColor = Color.Black;
+            btnCancelled.Click += btnCancelled_Click;
             // 
             // btnRegistered
             // 
@@ -165,6 +170,7 @@
             btnRegistered.TabIndex = 9;
             btnRegistered.Text = "Registered";
             btnRegistered.TextColor = Color.Black;
+            btnRegistered.Click += btnRegistered_Click;
             // 
             // btnRefresh
             // 
@@ -201,6 +207,7 @@
             btnSearch.TabIndex = 3;
             btnSearch.Text = "Search";
             btnSearch.TextColor = Color.FromArgb(243, 243, 243);
+            btnSearch.Click += btnSearch_Click;
             // 
             // btnCreatePermit
             // 
@@ -216,19 +223,19 @@
             btnCreatePermit.TextColor = Color.FromArgb(243, 243, 243);
             btnCreatePermit.Click += btnCreatePermit_Click;
             // 
-            // txtSearchPark
+            // txtSearchPermit
             // 
-            txtSearchPark.BackColor = SystemColors.ScrollBar;
-            txtSearchPark.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearchPark.Location = new Point(777, 100);
-            txtSearchPark.Name = "txtSearchPark";
-            txtSearchPark.Size = new Size(230, 27);
-            txtSearchPark.TabIndex = 2;
+            txtSearchPermit.BackColor = SystemColors.ScrollBar;
+            txtSearchPermit.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearchPermit.Location = new Point(777, 100);
+            txtSearchPermit.Name = "txtSearchPermit";
+            txtSearchPermit.Size = new Size(230, 27);
+            txtSearchPermit.TabIndex = 2;
             // 
             // cmsPermitActions
             // 
             cmsPermitActions.Name = "cmsPermitActions";
-            cmsPermitActions.Size = new Size(181, 26);
+            cmsPermitActions.Size = new Size(61, 4);
             cmsPermitActions.ItemClicked += cmsPermitActions_ItemClicked;
             // 
             // maintainPermitsForm
@@ -257,10 +264,10 @@
         private DataGridView dgvPermits;
         private ReaLTaiizor.Controls.ForeverButton btnSearch;
         private ReaLTaiizor.Controls.ForeverButton btnCreatePermit;
-        private TextBox txtSearchPark;
+        private TextBox txtSearchPermit;
         private ReaLTaiizor.Controls.ForeverButton btnCancelled;
         private ReaLTaiizor.Controls.ForeverButton btnRegistered;
-        private ReaLTaiizor.Controls.ForeverButton btnCheckedIn;
+        private ReaLTaiizor.Controls.ForeverButton btnActive;
         private ReaLTaiizor.Controls.ForeverButton btnCompleted;
         private ReaLTaiizor.Controls.ForeverButton btnOverdue;
         private ReaLTaiizor.Controls.ForeverButton btnRescued;
