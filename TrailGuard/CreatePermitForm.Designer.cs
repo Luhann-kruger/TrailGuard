@@ -41,12 +41,15 @@
             dtpPermitDate = new DateTimePicker();
             dtpExpectedReturnTime = new DateTimePicker();
             pnlAddParticipants = new Panel();
+            btnReloadAll = new ReaLTaiizor.Controls.ForeverButton();
+            btnClearParticipants = new ReaLTaiizor.Controls.ForeverButton();
             label1 = new Label();
             dgvParticipants = new DataGridView();
             btnSearchParticipant = new ReaLTaiizor.Controls.ForeverButton();
             txtSearchParticipant = new TextBox();
             lblAddParticipantHeading = new Label();
             btnCreatePermit = new ReaLTaiizor.Controls.ForeverButton();
+            btnCancel = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlAddParticipants.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvParticipants).BeginInit();
@@ -174,15 +177,47 @@
             // pnlAddParticipants
             // 
             pnlAddParticipants.BackColor = Color.White;
+            pnlAddParticipants.Controls.Add(btnReloadAll);
+            pnlAddParticipants.Controls.Add(btnClearParticipants);
             pnlAddParticipants.Controls.Add(label1);
             pnlAddParticipants.Controls.Add(dgvParticipants);
             pnlAddParticipants.Controls.Add(btnSearchParticipant);
             pnlAddParticipants.Controls.Add(txtSearchParticipant);
             pnlAddParticipants.Controls.Add(lblAddParticipantHeading);
-            pnlAddParticipants.Location = new Point(14, 321);
+            pnlAddParticipants.Location = new Point(12, 307);
             pnlAddParticipants.Name = "pnlAddParticipants";
-            pnlAddParticipants.Size = new Size(953, 293);
+            pnlAddParticipants.Size = new Size(953, 374);
             pnlAddParticipants.TabIndex = 13;
+            // 
+            // btnReloadAll
+            // 
+            btnReloadAll.BackColor = Color.Transparent;
+            btnReloadAll.BaseColor = Color.LightGray;
+            btnReloadAll.Font = new Font("Segoe UI", 12F);
+            btnReloadAll.Location = new Point(805, 80);
+            btnReloadAll.Name = "btnReloadAll";
+            btnReloadAll.RightToLeft = RightToLeft.No;
+            btnReloadAll.Rounded = false;
+            btnReloadAll.Size = new Size(119, 29);
+            btnReloadAll.TabIndex = 16;
+            btnReloadAll.Text = "Reload All";
+            btnReloadAll.TextColor = Color.Black;
+            btnReloadAll.Click += btnReloadAll_Click;
+            // 
+            // btnClearParticipants
+            // 
+            btnClearParticipants.BackColor = Color.Transparent;
+            btnClearParticipants.BaseColor = Color.LightGray;
+            btnClearParticipants.Font = new Font("Segoe UI", 12F);
+            btnClearParticipants.Location = new Point(18, 318);
+            btnClearParticipants.Name = "btnClearParticipants";
+            btnClearParticipants.RightToLeft = RightToLeft.No;
+            btnClearParticipants.Rounded = false;
+            btnClearParticipants.Size = new Size(185, 29);
+            btnClearParticipants.TabIndex = 15;
+            btnClearParticipants.Text = "Clear Participants";
+            btnClearParticipants.TextColor = Color.FromArgb(192, 0, 0);
+            btnClearParticipants.Click += btnClearParticipants_Click;
             // 
             // label1
             // 
@@ -197,7 +232,7 @@
             // dgvParticipants
             // 
             dgvParticipants.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvParticipants.Location = new Point(18, 88);
+            dgvParticipants.Location = new Point(18, 115);
             dgvParticipants.Name = "dgvParticipants";
             dgvParticipants.Size = new Size(906, 187);
             dgvParticipants.TabIndex = 14;
@@ -215,6 +250,7 @@
             btnSearchParticipant.TabIndex = 11;
             btnSearchParticipant.Text = "Search";
             btnSearchParticipant.TextColor = Color.FromArgb(243, 243, 243);
+            btnSearchParticipant.Click += btnSearchParticipant_Click;
             // 
             // txtSearchParticipant
             // 
@@ -240,20 +276,37 @@
             btnCreatePermit.BackColor = Color.Transparent;
             btnCreatePermit.BaseColor = Color.FromArgb(44, 123, 102);
             btnCreatePermit.Font = new Font("Segoe UI", 12F);
-            btnCreatePermit.Location = new Point(848, 644);
+            btnCreatePermit.Location = new Point(848, 717);
             btnCreatePermit.Name = "btnCreatePermit";
             btnCreatePermit.Rounded = false;
             btnCreatePermit.Size = new Size(119, 29);
             btnCreatePermit.TabIndex = 14;
             btnCreatePermit.Text = "Create Permit";
             btnCreatePermit.TextColor = Color.FromArgb(243, 243, 243);
+            btnCreatePermit.Click += btnCreatePermit_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.BackColor = Color.Transparent;
+            btnCancel.BaseColor = Color.LightGray;
+            btnCancel.Font = new Font("Segoe UI", 12F);
+            btnCancel.Location = new Point(637, 717);
+            btnCancel.Name = "btnCancel";
+            btnCancel.RightToLeft = RightToLeft.No;
+            btnCancel.Rounded = false;
+            btnCancel.Size = new Size(119, 29);
+            btnCancel.TabIndex = 17;
+            btnCancel.Text = "Cancel";
+            btnCancel.TextColor = Color.Black;
+            btnCancel.Click += btnCancel_Click;
             // 
             // CreatePermitForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ScrollBar;
-            ClientSize = new Size(1004, 685);
+            ClientSize = new Size(1004, 758);
+            Controls.Add(btnCancel);
             Controls.Add(btnCreatePermit);
             Controls.Add(pnlAddParticipants);
             Controls.Add(dtpExpectedReturnTime);
@@ -299,5 +352,8 @@
         private DataGridView dgvParticipants;
         private Label label1;
         private ReaLTaiizor.Controls.ForeverButton btnCreatePermit;
+        private ReaLTaiizor.Controls.ForeverButton btnClearParticipants;
+        private ReaLTaiizor.Controls.ForeverButton btnReloadAll;
+        private ReaLTaiizor.Controls.ForeverButton btnCancel;
     }
 }
