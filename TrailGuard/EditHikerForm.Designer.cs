@@ -33,8 +33,6 @@
             lblTitle = new Label();
             lblEditHikerTitle = new Label();
             pnlFormContent = new Panel();
-            btnCancel = new ReaLTaiizor.Controls.ForeverButton();
-            btnSave = new ReaLTaiizor.Controls.ForeverButton();
             gBoxEmergencyInfo = new GroupBox();
             cbRelationship = new ComboBox();
             lblRelationship = new Label();
@@ -57,6 +55,8 @@
             txtHomeAddress = new TextBox();
             rtxtMedicalNotes = new RichTextBox();
             txtPhoneNum = new TextBox();
+            btnCancel = new ReaLTaiizor.Controls.ForeverButton();
+            btnSave = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlFormContent.SuspendLayout();
             gBoxEmergencyInfo.SuspendLayout();
@@ -115,34 +115,6 @@
             pnlFormContent.Size = new Size(740, 400);
             pnlFormContent.TabIndex = 2;
             // 
-            // btnCancel
-            // 
-            btnCancel.BackColor = Color.Transparent;
-            btnCancel.BaseColor = Color.FromArgb(84, 84, 84);
-            btnCancel.Font = new Font("Segoe UI", 12F);
-            btnCancel.Location = new Point(560, 525);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Rounded = false;
-            btnCancel.Size = new Size(101, 29);
-            btnCancel.TabIndex = 3;
-            btnCancel.Text = "Cancel";
-            btnCancel.TextColor = Color.FromArgb(243, 243, 243);
-            btnCancel.Click += btnCancel_Click;
-            // 
-            // btnSave
-            // 
-            btnSave.BackColor = Color.Transparent;
-            btnSave.BaseColor = Color.FromArgb(44, 123, 102);
-            btnSave.Font = new Font("Segoe UI", 12F);
-            btnSave.Location = new Point(680, 525);
-            btnSave.Name = "btnSave";
-            btnSave.Rounded = false;
-            btnSave.Size = new Size(101, 29);
-            btnSave.TabIndex = 4;
-            btnSave.Text = "Save";
-            btnSave.TextColor = Color.FromArgb(243, 243, 243);
-            btnSave.Click += btnSave_Click;
-            // 
             // gBoxEmergencyInfo
             // 
             gBoxEmergencyInfo.Controls.Add(cbRelationship);
@@ -161,10 +133,11 @@
             // 
             // cbRelationship
             // 
+            cbRelationship.Font = new Font("Segoe UI", 9F);
             cbRelationship.FormattingEnabled = true;
             cbRelationship.Location = new Point(30, 131);
             cbRelationship.Name = "cbRelationship";
-            cbRelationship.Size = new Size(269, 28);
+            cbRelationship.Size = new Size(269, 23);
             cbRelationship.TabIndex = 14;
             // 
             // lblRelationship
@@ -199,16 +172,18 @@
             // 
             // txtEmergencyFirstName
             // 
+            txtEmergencyFirstName.Font = new Font("Segoe UI", 9F);
             txtEmergencyFirstName.Location = new Point(148, 28);
             txtEmergencyFirstName.Name = "txtEmergencyFirstName";
-            txtEmergencyFirstName.Size = new Size(151, 27);
+            txtEmergencyFirstName.Size = new Size(151, 23);
             txtEmergencyFirstName.TabIndex = 0;
             // 
             // txtEmergencyPhoneNum
             // 
+            txtEmergencyPhoneNum.Font = new Font("Segoe UI", 9F);
             txtEmergencyPhoneNum.Location = new Point(148, 62);
             txtEmergencyPhoneNum.Name = "txtEmergencyPhoneNum";
-            txtEmergencyPhoneNum.Size = new Size(151, 27);
+            txtEmergencyPhoneNum.Size = new Size(151, 23);
             txtEmergencyPhoneNum.TabIndex = 1;
             // 
             // gBoxHikerInfo
@@ -309,41 +284,47 @@
             // 
             // txtFirstName
             // 
+            txtFirstName.Font = new Font("Segoe UI", 9F);
             txtFirstName.Location = new Point(169, 28);
             txtFirstName.Name = "txtFirstName";
-            txtFirstName.Size = new Size(151, 27);
+            txtFirstName.Size = new Size(151, 23);
             txtFirstName.TabIndex = 0;
             // 
             // txtLastName
             // 
+            txtLastName.Font = new Font("Segoe UI", 9F);
             txtLastName.Location = new Point(169, 62);
             txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(151, 27);
+            txtLastName.Size = new Size(151, 23);
             txtLastName.TabIndex = 1;
             // 
             // txtIDnum
             // 
+            txtIDnum.Font = new Font("Segoe UI", 9F);
             txtIDnum.Location = new Point(169, 96);
             txtIDnum.Name = "txtIDnum";
-            txtIDnum.Size = new Size(151, 27);
+            txtIDnum.Size = new Size(151, 23);
             txtIDnum.TabIndex = 2;
             // 
             // txtEmailAddress
             // 
+            txtEmailAddress.Font = new Font("Segoe UI", 9F);
             txtEmailAddress.Location = new Point(169, 164);
             txtEmailAddress.Name = "txtEmailAddress";
-            txtEmailAddress.Size = new Size(151, 27);
+            txtEmailAddress.Size = new Size(151, 23);
             txtEmailAddress.TabIndex = 4;
             // 
             // txtHomeAddress
             // 
+            txtHomeAddress.Font = new Font("Segoe UI", 9F);
             txtHomeAddress.Location = new Point(169, 198);
             txtHomeAddress.Name = "txtHomeAddress";
-            txtHomeAddress.Size = new Size(151, 27);
+            txtHomeAddress.Size = new Size(151, 23);
             txtHomeAddress.TabIndex = 5;
             // 
             // rtxtMedicalNotes
             // 
+            rtxtMedicalNotes.Font = new Font("Segoe UI", 9F);
             rtxtMedicalNotes.Location = new Point(28, 263);
             rtxtMedicalNotes.Name = "rtxtMedicalNotes";
             rtxtMedicalNotes.Size = new Size(292, 82);
@@ -352,10 +333,39 @@
             // 
             // txtPhoneNum
             // 
+            txtPhoneNum.Font = new Font("Segoe UI", 9F);
             txtPhoneNum.Location = new Point(169, 130);
             txtPhoneNum.Name = "txtPhoneNum";
-            txtPhoneNum.Size = new Size(151, 27);
+            txtPhoneNum.Size = new Size(151, 23);
             txtPhoneNum.TabIndex = 3;
+            // 
+            // btnCancel
+            // 
+            btnCancel.BackColor = Color.Transparent;
+            btnCancel.BaseColor = Color.FromArgb(84, 84, 84);
+            btnCancel.Font = new Font("Segoe UI", 12F);
+            btnCancel.Location = new Point(560, 525);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Rounded = false;
+            btnCancel.Size = new Size(101, 29);
+            btnCancel.TabIndex = 3;
+            btnCancel.Text = "Cancel";
+            btnCancel.TextColor = Color.FromArgb(243, 243, 243);
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // btnSave
+            // 
+            btnSave.BackColor = Color.Transparent;
+            btnSave.BaseColor = Color.FromArgb(44, 123, 102);
+            btnSave.Font = new Font("Segoe UI", 12F);
+            btnSave.Location = new Point(680, 525);
+            btnSave.Name = "btnSave";
+            btnSave.Rounded = false;
+            btnSave.Size = new Size(101, 29);
+            btnSave.TabIndex = 4;
+            btnSave.Text = "Save";
+            btnSave.TextColor = Color.FromArgb(243, 243, 243);
+            btnSave.Click += btnSave_Click;
             // 
             // EditHikerForm
             // 
