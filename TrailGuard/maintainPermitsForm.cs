@@ -16,7 +16,7 @@ namespace TrailGuard
     {
 
         string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=TrailGuardDB;Integrated Security=True;";
-
+        private System.Windows.Forms.Timer overdueTimer;
 
         SqlConnection conn;
 
@@ -40,8 +40,22 @@ namespace TrailGuard
 
         private void maintainPermitsForm_Load(object sender, EventArgs e)
         {
+            //Check for overdue Permits
+            CheckOverduePermits();
+            
+            overdueTimer = new System.Windows.Forms.Timer();
+
             loadPermits();
             styleDGVPermits();
+
+            overdueTimer.Interval = 5 * 60 * 1000; //5 minutes
+            overdueTimer.Tick += OverdueTimer_Tick;
+            overdueTimer.Start();
+
+        }
+
+        private void OverdueTimer_Tick(Object sender, EventArgs e) {
+            CheckOverduePermits();
         }
 
         //function to style the datagrid view
@@ -124,6 +138,11 @@ namespace TrailGuard
         {
             // just return the function if a valid row is not clicked
             if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            if (dgvPermits.Rows[e.RowIndex].IsNewRow)
             {
                 return;
             }
@@ -295,11 +314,15 @@ namespace TrailGuard
                 conn = new SqlConnection(connString);
                 conn.Open();
 
-                string sqlQuery = "UPDATE Permit SET Status = 'Active' WHERE PermitID = @PermitID";
+                string sqlQuery = "UPDATE Permit SET Status = 'Active', CheckInTime = @CheckInTime WHERE PermitID = @PermitID";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
 
                 cmd.Parameters.AddWithValue("@PermitID", selectedPermitID);
+
+                TimeSpan checkInTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0);
+
+                cmd.Parameters.AddWithValue("@CheckInTime", checkInTime);
 
                 //execute and confirm that it sucessfully updated
                 int rowsAffected = cmd.ExecuteNonQuery();
@@ -433,6 +456,29 @@ namespace TrailGuard
             }
             catch (SqlException ex)
             {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        //function that check if the permit is overdue
+        private void CheckOverduePermits()
+        {
+            try
+            {
+                conn = new SqlConnection(connString);
+                conn.Open();
+                string sqlQuery = @"UPDATE Permit SET Status = 'Overdue' WHERE DATEADD(SECOND, DATEDIFF(SECOND, '00:00:00', ExpectedReturnTime),
+                                    CAST(Date AS DATETIME)) < GETDATE() AND Status = 'Active'";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, conn);
+                cmd.ExecuteNonQuery();
+
+                conn.Close();
+
+                //Refresh dgv
+                loadPermits();
+            }
+            catch (SqlException ex) { 
                 MessageBox.Show(ex.Message);
             }
         }
