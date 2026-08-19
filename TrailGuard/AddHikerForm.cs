@@ -87,9 +87,9 @@ namespace TrailGuard
                 return;
             }
 
-            if (!emailAddress.Contains("@"))
+            if (!emailAddress.Contains("@") || !emailAddress.Contains("."))
             {
-                MessageBox.Show("Email Address must contain '@'.", "Validation Error",
+                MessageBox.Show("Email Address must contain '@' and '.'.", "Validation Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtEmailAddress.Focus();
                 return;
