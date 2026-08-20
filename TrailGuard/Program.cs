@@ -12,7 +12,8 @@ namespace TrailGuard
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             //Application.Run(new ParentMDIAdminForm());
-            Application.Run(new ParentMDIRangerForm());
+            // Application.Run(new ParentMDIRangerForm());
+            Application.Run(new LoginForm());
         }
     }
 }
