@@ -33,6 +33,13 @@
             lblTitle = new Label();
             lblViewHikerDetailsTitle = new Label();
             pnlFormContent = new Panel();
+            groupBox1 = new GroupBox();
+            txtEmergencyRelationship = new TextBox();
+            txtEmergencyPhone = new TextBox();
+            txtEmergencyName = new TextBox();
+            lblEmergencyRelationship = new Label();
+            lblEmergencyPhone = new Label();
+            lblEmergencyName = new Label();
             rtxtMedicalNotes = new RichTextBox();
             txtEmailAddress = new TextBox();
             txtHomeAddress = new TextBox();
@@ -50,6 +57,7 @@
             btnBack = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlFormContent.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
@@ -97,6 +105,7 @@
             // pnlFormContent
             // 
             pnlFormContent.BackColor = Color.White;
+            pnlFormContent.Controls.Add(groupBox1);
             pnlFormContent.Controls.Add(rtxtMedicalNotes);
             pnlFormContent.Controls.Add(txtEmailAddress);
             pnlFormContent.Controls.Add(txtHomeAddress);
@@ -115,6 +124,70 @@
             pnlFormContent.Name = "pnlFormContent";
             pnlFormContent.Size = new Size(753, 429);
             pnlFormContent.TabIndex = 2;
+            pnlFormContent.Paint += pnlFormContent_Paint;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(txtEmergencyRelationship);
+            groupBox1.Controls.Add(txtEmergencyPhone);
+            groupBox1.Controls.Add(txtEmergencyName);
+            groupBox1.Controls.Add(lblEmergencyRelationship);
+            groupBox1.Controls.Add(lblEmergencyPhone);
+            groupBox1.Controls.Add(lblEmergencyName);
+            groupBox1.Location = new Point(441, 59);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(269, 174);
+            groupBox1.TabIndex = 31;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Emergency Contact Details";
+            // 
+            // txtEmergencyRelationship
+            // 
+            txtEmergencyRelationship.Location = new Point(118, 119);
+            txtEmergencyRelationship.Name = "txtEmergencyRelationship";
+            txtEmergencyRelationship.Size = new Size(131, 23);
+            txtEmergencyRelationship.TabIndex = 30;
+            // 
+            // txtEmergencyPhone
+            // 
+            txtEmergencyPhone.Location = new Point(118, 77);
+            txtEmergencyPhone.Name = "txtEmergencyPhone";
+            txtEmergencyPhone.Size = new Size(131, 23);
+            txtEmergencyPhone.TabIndex = 29;
+            // 
+            // txtEmergencyName
+            // 
+            txtEmergencyName.Location = new Point(118, 35);
+            txtEmergencyName.Name = "txtEmergencyName";
+            txtEmergencyName.Size = new Size(131, 23);
+            txtEmergencyName.TabIndex = 28;
+            // 
+            // lblEmergencyRelationship
+            // 
+            lblEmergencyRelationship.AutoSize = true;
+            lblEmergencyRelationship.Location = new Point(9, 122);
+            lblEmergencyRelationship.Name = "lblEmergencyRelationship";
+            lblEmergencyRelationship.Size = new Size(75, 15);
+            lblEmergencyRelationship.TabIndex = 27;
+            lblEmergencyRelationship.Text = "Relationship:";
+            // 
+            // lblEmergencyPhone
+            // 
+            lblEmergencyPhone.AutoSize = true;
+            lblEmergencyPhone.Location = new Point(9, 80);
+            lblEmergencyPhone.Name = "lblEmergencyPhone";
+            lblEmergencyPhone.Size = new Size(91, 15);
+            lblEmergencyPhone.TabIndex = 26;
+            lblEmergencyPhone.Text = "Phone Number:";
+            // 
+            // lblEmergencyName
+            // 
+            lblEmergencyName.AutoSize = true;
+            lblEmergencyName.Location = new Point(9, 38);
+            lblEmergencyName.Name = "lblEmergencyName";
+            lblEmergencyName.Size = new Size(67, 15);
+            lblEmergencyName.TabIndex = 25;
+            lblEmergencyName.Text = "First Name:";
             // 
             // rtxtMedicalNotes
             // 
@@ -263,6 +336,8 @@
             pnlHeader.PerformLayout();
             pnlFormContent.ResumeLayout(false);
             pnlFormContent.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -289,5 +364,12 @@
         private Label lblIDNumber;
         private Label lblLastName;
         private Label lblFirstName;
+        private GroupBox groupBox1;
+        private TextBox txtEmergencyRelationship;
+        private TextBox txtEmergencyPhone;
+        private TextBox txtEmergencyName;
+        private Label lblEmergencyRelationship;
+        private Label lblEmergencyPhone;
+        private Label lblEmergencyName;
     }
 }

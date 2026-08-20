@@ -38,6 +38,8 @@ namespace TrailGuard
                 cmd.Parameters.AddWithValue("@selectedParticipantID", selectedParticipantID);
                 SqlDataReader reader = cmd.ExecuteReader();
 
+                int emergencyContactID = 0;
+
                 if (reader.Read())
                 {
                     txtFirstName.Text = reader["FirstName"].ToString();
@@ -47,7 +49,22 @@ namespace TrailGuard
                     txtEmailAddress.Text = reader["EmailAddress"].ToString();
                     txtHomeAddress.Text = reader["HomeAddress"].ToString();
                     rtxtMedicalNotes.Text = reader["MedicalNotes"].ToString();
+                    emergencyContactID = int.Parse(reader["EmergencyContactID"].ToString());
+                }
 
+                reader.Close();
+
+                sql = "SELECT * FROM EmergencyContact WHERE EmergencyContactID = @emergencyContactID";
+
+                SqlCommand ecmd = new SqlCommand(sql, conn);
+                ecmd.Parameters.AddWithValue("@emergencyContactID", emergencyContactID);
+                SqlDataReader eReader = ecmd.ExecuteReader();
+
+                if (eReader.Read())
+                {
+                    txtEmergencyName.Text = eReader["FirstName"].ToString();
+                    txtEmergencyPhone.Text = eReader["PhoneNumber"].ToString();
+                    txtEmergencyRelationship.Text = eReader["RelationshipToParticipant"].ToString();
                 }
 
                 conn.Close();
@@ -67,6 +84,11 @@ namespace TrailGuard
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void pnlFormContent_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
