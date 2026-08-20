@@ -40,7 +40,9 @@ namespace TrailGuard
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 // this command joins the date and time and checks if the permit is overdue if it is less than getdate and the status is still active
                 // cast is the equivalent of type cast in sql
-                SqlCommand command = new SqlCommand(@"SELECT PermitID, TrailID, CheckInTime, ExpectedReturnTime, Date, Status FROM Permit WHERE CAST(Date AS DATETIME) + CAST(ExpectedReturnTime AS DATETIME) < GETDATE() AND Status = 'Active'", conn);
+                //SqlCommand command = new SqlCommand(@"SELECT PermitID, TrailID, CheckInTime, ExpectedReturnTime, Date, Status FROM Permit WHERE CAST(Date AS DATETIME) + CAST(ExpectedReturnTime AS DATETIME) < GETDATE() AND Status = 'Active'", conn);
+                SqlCommand command = new SqlCommand(@"SELECT PermitID, TrailID, CheckInTime, ExpectedReturnTime, Date, Status FROM Permit WHERE Status = 'Overdue'", conn);
+
                 DataTable dataTable = new DataTable();
 
                 adapter.SelectCommand = command;
