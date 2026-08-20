@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace TrailGuard
     public partial class viewDetailsForm : Form
     {
         int selectedPermitID;
+       
         public viewDetailsForm(int selectedPermitID)
         {
             InitializeComponent();
@@ -21,7 +23,11 @@ namespace TrailGuard
 
         private void viewDetailsForm_Load(object sender, EventArgs e)
         {
+        }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
