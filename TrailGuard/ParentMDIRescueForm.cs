@@ -13,6 +13,7 @@ namespace TrailGuard
 {
     public partial class ParentMDIRescueForm : Form
     {
+        private ChatForm chatForm = null;
         public ParentMDIRescueForm()
         {
             InitializeComponent();
@@ -72,6 +73,23 @@ namespace TrailGuard
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnAskTrailGuardAI_Click(object sender, EventArgs e)
+        {
+            // if an existing chat is not open then open one
+            if (chatForm == null || chatForm.IsDisposed)
+            {
+                chatForm = new ChatForm();
+                chatForm.MdiParent = this;
+                chatForm.Show();
+
+            }
+            else
+            {
+                // if the vhat is already open then open it again
+                chatForm.Activate();
+            }
         }
     }
 }

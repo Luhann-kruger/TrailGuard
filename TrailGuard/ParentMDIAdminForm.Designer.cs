@@ -36,6 +36,7 @@
             btnGenerateReport = new ReaLTaiizor.Controls.ForeverButton();
             btnMaintainParks = new ReaLTaiizor.Controls.ForeverButton();
             btnMaintainTrails = new ReaLTaiizor.Controls.ForeverButton();
+            btnAskTrailGuardAI = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlSidebarMenu.SuspendLayout();
             SuspendLayout();
@@ -75,6 +76,7 @@
             // pnlSidebarMenu
             // 
             pnlSidebarMenu.BackColor = Color.FromArgb(14, 76, 39);
+            pnlSidebarMenu.Controls.Add(btnAskTrailGuardAI);
             pnlSidebarMenu.Controls.Add(btnLogout);
             pnlSidebarMenu.Controls.Add(btnGenerateReport);
             pnlSidebarMenu.Controls.Add(btnMaintainParks);
@@ -109,7 +111,7 @@
             btnGenerateReport.TabIndex = 4;
             btnGenerateReport.Text = "Generate Reports";
             btnGenerateReport.TextColor = Color.FromArgb(243, 243, 243);
-            btnGenerateReport.Click += this.btnGenerateReport_Click;
+            btnGenerateReport.Click += btnGenerateReport_Click;
             // 
             // btnMaintainParks
             // 
@@ -139,6 +141,20 @@
             btnMaintainTrails.TextColor = Color.FromArgb(243, 243, 243);
             btnMaintainTrails.Click += btnMaintainTrails_Click;
             // 
+            // btnAskTrailGuardAI
+            // 
+            btnAskTrailGuardAI.BackColor = Color.Transparent;
+            btnAskTrailGuardAI.BaseColor = Color.FromArgb(14, 76, 39);
+            btnAskTrailGuardAI.Font = new Font("Segoe UI", 12F);
+            btnAskTrailGuardAI.Location = new Point(0, 438);
+            btnAskTrailGuardAI.Name = "btnAskTrailGuardAI";
+            btnAskTrailGuardAI.Rounded = false;
+            btnAskTrailGuardAI.Size = new Size(203, 40);
+            btnAskTrailGuardAI.TabIndex = 5;
+            btnAskTrailGuardAI.Text = "Ask TrailGaurd AI";
+            btnAskTrailGuardAI.TextColor = Color.FromArgb(243, 243, 243);
+            btnAskTrailGuardAI.Click += btnAskTrailGuardAI_Click;
+            // 
             // ParentMDIAdminForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -166,5 +182,6 @@
         private ReaLTaiizor.Controls.ForeverButton btnGenerateReport;
         private Label lblModeTitle;
         private ReaLTaiizor.Controls.ForeverButton btnLogout;
+        private ReaLTaiizor.Controls.ForeverButton btnAskTrailGuardAI;
     }
 }
