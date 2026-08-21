@@ -12,9 +12,11 @@ namespace TrailGuard
 {
     public partial class ParentMDIRangerForm : Form
     {
-        public ParentMDIRangerForm()
+        User loggedInUser;
+        public ParentMDIRangerForm(User loggedInUser)
         {
             InitializeComponent();
+            this.loggedInUser = loggedInUser;
         }
 
         private void ParentMDIRangerForm_Load(object sender, EventArgs e)
@@ -65,6 +67,32 @@ namespace TrailGuard
         private void btnMaintainHikers_Click(object sender, EventArgs e)
         {
             loadMaintainHikersForm();
+        }
+
+        private void pnlSidebarMenu_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            loggedInUser = null;
+
+            LoginForm loginForm = new LoginForm();
+
+            this.Hide();
+
+            loginForm.ShowDialog();
+
+            this.Close();
+        }
+
+        private void btnChangeMode_Click(object sender, EventArgs e)
+        {
+            ModesForm form = new ModesForm(loggedInUser);
+            this.Hide();
+            form.ShowDialog();
+            this.Close();
         }
     }
 }
