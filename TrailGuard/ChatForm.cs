@@ -27,11 +27,16 @@ namespace TrailGuard
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Could not load the chat assistant. Please check that WebView2 Runtime is installed.\n\n" + ex.Message,
+                    "Could not load the chat assistant. Please check that WebView2 Runtime is installed or you have an active internet connection.\n\n" + ex.Message,
                     "Chat Unavailable",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

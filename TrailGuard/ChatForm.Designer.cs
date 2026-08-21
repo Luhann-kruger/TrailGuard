@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            btnClose = new ReaLTaiizor.Controls.ForeverButton();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
@@ -39,18 +40,33 @@
             webView21.DefaultBackgroundColor = Color.White;
             webView21.Location = new Point(12, 4);
             webView21.Name = "webView21";
-            webView21.Size = new Size(479, 434);
+            webView21.Size = new Size(479, 423);
             webView21.TabIndex = 0;
             webView21.ZoomFactor = 1D;
+            // 
+            // btnClose
+            // 
+            btnClose.BackColor = Color.Transparent;
+            btnClose.BaseColor = Color.FromArgb(35, 168, 109);
+            btnClose.Font = new Font("Segoe UI", 12F);
+            btnClose.Location = new Point(172, 433);
+            btnClose.Name = "btnClose";
+            btnClose.Rounded = false;
+            btnClose.Size = new Size(134, 40);
+            btnClose.TabIndex = 5;
+            btnClose.Text = "Close";
+            btnClose.TextColor = Color.FromArgb(243, 243, 243);
+            btnClose.Click += btnClose_Click;
             // 
             // ChatForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(497, 450);
+            ClientSize = new Size(497, 478);
+            Controls.Add(btnClose);
             Controls.Add(webView21);
             Name = "ChatForm";
-            Text = "ChatForm";
+            Text = "Trail Guard AI";
             Load += ChatForm_Load;
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
@@ -59,5 +75,6 @@
         #endregion
 
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private ReaLTaiizor.Controls.ForeverButton btnClose;
     }
 }
