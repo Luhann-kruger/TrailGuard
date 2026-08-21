@@ -36,6 +36,7 @@
             lblMenuOptions = new Label();
             btnMaintainRescues = new ReaLTaiizor.Controls.ForeverButton();
             btnOverduePermits = new ReaLTaiizor.Controls.ForeverButton();
+            btnChangeMode = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlSidebarMenu.SuspendLayout();
             SuspendLayout();
@@ -43,6 +44,7 @@
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.FromArgb(56, 146, 89);
+            pnlHeader.Controls.Add(btnChangeMode);
             pnlHeader.Controls.Add(lblModeTitle);
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Location = new Point(0, 1);
@@ -57,7 +59,7 @@
             lblModeTitle.ForeColor = Color.White;
             lblModeTitle.Location = new Point(582, 24);
             lblModeTitle.Name = "lblModeTitle";
-            lblModeTitle.Size = new Size(142, 30);
+            lblModeTitle.Size = new Size(143, 30);
             lblModeTitle.TabIndex = 3;
             lblModeTitle.Text = "Rescue Mode";
             // 
@@ -105,7 +107,7 @@
             lblMenuOptions.ForeColor = Color.White;
             lblMenuOptions.Location = new Point(12, 8);
             lblMenuOptions.Name = "lblMenuOptions";
-            lblMenuOptions.Size = new Size(114, 21);
+            lblMenuOptions.Size = new Size(118, 21);
             lblMenuOptions.TabIndex = 5;
             lblMenuOptions.Text = "Menu Options";
             // 
@@ -137,6 +139,20 @@
             btnOverduePermits.TextColor = Color.FromArgb(243, 243, 243);
             btnOverduePermits.Click += btnOverduePermits_Click;
             // 
+            // btnChangeMode
+            // 
+            btnChangeMode.BackColor = Color.Transparent;
+            btnChangeMode.BaseColor = Color.FromArgb(14, 76, 39);
+            btnChangeMode.Font = new Font("Segoe UI", 12F);
+            btnChangeMode.Location = new Point(1224, 18);
+            btnChangeMode.Name = "btnChangeMode";
+            btnChangeMode.Rounded = false;
+            btnChangeMode.Size = new Size(120, 40);
+            btnChangeMode.TabIndex = 6;
+            btnChangeMode.Text = "Change Mode";
+            btnChangeMode.TextColor = Color.FromArgb(243, 243, 243);
+            btnChangeMode.Click += btnChangeMode_Click;
+            // 
             // ParentMDIRescueForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -165,5 +181,6 @@
         private Label lblModeTitle;
         private Label lblMenuOptions;
         private ReaLTaiizor.Controls.ForeverButton btnLogout;
+        private ReaLTaiizor.Controls.ForeverButton btnChangeMode;
     }
 }

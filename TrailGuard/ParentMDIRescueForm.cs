@@ -13,11 +13,13 @@ namespace TrailGuard
 {
     public partial class ParentMDIRescueForm : Form
     {
-        public ParentMDIRescueForm()
+        User loggedInUser;
+        public ParentMDIRescueForm(User loggedInUser)
         {
             InitializeComponent();
             // declare form as MDI parent form
             this.IsMdiContainer = true;
+            this.loggedInUser = loggedInUser;
         }
 
         private void ParentMDIRescueForm_Load(object sender, EventArgs e)
@@ -71,6 +73,22 @@ namespace TrailGuard
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
+            loggedInUser = null;
+
+            LoginForm loginForm = new LoginForm();
+
+            this.Hide();
+
+            loginForm.ShowDialog();
+
+            this.Close();
+        }
+
+        private void btnChangeMode_Click(object sender, EventArgs e)
+        {
+            ModesForm form = new ModesForm(loggedInUser);
+            this.Hide();
+            form.ShowDialog();
             this.Close();
         }
     }

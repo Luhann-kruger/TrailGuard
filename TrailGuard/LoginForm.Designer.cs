@@ -165,6 +165,7 @@
             Controls.Add(pnlHeader);
             Name = "LoginForm";
             Text = "LoginForm";
+            Load += LoginForm_Load;
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             ResumeLayout(false);

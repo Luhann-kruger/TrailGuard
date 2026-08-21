@@ -19,11 +19,12 @@ namespace TrailGuard
 
             new User("Ben", "Ben123", new List<string> { "Admin", "Ranger" }),
 
-            new User("Jack", "Jack123", new List<string> { "Rescuer", "Ranger" })
+            new User("Jack", "Jack123", new List<string> { "Rescuer", "Ranger" }),
+            new User("Sam", "Sam123", new List<string> { "Rescuer", "Ranger", "Admin" })
         };
 
         Boolean passwordVisible;
-        
+
 
         public LoginForm()
         {
@@ -107,6 +108,11 @@ namespace TrailGuard
             }
 
             MessageBox.Show(userInfo);
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

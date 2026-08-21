@@ -74,7 +74,7 @@ namespace TrailGuard
 
         private void btnRangerMode_Click(object sender, EventArgs e)
         {
-            ParentMDIRangerForm form = new ParentMDIRangerForm();
+            ParentMDIRangerForm form = new ParentMDIRangerForm(loggedInUser);
             this.Hide();
 
             form.ShowDialog();
@@ -84,7 +84,7 @@ namespace TrailGuard
 
         private void btnAdminMode_Click(object sender, EventArgs e)
         {
-            ParentMDIAdminForm form = new ParentMDIAdminForm();
+            ParentMDIAdminForm form = new ParentMDIAdminForm(loggedInUser);
             this.Hide();
 
             form.ShowDialog(this);
@@ -94,7 +94,11 @@ namespace TrailGuard
 
         private void btnRescueMode_Click(object sender, EventArgs e)
         {
-            
+            ParentMDIRescueForm form = new ParentMDIRescueForm(loggedInUser);
+            this.Hide();
+
+            form.ShowDialog();
+            this.Close();
         }
     }
 }
