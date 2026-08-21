@@ -42,13 +42,13 @@
             label2 = new Label();
             label1 = new Label();
             panel1 = new Panel();
+            lblPeakUsage = new Label();
+            label7 = new Label();
             lblLeastUsedTrail = new Label();
             lblMostUsedTrail = new Label();
             label6 = new Label();
             label5 = new Label();
             dgvReport = new DataGridView();
-            label7 = new Label();
-            lblPeakUsage = new Label();
             pnlHeader.SuspendLayout();
             panelTOP.SuspendLayout();
             panel1.SuspendLayout();
@@ -132,6 +132,7 @@
             cmbTrails.Size = new Size(588, 28);
             cmbTrails.TabIndex = 6;
             cmbTrails.Text = "<Select trail name>";
+            cmbTrails.SelectedIndexChanged += cmbTrails_SelectedIndexChanged;
             // 
             // dateTimePickerENDDATE
             // 
@@ -198,6 +199,24 @@
             panel1.Size = new Size(1075, 368);
             panel1.TabIndex = 4;
             // 
+            // lblPeakUsage
+            // 
+            lblPeakUsage.AutoSize = true;
+            lblPeakUsage.Location = new Point(206, 317);
+            lblPeakUsage.Name = "lblPeakUsage";
+            lblPeakUsage.Size = new Size(50, 20);
+            lblPeakUsage.TabIndex = 6;
+            lblPeakUsage.Text = "label8";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(24, 317);
+            label7.Name = "label7";
+            label7.Size = new Size(116, 20);
+            label7.TabIndex = 5;
+            label7.Text = "Peak usage date";
+            // 
             // lblLeastUsedTrail
             // 
             lblLeastUsedTrail.AutoSize = true;
@@ -242,24 +261,6 @@
             dgvReport.RowHeadersWidth = 51;
             dgvReport.Size = new Size(1026, 203);
             dgvReport.TabIndex = 0;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(24, 317);
-            label7.Name = "label7";
-            label7.Size = new Size(116, 20);
-            label7.TabIndex = 5;
-            label7.Text = "Peak usage date";
-            // 
-            // lblPeakUsage
-            // 
-            lblPeakUsage.AutoSize = true;
-            lblPeakUsage.Location = new Point(206, 317);
-            lblPeakUsage.Name = "lblPeakUsage";
-            lblPeakUsage.Size = new Size(50, 20);
-            lblPeakUsage.TabIndex = 6;
-            lblPeakUsage.Text = "label8";
             // 
             // GenerateReportsForm
             // 
