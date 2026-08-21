@@ -73,6 +73,7 @@ namespace TrailGuard
             // if an existing chat is not open then open one
             if (chatForm == null || chatForm.IsDisposed)
             {
+                // the chat form does use the open child method as it is conflicting with the look 
                 chatForm = new ChatForm();
                 chatForm.MdiParent = this;
                 chatForm.Show();
