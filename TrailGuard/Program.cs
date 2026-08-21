@@ -14,6 +14,9 @@ namespace TrailGuard
             //Application.Run(new ParentMDIAdminForm());
             //Application.Run(new ParentMDIRangerForm());
             Application.Run(new ChatForm());
+
+           //Application.Run(new ParentMDIRescueForm());
+
         }
     }
 }
