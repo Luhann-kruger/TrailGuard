@@ -150,7 +150,7 @@ namespace TrailGuard
             {
                 // get trail ID
                 int trailID = GetSelectedTrailID();
-                
+
                 if (trailID == -1)
                 {
                     RunAllTrailsReport(dateTimePickerSTARTDATE.Value, dateTimePickerENDDATE.Value);
@@ -161,9 +161,9 @@ namespace TrailGuard
                 }
 
                 // get the most and least used trails
-                string mostUsed = GetMostUsedTrail(dateTimePickerSTARTDATE.Value,dateTimePickerENDDATE.Value);
+                string mostUsed = GetMostUsedTrail(dateTimePickerSTARTDATE.Value, dateTimePickerENDDATE.Value);
 
-                string leastUsed = GetLeastUsedTrail(dateTimePickerSTARTDATE.Value,dateTimePickerENDDATE.Value);
+                string leastUsed = GetLeastUsedTrail(dateTimePickerSTARTDATE.Value, dateTimePickerENDDATE.Value);
 
                 // get peak usage date
                 string peakUsage = GetPeakUsageDate(trailID, dateTimePickerSTARTDATE.Value, dateTimePickerENDDATE.Value);
@@ -196,7 +196,7 @@ namespace TrailGuard
 
             SqlConnection conn = null;
             SqlCommand cmd;
-            SqlDataReader reader = null;          
+            SqlDataReader reader = null;
 
             try
             {
@@ -229,7 +229,7 @@ namespace TrailGuard
             }
 
             // default to "All trails"
-            cmbTrails.SelectedIndex = 0; 
+            cmbTrails.SelectedIndex = 0;
 
         }
 
@@ -449,6 +449,11 @@ namespace TrailGuard
             }
 
             return leastUsedTrail;
+        }
+
+        private void cmbTrails_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
