@@ -34,7 +34,17 @@
             lblCreateTrailTitle = new Label();
             btnCancel = new ReaLTaiizor.Controls.ForeverButton();
             btnCreateTrail = new ReaLTaiizor.Controls.ForeverButton();
+            cmbSelectPark = new ComboBox();
+            txtTrailName = new TextBox();
+            numDifficultyLevel = new NumericUpDown();
+            numMaxHikers = new NumericUpDown();
+            lblSelectPark = new Label();
+            lblTrailName = new Label();
+            lblDifficulty = new Label();
+            lblMaxHikers = new Label();
             pnlHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numDifficultyLevel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numMaxHikers).BeginInit();
             SuspendLayout();
             // 
             // pnlHeader
@@ -105,6 +115,80 @@
             btnCreateTrail.TabIndex = 5;
             btnCreateTrail.Text = "Create Trail";
             btnCreateTrail.TextColor = Color.FromArgb(243, 243, 243);
+            btnCreateTrail.Click += btnCreateTrail_Click;
+            // 
+            // cmbSelectPark
+            // 
+            cmbSelectPark.FormattingEnabled = true;
+            cmbSelectPark.Location = new Point(201, 196);
+            cmbSelectPark.Name = "cmbSelectPark";
+            cmbSelectPark.Size = new Size(186, 23);
+            cmbSelectPark.TabIndex = 6;
+            // 
+            // txtTrailName
+            // 
+            txtTrailName.Location = new Point(582, 196);
+            txtTrailName.Name = "txtTrailName";
+            txtTrailName.Size = new Size(199, 23);
+            txtTrailName.TabIndex = 7;
+            // 
+            // numDifficultyLevel
+            // 
+            numDifficultyLevel.Location = new Point(275, 271);
+            numDifficultyLevel.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
+            numDifficultyLevel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numDifficultyLevel.Name = "numDifficultyLevel";
+            numDifficultyLevel.Size = new Size(136, 23);
+            numDifficultyLevel.TabIndex = 8;
+            numDifficultyLevel.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // numMaxHikers
+            // 
+            numMaxHikers.Location = new Point(645, 269);
+            numMaxHikers.Name = "numMaxHikers";
+            numMaxHikers.Size = new Size(136, 23);
+            numMaxHikers.TabIndex = 9;
+            // 
+            // lblSelectPark
+            // 
+            lblSelectPark.AutoSize = true;
+            lblSelectPark.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSelectPark.Location = new Point(65, 194);
+            lblSelectPark.Name = "lblSelectPark";
+            lblSelectPark.Size = new Size(111, 25);
+            lblSelectPark.TabIndex = 10;
+            lblSelectPark.Text = "Select Park:";
+            // 
+            // lblTrailName
+            // 
+            lblTrailName.AutoSize = true;
+            lblTrailName.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTrailName.Location = new Point(452, 194);
+            lblTrailName.Name = "lblTrailName";
+            lblTrailName.Size = new Size(109, 25);
+            lblTrailName.TabIndex = 11;
+            lblTrailName.Text = "Trail Name:";
+            // 
+            // lblDifficulty
+            // 
+            lblDifficulty.AutoSize = true;
+            lblDifficulty.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDifficulty.Location = new Point(65, 269);
+            lblDifficulty.Name = "lblDifficulty";
+            lblDifficulty.Size = new Size(202, 25);
+            lblDifficulty.TabIndex = 12;
+            lblDifficulty.Text = "Difficulty Rating (1-5):";
+            lblDifficulty.Click += lblDifficulty_Click;
+            // 
+            // lblMaxHikers
+            // 
+            lblMaxHikers.AutoSize = true;
+            lblMaxHikers.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMaxHikers.Location = new Point(452, 263);
+            lblMaxHikers.Name = "lblMaxHikers";
+            lblMaxHikers.Size = new Size(114, 25);
+            lblMaxHikers.TabIndex = 13;
+            lblMaxHikers.Text = "Max Hikers:";
             // 
             // CreateTrailForm
             // 
@@ -112,14 +196,25 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ScrollBar;
             ClientSize = new Size(1004, 590);
+            Controls.Add(lblMaxHikers);
+            Controls.Add(lblDifficulty);
+            Controls.Add(lblTrailName);
+            Controls.Add(lblSelectPark);
+            Controls.Add(numMaxHikers);
+            Controls.Add(numDifficultyLevel);
+            Controls.Add(txtTrailName);
+            Controls.Add(cmbSelectPark);
             Controls.Add(btnCreateTrail);
             Controls.Add(btnCancel);
             Controls.Add(lblCreateTrailTitle);
             Controls.Add(pnlHeader);
             Name = "CreateTrailForm";
             Text = "CreateTrailForm";
+            Load += CreateTrailForm_Load;
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numDifficultyLevel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numMaxHikers).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -132,5 +227,13 @@
         private Label lblCreateTrailTitle;
         private ReaLTaiizor.Controls.ForeverButton btnCancel;
         private ReaLTaiizor.Controls.ForeverButton btnCreateTrail;
+        private ComboBox cmbSelectPark;
+        private TextBox txtTrailName;
+        private NumericUpDown numDifficultyLevel;
+        private NumericUpDown numMaxHikers;
+        private Label lblSelectPark;
+        private Label lblTrailName;
+        private Label lblDifficulty;
+        private Label lblMaxHikers;
     }
 }
