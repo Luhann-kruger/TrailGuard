@@ -258,3 +258,48 @@ BEGIN
     END CATCH
 END;
 GO
+
+--Stored procedure to Update a Permit and it Participants via Permit_Participant
+
+CREATE PROCEDURE sp_UpdatePermitWithParticipants
+    @PermitID INT,
+    @TrailID INT,
+    @ExpectedReturnTime TIME,
+    @Date DATE,
+    @ParticipantIDs IntListType READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Update the parent Permit details
+        UPDATE Permit 
+        SET TrailID = @TrailID, 
+            ExpectedReturnTime = @ExpectedReturnTime, 
+            [Date] = @Date 
+        WHERE PermitID = @PermitID;
+
+        -- Remove existing participant linkages for this permit
+        DELETE FROM Permit_Participant 
+        WHERE PermitID = @PermitID;
+
+        --Re-insert the updated participant list from the Table-Valued Parameter
+        INSERT INTO Permit_Participant (PermitID, ParticipantID)
+        SELECT @PermitID, ID
+        FROM @ParticipantIDs;
+
+        -- Commit all changes if everything succeeds
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Rollback on failure
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        -- Pass exception details back to C#
+        THROW;
+    END CATCH
+END;
+GO
