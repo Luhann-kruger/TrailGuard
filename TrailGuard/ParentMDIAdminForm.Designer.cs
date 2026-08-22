@@ -36,7 +36,6 @@
             btnGenerateReport = new ReaLTaiizor.Controls.ForeverButton();
             btnMaintainParks = new ReaLTaiizor.Controls.ForeverButton();
             btnMaintainTrails = new ReaLTaiizor.Controls.ForeverButton();
-            btnAskTrailGuardAI = new ReaLTaiizor.Controls.ForeverButton();
             btnChangeMode = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlSidebarMenu.SuspendLayout();
@@ -78,7 +77,6 @@
             // pnlSidebarMenu
             // 
             pnlSidebarMenu.BackColor = Color.FromArgb(14, 76, 39);
-            pnlSidebarMenu.Controls.Add(btnAskTrailGuardAI);
             pnlSidebarMenu.Controls.Add(btnLogout);
             pnlSidebarMenu.Controls.Add(btnGenerateReport);
             pnlSidebarMenu.Controls.Add(btnMaintainParks);
@@ -144,19 +142,6 @@
             btnMaintainTrails.TextColor = Color.FromArgb(243, 243, 243);
             btnMaintainTrails.Click += btnMaintainTrails_Click;
             // 
-            // btnAskTrailGuardAI
-            // 
-            btnAskTrailGuardAI.BackColor = Color.Transparent;
-            btnAskTrailGuardAI.BaseColor = Color.FromArgb(14, 76, 39);
-            btnAskTrailGuardAI.Font = new Font("Segoe UI", 12F);
-            btnAskTrailGuardAI.Location = new Point(0, 438);
-            btnAskTrailGuardAI.Name = "btnAskTrailGuardAI";
-            btnAskTrailGuardAI.Rounded = false;
-            btnAskTrailGuardAI.Size = new Size(203, 40);
-            btnAskTrailGuardAI.TabIndex = 5;
-            btnAskTrailGuardAI.Text = "Ask TrailGaurd AI";
-            btnAskTrailGuardAI.TextColor = Color.FromArgb(243, 243, 243);
-            btnAskTrailGuardAI.Click += btnAskTrailGuardAI_Click;
             // btnChangeMode
             // 
             btnChangeMode.BackColor = Color.Transparent;
@@ -198,7 +183,6 @@
         private ReaLTaiizor.Controls.ForeverButton btnGenerateReport;
         private Label lblModeTitle;
         private ReaLTaiizor.Controls.ForeverButton btnLogout;
-        private ReaLTaiizor.Controls.ForeverButton btnAskTrailGuardAI;
         private ReaLTaiizor.Controls.ForeverButton btnChangeMode;
     }
 }

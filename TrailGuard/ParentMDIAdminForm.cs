@@ -2,11 +2,8 @@ namespace TrailGuard
 {
     public partial class ParentMDIAdminForm : Form
     {
-
-        private ChatForm chatForm = null;
         User loggedInUser;
         public ParentMDIAdminForm(User loggedInUser)
-
         {
             InitializeComponent();
             // declare form as MDI parent form
@@ -76,22 +73,6 @@ namespace TrailGuard
             //Add load data function later to reload the data once the form dialog closes.
         }
 
-        private void btnAskTrailGuardAI_Click(object sender, EventArgs e)
-        {
-            // if an existing chat is not open then open one
-            if (chatForm == null || chatForm.IsDisposed)
-            {
-                // the chat form does use the open child method as it is conflicting with the look 
-                chatForm = new ChatForm();
-                chatForm.MdiParent = this;
-                chatForm.Show();
-            }
-            else
-            {
-                // if the vhat is already open then open it again
-                chatForm.Activate();
-
-            }
         private void btnLogout_Click(object sender, EventArgs e)
         {
             loggedInUser = null;

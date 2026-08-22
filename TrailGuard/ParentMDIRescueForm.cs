@@ -13,13 +13,8 @@ namespace TrailGuard
 {
     public partial class ParentMDIRescueForm : Form
     {
-
-        private ChatForm chatForm = null;
-        
-
         User loggedInUser;
         public ParentMDIRescueForm(User loggedInUser)
-
         {
             InitializeComponent();
             // declare form as MDI parent form
@@ -78,7 +73,6 @@ namespace TrailGuard
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-
             loggedInUser = null;
 
             LoginForm loginForm = new LoginForm();
@@ -90,33 +84,12 @@ namespace TrailGuard
             this.Close();
         }
 
-        private void btnAskTrailGuardAI_Click(object sender, EventArgs e)
-        {
-            // if an existing chat is not open then open one
-            if (chatForm == null || chatForm.IsDisposed)
-            {
-                // the chat form does use the open child method as it is conflicting with the look 
-                chatForm = new ChatForm();
-                chatForm.MdiParent = this;
-                chatForm.Show();
-
-            }
-            else
-            {
-                // if the vhat is already open then open it again
-                chatForm.Activate();
-            }
-
-            
-        }
-
         private void btnChangeMode_Click(object sender, EventArgs e)
         {
             ModesForm form = new ModesForm(loggedInUser);
             this.Hide();
             form.ShowDialog();
             this.Close();
-
         }
     }
 }

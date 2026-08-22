@@ -32,7 +32,6 @@
             lblModeTitle = new Label();
             lblTitle = new Label();
             pnlSidebarMenu = new Panel();
-            btnAskTrailGuardAI = new ReaLTaiizor.Controls.ForeverButton();
             btnLogout = new ReaLTaiizor.Controls.ForeverButton();
             lblMenuOptions = new Label();
             btnMaintainRescues = new ReaLTaiizor.Controls.ForeverButton();
@@ -78,7 +77,6 @@
             // pnlSidebarMenu
             // 
             pnlSidebarMenu.BackColor = Color.FromArgb(14, 76, 39);
-            pnlSidebarMenu.Controls.Add(btnAskTrailGuardAI);
             pnlSidebarMenu.Controls.Add(btnLogout);
             pnlSidebarMenu.Controls.Add(lblMenuOptions);
             pnlSidebarMenu.Controls.Add(btnMaintainRescues);
@@ -87,20 +85,6 @@
             pnlSidebarMenu.Name = "pnlSidebarMenu";
             pnlSidebarMenu.Size = new Size(203, 581);
             pnlSidebarMenu.TabIndex = 1;
-            // 
-            // btnAskTrailGuardAI
-            // 
-            btnAskTrailGuardAI.BackColor = Color.Transparent;
-            btnAskTrailGuardAI.BaseColor = Color.FromArgb(14, 76, 39);
-            btnAskTrailGuardAI.Font = new Font("Segoe UI", 12F);
-            btnAskTrailGuardAI.Location = new Point(-3, 440);
-            btnAskTrailGuardAI.Name = "btnAskTrailGuardAI";
-            btnAskTrailGuardAI.Rounded = false;
-            btnAskTrailGuardAI.Size = new Size(203, 40);
-            btnAskTrailGuardAI.TabIndex = 6;
-            btnAskTrailGuardAI.Text = "Ask TrailGuard AI";
-            btnAskTrailGuardAI.TextColor = Color.FromArgb(243, 243, 243);
-            btnAskTrailGuardAI.Click += btnAskTrailGuardAI_Click;
             // 
             // btnLogout
             // 
@@ -197,7 +181,6 @@
         private Label lblModeTitle;
         private Label lblMenuOptions;
         private ReaLTaiizor.Controls.ForeverButton btnLogout;
-        private ReaLTaiizor.Controls.ForeverButton btnAskTrailGuardAI;
         private ReaLTaiizor.Controls.ForeverButton btnChangeMode;
     }
 }
