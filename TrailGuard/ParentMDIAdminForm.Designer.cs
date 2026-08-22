@@ -37,6 +37,7 @@
             btnMaintainParks = new ReaLTaiizor.Controls.ForeverButton();
             btnMaintainTrails = new ReaLTaiizor.Controls.ForeverButton();
             btnAskTrailGuardAI = new ReaLTaiizor.Controls.ForeverButton();
+            btnChangeMode = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlSidebarMenu.SuspendLayout();
             SuspendLayout();
@@ -44,6 +45,7 @@
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.FromArgb(56, 146, 89);
+            pnlHeader.Controls.Add(btnChangeMode);
             pnlHeader.Controls.Add(lblModeTitle);
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Location = new Point(0, 1);
@@ -98,6 +100,7 @@
             btnLogout.TabIndex = 3;
             btnLogout.Text = "Logout";
             btnLogout.TextColor = Color.FromArgb(243, 243, 243);
+            btnLogout.Click += btnLogout_Click;
             // 
             // btnGenerateReport
             // 
@@ -154,6 +157,19 @@
             btnAskTrailGuardAI.Text = "Ask TrailGaurd AI";
             btnAskTrailGuardAI.TextColor = Color.FromArgb(243, 243, 243);
             btnAskTrailGuardAI.Click += btnAskTrailGuardAI_Click;
+            // btnChangeMode
+            // 
+            btnChangeMode.BackColor = Color.Transparent;
+            btnChangeMode.BaseColor = Color.FromArgb(14, 76, 39);
+            btnChangeMode.Font = new Font("Segoe UI", 12F);
+            btnChangeMode.Location = new Point(1267, 14);
+            btnChangeMode.Name = "btnChangeMode";
+            btnChangeMode.Rounded = false;
+            btnChangeMode.Size = new Size(120, 40);
+            btnChangeMode.TabIndex = 5;
+            btnChangeMode.Text = "Change Mode";
+            btnChangeMode.TextColor = Color.FromArgb(243, 243, 243);
+            btnChangeMode.Click += btnChangeMode_Click;
             // 
             // ParentMDIAdminForm
             // 
@@ -183,5 +199,6 @@
         private Label lblModeTitle;
         private ReaLTaiizor.Controls.ForeverButton btnLogout;
         private ReaLTaiizor.Controls.ForeverButton btnAskTrailGuardAI;
+        private ReaLTaiizor.Controls.ForeverButton btnChangeMode;
     }
 }

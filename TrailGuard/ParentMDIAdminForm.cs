@@ -2,12 +2,16 @@ namespace TrailGuard
 {
     public partial class ParentMDIAdminForm : Form
     {
+
         private ChatForm chatForm = null;
-        public ParentMDIAdminForm()
+        User loggedInUser;
+        public ParentMDIAdminForm(User loggedInUser)
+
         {
             InitializeComponent();
             // declare form as MDI parent form
             this.IsMdiContainer = true;
+            this.loggedInUser = loggedInUser;
         }
 
         private void ParentMDIAdminForm_Load(object sender, EventArgs e)
@@ -88,6 +92,25 @@ namespace TrailGuard
                 chatForm.Activate();
 
             }
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            loggedInUser = null;
+
+            LoginForm loginForm = new LoginForm();
+
+            this.Hide();
+
+            loginForm.ShowDialog();
+
+            this.Close();
+        }
+
+        private void btnChangeMode_Click(object sender, EventArgs e)
+        {
+            ModesForm form = new ModesForm(loggedInUser);
+            this.Hide();
+            form.ShowDialog();
+            this.Close();
         }
     }
 }

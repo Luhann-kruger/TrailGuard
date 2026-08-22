@@ -36,6 +36,7 @@
             btnLogout = new ReaLTaiizor.Controls.ForeverButton();
             btnMaintainHikers = new ReaLTaiizor.Controls.ForeverButton();
             btnMaintainPermits = new ReaLTaiizor.Controls.ForeverButton();
+            btnChangeMode = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlSidebarMenu.SuspendLayout();
             SuspendLayout();
@@ -43,6 +44,7 @@
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.FromArgb(56, 146, 89);
+            pnlHeader.Controls.Add(btnChangeMode);
             pnlHeader.Controls.Add(lblModeTitle);
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Location = new Point(1, 1);
@@ -83,6 +85,7 @@
             pnlSidebarMenu.Name = "pnlSidebarMenu";
             pnlSidebarMenu.Size = new Size(203, 581);
             pnlSidebarMenu.TabIndex = 2;
+            pnlSidebarMenu.Paint += pnlSidebarMenu_Paint;
             // 
             // btnAskTrailGuardAI
             // 
@@ -110,6 +113,7 @@
             btnLogout.TabIndex = 3;
             btnLogout.Text = "Logout";
             btnLogout.TextColor = Color.FromArgb(243, 243, 243);
+            btnLogout.Click += btnLogout_Click;
             // 
             // btnMaintainHikers
             // 
@@ -139,6 +143,20 @@
             btnMaintainPermits.TextColor = Color.FromArgb(243, 243, 243);
             btnMaintainPermits.Click += btnMaintainPermits_Click;
             // 
+            // btnChangeMode
+            // 
+            btnChangeMode.BackColor = Color.Transparent;
+            btnChangeMode.BaseColor = Color.FromArgb(14, 76, 39);
+            btnChangeMode.Font = new Font("Segoe UI", 12F);
+            btnChangeMode.Location = new Point(1260, 18);
+            btnChangeMode.Name = "btnChangeMode";
+            btnChangeMode.Rounded = false;
+            btnChangeMode.Size = new Size(120, 40);
+            btnChangeMode.TabIndex = 6;
+            btnChangeMode.Text = "Change Mode";
+            btnChangeMode.TextColor = Color.FromArgb(243, 243, 243);
+            btnChangeMode.Click += btnChangeMode_Click;
+            // 
             // ParentMDIRangerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -167,5 +185,6 @@
         private ReaLTaiizor.Controls.ForeverButton btnMaintainHikers;
         private ReaLTaiizor.Controls.ForeverButton btnMaintainPermits;
         private ReaLTaiizor.Controls.ForeverButton btnAskTrailGuardAI;
+        private ReaLTaiizor.Controls.ForeverButton btnChangeMode;
     }
 }
