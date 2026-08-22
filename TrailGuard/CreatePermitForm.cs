@@ -404,67 +404,50 @@ namespace TrailGuard
                 return;
             }
 
+            // DataTable matching the SQL IntListType definition
+            DataTable tvpParticipants = new DataTable();
+            tvpParticipants.Columns.Add("ID", typeof(int));
+
+            foreach (int id in selectedParticpantIds)
+            {
+                tvpParticipants.Rows.Add(id);
+            }
+
+            // Use a stored procedure declared in CreateDatabase.sql
             try
             {
                 conn = new SqlConnection(connString);
                 conn.Open();
-                SqlTransaction transaction = conn.BeginTransaction();
 
-                try
-                {
-                    string sqlQuery = "INSERT INTO Permit (TrailID,ExpectedReturnTime,Date,Status)" +
-                        "VALUES (@TrailID, @ExpectedReturnTime, @Date, @Status);" +
-                        "SELECT SCOPE_IDENTITY();";
+                SqlCommand cmd = new SqlCommand("sp_CreatePermitWithParticipants", conn);
+                    
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlCommand cmd = new SqlCommand(sqlQuery, conn, transaction);
+                        // Pass standard scalar parameters
+                        cmd.Parameters.AddWithValue("@TrailID", trailID);
+                        cmd.Parameters.AddWithValue("@ExpectedReturnTime", expectedReturnTime);
+                        cmd.Parameters.AddWithValue("@Date", selectedDate);
+                        cmd.Parameters.AddWithValue("@Status", "Registered");
 
-                    cmd.Parameters.AddWithValue("@TrailID", trailID);
-                    cmd.Parameters.AddWithValue("@ExpectedReturnTime", expectedReturnTime);
-                    cmd.Parameters.AddWithValue("@Date", selectedDate);
-                    cmd.Parameters.AddWithValue("@Status", "Registered");
+                        // Pass the DataTable as a Table-Valued Parameter (TVP)
+                        SqlParameter tvpParam = cmd.Parameters.AddWithValue("@ParticipantIDs", tvpParticipants);
+                        tvpParam.SqlDbType = SqlDbType.Structured;
+                        tvpParam.TypeName = "IntListType";
 
-                    int permitID = Convert.ToInt32(cmd.ExecuteScalar());
+                        // Execute the single procedure
+                        cmd.ExecuteNonQuery();
+                    
+                
 
-                    //Add participants to Permit_Participant
-                    foreach (int participantID in selectedParticpantIds)
-                    {
-                        string participantSQLQuery = @"INSERT INTO Permit_Participant (PermitID, ParticipantID) VALUES (@PermitID, @ParticipantID)";
-
-                        SqlCommand cmdParticipant = new SqlCommand(participantSQLQuery, conn, transaction);
-
-                        cmdParticipant.Parameters.AddWithValue("@PermitID", permitID);
-                        cmdParticipant.Parameters.AddWithValue("@ParticipantID", participantID);
-
-                        cmdParticipant.ExecuteNonQuery();
-                    }
-
-                    transaction.Commit();
-
-                    MessageBox.Show("Permit created successfully.");
-
-
-                    //conn.Close();
-                    this.Close();
-
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    throw;
-                }
+                MessageBox.Show("Permit created successfully.");
+                this.Close();
             }
             catch (SqlException ex)
             {
+                MessageBox.Show("Database Error: " + ex.Message);
+            }
 
-                MessageBox.Show(ex.Message);
-            }
-            finally {
-                if (conn != null && conn.State == System.Data.ConnectionState.Open)
-                {
-                    conn.Close();
-                    
-                }
-            }
+           
         }
     }
 }

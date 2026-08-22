@@ -124,6 +124,9 @@ BEGIN
 END
 GO
 
+
+
+
 -- ============================================================================
 -- 3. MOCK DATA SEEDING
 -- ============================================================================
@@ -201,4 +204,57 @@ BEGIN
     (3, 1),
     (3, 4);
 END
+GO
+
+-- ============================================================================
+-- Stored Procedures
+-- ============================================================================
+
+-- Stored procedure to create a new participant using SQL INSERT
+
+-- Create a Table Type to hold the list of Participant IDs
+CREATE TYPE IntListType AS TABLE (
+    ID INT
+);
+GO
+
+-- Create the Stored Procedure
+CREATE PROCEDURE sp_CreatePermitWithParticipants
+    @TrailID INT,
+    @ExpectedReturnTime TIME,  
+    @Date DATE,
+    @Status VARCHAR(50),
+    @ParticipantIDs IntListType READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Wrap operations in a transaction inside SQL
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Insert into Permit parent table
+        INSERT INTO Permit (TrailID, ExpectedReturnTime, [Date], [Status])
+        VALUES (@TrailID, @ExpectedReturnTime, @Date, @Status);
+
+        -- Capture the newly generated Primary Key
+        DECLARE @NewPermitID INT = SCOPE_IDENTITY();
+
+        -- Bulk-insert all linked participants from the table parameter
+        INSERT INTO Permit_Participant (PermitID, ParticipantID)
+        SELECT @NewPermitID, ID
+        FROM @ParticipantIDs;
+
+        -- Commit if all operations succeed
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Rollback on error
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        -- Re-throw exception back to C#
+        THROW;
+    END CATCH
+END;
 GO
