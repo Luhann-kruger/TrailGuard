@@ -470,80 +470,124 @@ namespace TrailGuard
                 return;
             }
 
+            
+            DataTable tvpParticipants = new DataTable();
+            tvpParticipants.Columns.Add("ID", typeof(int));
+
+            foreach (int id in selectedParticpantIds)
+            {
+                tvpParticipants.Rows.Add(id);
+            }
+
+            // 2. Call the Stored Procedure
             try
             {
-                conn = new SqlConnection(connString);
-                conn.Open();
-
-                SqlTransaction transaction = conn.BeginTransaction();
-
-                try
+                using (SqlConnection conn = new SqlConnection(connString))
                 {
-                    // Update Permit
-                    string sqlQuery = @"UPDATE Permit SET TrailID = @TrailID, ExpectedReturnTime = @ExpectedReturnTime, Date = @Date WHERE PermitID = @PermitID";
+                    conn.Open();
 
-                    SqlCommand cmd = new SqlCommand(sqlQuery, conn, transaction);
-
-                    cmd.Parameters.AddWithValue("@TrailID", trailID);
-                    cmd.Parameters.AddWithValue("@ExpectedReturnTime", expectedReturnTime);
-                    cmd.Parameters.AddWithValue("@Date", selectedDate);
-                    cmd.Parameters.AddWithValue("@PermitID", editPermitID);
-
-                    cmd.ExecuteNonQuery();
-
-
-                    // Remove existing participants
-                    string deleteQuery = @"DELETE FROM Permit_Participant WHERE PermitID = @PermitID";
-
-                    SqlCommand deleteCmd =
-                        new SqlCommand(deleteQuery, conn, transaction);
-
-                    deleteCmd.Parameters.AddWithValue("@PermitID", editPermitID);
-
-                    deleteCmd.ExecuteNonQuery();
-
-
-                    // Add the updated participants
-                    foreach (int participantID in selectedParticpantIds)
+                    using (SqlCommand cmd = new SqlCommand("sp_UpdatePermitWithParticipants", conn))
                     {
-                        string participantQuery = @"INSERT INTO Permit_Participant (PermitID, ParticipantID) VALUES (@PermitID, @ParticipantID)";
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                        SqlCommand participantCmd =
-                            new SqlCommand(participantQuery, conn, transaction);
+                        // Pass parameters
+                        cmd.Parameters.AddWithValue("@PermitID", editPermitID);
+                        cmd.Parameters.AddWithValue("@TrailID", trailID);
+                        cmd.Parameters.AddWithValue("@ExpectedReturnTime", expectedReturnTime);
+                        cmd.Parameters.AddWithValue("@Date", selectedDate);
 
-                        participantCmd.Parameters.AddWithValue("@PermitID", editPermitID);
-                        participantCmd.Parameters.AddWithValue("@ParticipantID", participantID);
+                        // Pass Table-Valued Parameter
+                        SqlParameter tvpParam = cmd.Parameters.AddWithValue("@ParticipantIDs", tvpParticipants);
+                        tvpParam.SqlDbType = SqlDbType.Structured;
+                        tvpParam.TypeName = "IntListType";
 
-                        participantCmd.ExecuteNonQuery();
+                        // Execute procedure
+                        cmd.ExecuteNonQuery();
                     }
-
-
-                    // Save everything
-                    transaction.Commit();
-
-                    MessageBox.Show("Permit updated successfully.");
-
-                    this.Close();
                 }
-                catch
-                {
-                    transaction.Rollback();
-                    throw;
-                }
+
+                MessageBox.Show("Permit updated successfully.");
+                this.Close();
             }
             catch (SqlException ex)
             {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (conn != null &&
-                    conn.State == System.Data.ConnectionState.Open)
-                {
-                    conn.Close();
-                }
+                MessageBox.Show("Database Error: " + ex.Message);
             }
 
-        }
+            /** try
+             {
+                 conn = new SqlConnection(connString);
+                 conn.Open();
+
+                 SqlTransaction transaction = conn.BeginTransaction();
+
+                 try
+                 {
+                     // Update Permit
+                     string sqlQuery = @"UPDATE Permit SET TrailID = @TrailID, ExpectedReturnTime = @ExpectedReturnTime, Date = @Date WHERE PermitID = @PermitID";
+
+                     SqlCommand cmd = new SqlCommand(sqlQuery, conn, transaction);
+
+                     cmd.Parameters.AddWithValue("@TrailID", trailID);
+                     cmd.Parameters.AddWithValue("@ExpectedReturnTime", expectedReturnTime);
+                     cmd.Parameters.AddWithValue("@Date", selectedDate);
+                     cmd.Parameters.AddWithValue("@PermitID", editPermitID);
+
+                     cmd.ExecuteNonQuery();
+
+
+                     // Remove existing participants
+                     string deleteQuery = @"DELETE FROM Permit_Participant WHERE PermitID = @PermitID";
+
+                     SqlCommand deleteCmd =
+                         new SqlCommand(deleteQuery, conn, transaction);
+
+                     deleteCmd.Parameters.AddWithValue("@PermitID", editPermitID);
+
+                     deleteCmd.ExecuteNonQuery();
+
+
+                     // Add the updated participants
+                     foreach (int participantID in selectedParticpantIds)
+                     {
+                         string participantQuery = @"INSERT INTO Permit_Participant (PermitID, ParticipantID) VALUES (@PermitID, @ParticipantID)";
+
+                         SqlCommand participantCmd =
+                             new SqlCommand(participantQuery, conn, transaction);
+
+                         participantCmd.Parameters.AddWithValue("@PermitID", editPermitID);
+                         participantCmd.Parameters.AddWithValue("@ParticipantID", participantID);
+
+                         participantCmd.ExecuteNonQuery();
+                     }
+
+
+                     // Save everything
+                     transaction.Commit();
+
+                     MessageBox.Show("Permit updated successfully.");
+
+                     this.Close();
+                 }
+                 catch
+                 {
+                     transaction.Rollback();
+                     throw;
+                 }
+             }
+             catch (SqlException ex)
+             {
+                 MessageBox.Show(ex.Message);
+             }
+             finally
+             {
+                 if (conn != null &&
+                     conn.State == System.Data.ConnectionState.Open)
+                 {
+                     conn.Close();
+                 }
+             }**/
+
+        } 
     }
 }
