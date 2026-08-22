@@ -24,6 +24,7 @@ namespace TrailGuard
             btnRangerMode.Enabled = loggedInUser.Modes.Contains("Ranger");
             btnAdminMode.Enabled = loggedInUser.Modes.Contains("Admin");
             btnRescueMode.Enabled = loggedInUser.Modes.Contains("Rescuer");
+            lblRoleTitle.Text = loggedInUser.Username + ", you can access these Modes:";
 
 
             // color for btnRangerMode
