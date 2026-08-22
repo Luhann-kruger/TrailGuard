@@ -89,6 +89,8 @@ namespace TrailGuard
                 chatForm.Activate();
 
             }
+
+        }
         private void pnlSidebarMenu_Paint(object sender, PaintEventArgs e)
         {
 

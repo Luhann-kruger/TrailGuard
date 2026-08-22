@@ -92,6 +92,7 @@ namespace TrailGuard
                 chatForm.Activate();
 
             }
+            }
         private void btnLogout_Click(object sender, EventArgs e)
         {
             loggedInUser = null;
