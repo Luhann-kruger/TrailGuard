@@ -12,6 +12,10 @@ namespace TrailGuard
 {
     public partial class ParentMDIRangerForm : Form
     {
+
+        private ChatForm chatForm = null;
+        
+
         User loggedInUser;
         public ParentMDIRangerForm(User loggedInUser)
         {
@@ -69,6 +73,22 @@ namespace TrailGuard
             loadMaintainHikersForm();
         }
 
+        private void btnAskTrailGuardAI_Click(object sender, EventArgs e)
+        {
+            // if an existing chat is not open then open one
+            if (chatForm == null || chatForm.IsDisposed)
+            {
+                // the chat form does use the open child method as it is conflicting with the look 
+                chatForm = new ChatForm();
+                chatForm.MdiParent = this;
+                chatForm.Show();
+            }
+            else
+            {
+                // if the vhat is already open then open it again
+                chatForm.Activate();
+
+            }
         private void pnlSidebarMenu_Paint(object sender, PaintEventArgs e)
         {
 
