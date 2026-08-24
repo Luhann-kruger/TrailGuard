@@ -15,160 +15,143 @@ namespace TrailGuard
 {
     public partial class GenerateReportsForm : Form
     {
-        // Declare varibles
         private const string connString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TrailGuardDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+
         string query = "";
-
-
-        // report will decide what a critical threshold is for admin information
-        private const decimal OVERDUE_RATE_CRITICAL_THRESHOLD = 30m;
-        private const decimal OVERDUE_RATE_WARNING_THRESHOLD = 15m;
-
-        // the report check for trails with little to no capacity
-        // the report gives recommendations based on metrics set by the administration of the park
-        private const decimal CAPACITY_UNDERUSE_THRESHOLD = 20m;
-        private const string ACTION_CLOSURE = "Investigate or Consider Closure";
-        private const string ACTION_SIGNAGE = "Increase Signage & Patrols";
-        private const string ACTION_CAPACITY = "Underused: Review Promotion or Resource Allocation";
-        private const string ACTION_NONE = "No Action Needed";
 
         public GenerateReportsForm()
         {
             InitializeComponent();
-
-        }
-
-       
-        private static readonly string[] hiddenColumns = new string[]
-        {
-            "MaximumHikers",
-            "TotalHikers",
-            "StillOutPermits",
-            "AvgReturnDiffMinutes",
-            "AvgGroupSize"
-        };
-
-        // after the data grid view has been bound the following method will run
-        // it assisgns colors for the critical factors trackecd by the park
-        private void dgvReport_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            // hide the columns that are only used to work out other values
-            foreach (string columnName in hiddenColumns)
-            {
-                if (dgvReport.Columns.Contains(columnName))
-                {
-                    dgvReport.Columns[columnName].Visible = false;
-                }
-            }
-
-           
-            dgvReport.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
-           // rename colum headings
-            if (dgvReport.Columns.Contains("TrailName"))
-            {
-                dgvReport.Columns["TrailName"].HeaderText = "Trail";
-            }
-
-            if (dgvReport.Columns.Contains("TotalPermits"))
-            {
-                dgvReport.Columns["TotalPermits"].HeaderText = "Total Permits";
-            }
-
-            if (dgvReport.Columns.Contains("OverduePermits"))
-            {
-                dgvReport.Columns["OverduePermits"].HeaderText = "Overdue Permits";
-            }
-
-            if (dgvReport.Columns.Contains("CapacityUtilizationPercent"))
-            {
-                dgvReport.Columns["CapacityUtilizationPercent"].HeaderText = "Capacity Used (%)";
-            }
-
-            if (dgvReport.Columns.Contains("OnTimeReturnRatePercent"))
-            {
-                dgvReport.Columns["OnTimeReturnRatePercent"].HeaderText = "On-Time Rate (%)";
-            }
-
-            if (dgvReport.Columns.Contains("OverdueRatePercent"))
-            {
-                dgvReport.Columns["OverdueRatePercent"].HeaderText = "Overdue Rate (%)";
-            }
-
-            if (dgvReport.Columns.Contains("RecommendedAction"))
-            {
-                dgvReport.Columns["RecommendedAction"].HeaderText = "Recommended Action";
-            }
-
-            // if there are no actions the method will not run
-            if (!dgvReport.Columns.Contains("RecommendedAction"))
-            {
-                return;
-            }
-
-            foreach (DataGridViewRow row in dgvReport.Rows)
-            {
-                if (row.IsNewRow)
-                {
-                    continue;
-                }
-
-                string action;
-
-                if (row.Cells["RecommendedAction"].Value == null)
-                {
-                    action = "";
-                }
-                else
-                {
-                    action = row.Cells["RecommendedAction"].Value.ToString();
-                }
-
-                // these colors help administration with a visual importance refrence
-                if (action == ACTION_CLOSURE)
-                {
-                    row.DefaultCellStyle.BackColor = Color.MistyRose;
-                }
-                else if (action == ACTION_SIGNAGE)
-                {
-                    row.DefaultCellStyle.BackColor = Color.LightYellow;
-                }
-                else if (action == ACTION_CAPACITY)
-                {
-
-                    row.DefaultCellStyle.BackColor = Color.LightBlue;
-                }
-                else
-                {
-                    //normall back color similar to other forms
-                    row.DefaultCellStyle.BackColor = Color.White;
-                }
-            }
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
         }
 
-        private void RunAllTrailsReport(DateTime startDate, DateTime endDate)
+        // A method to resize the columns in the DataGridView
+        private void AutoSizeGridColumns(DataGridView grid)
         {
-            
-            const string query =
+            foreach (DataGridViewColumn column in grid.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+
+            foreach (DataGridViewColumn column in grid.Columns)
+            {
+                if (column.Width < 90)
+                {
+                    column.Width = 90;
+                }
+            }
+        }
+
+        // A method to change the headings in the Trail Usage DataGridView
+        private void FormatTrailUsageGrid(DataGridView grid)
+        {
+            grid.Columns["TrailName"].HeaderText = "Trail";
+            grid.Columns["TotalPermits"].HeaderText = "Total Permits";
+            grid.Columns["OverduePermits"].HeaderText = "Overdue Permits";
+            grid.Columns["CapacityUsedPercent"].HeaderText = "Capacity Used (%)";
+            grid.Columns["CapacityUsedPercent"].DefaultCellStyle.Format = "N2";
+            grid.Columns["OnTimeRate"].HeaderText = "On-Time Rate (%)";
+            grid.Columns["OnTimeRate"].DefaultCellStyle.Format = "N2";
+            grid.Columns["OverdueRate"].HeaderText = "Overdue Rate (%)";
+            grid.Columns["OverdueRate"].DefaultCellStyle.Format = "N2";
+            grid.Columns["RecommendedAction"].HeaderText = "Recommended Action";
+        }
+
+        // A method to change the headings in the Incident DataGridView
+        private void FormatIncidentGrid(DataGridView grid)
+        {
+            grid.Columns["ParkName"].HeaderText = "Park";
+            grid.Columns["TotalIncidents"].HeaderText = "Total Incidents";
+            grid.Columns["ClosedIncidents"].HeaderText = "Closed Incidents";
+            grid.Columns["OpenIncidents"].HeaderText = "Open Incidents";
+        }
+
+        // A method that changes the colour of records that need attention
+        private void ColorizeTrailUsageGrid(DataGridView grid)
+        {
+            foreach (DataGridViewRow row in grid.Rows)
+            {
+                string action = "";
+
+                if (row.Cells["RecommendedAction"].Value != null)
+                {
+                    action = row.Cells["RecommendedAction"].Value.ToString();
+                }
+
+                if (action == "Needs signage or closure review")
+                {
+                    row.Cells["RecommendedAction"].Style.ForeColor = Color.DarkRed;
+                    row.Cells["OverdueRate"].Style.ForeColor = Color.DarkRed;
+                }
+                else if (action == "Underused: Review promotion or resources")
+                {
+                    row.Cells["RecommendedAction"].Style.ForeColor = Color.DarkOrange;
+                    row.Cells["OnTimeRate"].Style.ForeColor = Color.DarkOrange;
+                }
+                else
+                {
+                    row.Cells["RecommendedAction"].Style.ForeColor = Color.SeaGreen;
+                }
+            }
+        }
+
+        // A method that changes the colour of the incident records
+        private void ColorizeIncidentGrid(DataGridView grid)
+        {
+            foreach (DataGridViewRow row in grid.Rows)
+            {
+                row.Cells["ClosedIncidents"].Style.ForeColor = Color.SeaGreen;
+                row.Cells["OpenIncidents"].Style.ForeColor = Color.DarkRed;
+            }
+        }
+
+        // A method for showing and hiding the summary controls
+        private void SetSummaryControlsVisible(bool visible)
+        {
+            lblMostUsedTrail.Visible = visible;
+            lblLeastUsedTrail.Visible = visible;
+            lblPeakUsage.Visible = visible;
+            label5.Visible = visible;
+            label6.Visible = visible;
+            label7.Visible = visible;
+            pnlUnderusedNotice.Visible = visible;
+            pnlSignageNotice.Visible = visible;
+        }
+
+        // A method for showing the first report
+        // If trailID is null, all trails are shown.
+        // If trailID contains an id, only that trail is shown.
+        private void RunTrailUsageReport(Nullable<int> trailID, DateTime startDate, DateTime endDate)
+        {
+            string reportQuery =
                 "SELECT dbo.Trail.TrailName, " +
-                "dbo.Trail.MaximumHikers, " +
                 "COUNT(DISTINCT dbo.Permit.PermitID) AS TotalPermits, " +
-                "COUNT(dbo.Permit_Participant.ParticipantID) AS TotalHikers, " +
-                "SUM(CASE WHEN dbo.Permit.CheckInTime IS NULL THEN 1 ELSE 0 END) AS StillOutPermits, " +
-                "SUM(CASE WHEN dbo.Permit.CheckInTime IS NULL AND DATEADD(SECOND, DATEDIFF(SECOND, 0, CAST(dbo.Permit.ExpectedReturnTime AS DATETIME)), CAST(dbo.Permit.Date AS DATETIME)) < GETDATE() THEN 1 ELSE 0 END) AS OverduePermits, " +
-                "AVG(DATEDIFF(minute, dbo.Permit.ExpectedReturnTime, dbo.Permit.CheckInTime)) AS AvgReturnDiffMinutes, " +
-                "CAST(ROUND(CAST(COUNT(dbo.Permit_Participant.ParticipantID) AS DECIMAL(10,2)) / NULLIF(COUNT(DISTINCT dbo.Permit.PermitID), 0), 2) AS DECIMAL(10,2)) AS AvgGroupSize, " +
-                "CAST(ROUND(CAST(COUNT(dbo.Permit_Participant.ParticipantID) AS DECIMAL(10,2)) / NULLIF(COUNT(DISTINCT dbo.Permit.PermitID), 0) / NULLIF(dbo.Trail.MaximumHikers, 0) * 100, 2) AS DECIMAL(10,2)) AS CapacityUtilizationPercent, " +
-                "CAST(ROUND(CAST(SUM(CASE WHEN dbo.Permit.CheckInTime IS NOT NULL AND dbo.Permit.CheckInTime <= dbo.Permit.ExpectedReturnTime THEN 1 ELSE 0 END) AS DECIMAL(10,2)) / NULLIF(SUM(CASE WHEN dbo.Permit.CheckInTime IS NOT NULL THEN 1 ELSE 0 END), 0) * 100, 2) AS DECIMAL(10,2)) AS OnTimeReturnRatePercent " +
+                "SUM(CASE WHEN dbo.Permit.Status = 'Overdue' THEN 1 ELSE 0 END) AS OverduePermits, " +
+                "CAST(COUNT(dbo.Permit_Participant.ParticipantID) AS FLOAT) " +
+                "/ NULLIF(dbo.Trail.MaximumHikers * COUNT(DISTINCT dbo.Permit.PermitID), 0) * 100 AS CapacityUsedPercent, " +
+                "CAST(SUM(CASE WHEN dbo.Permit.Status = 'Completed' " +
+                "AND dbo.Permit.CheckInTime <= dbo.Permit.ExpectedReturnTime THEN 1 ELSE 0 END) AS FLOAT) " +
+                "/ NULLIF(SUM(CASE WHEN dbo.Permit.Status = 'Completed' THEN 1 ELSE 0 END), 0) * 100 AS OnTimeRate, " +
+                "CAST(SUM(CASE WHEN dbo.Permit.Status = 'Overdue' THEN 1 ELSE 0 END) AS FLOAT) " +
+                "/ NULLIF(COUNT(DISTINCT dbo.Permit.PermitID), 0) * 100 AS OverdueRate " +
                 "FROM dbo.Permit " +
                 "JOIN dbo.Trail ON dbo.Trail.TrailID = dbo.Permit.TrailID " +
                 "LEFT JOIN dbo.Permit_Participant ON dbo.Permit_Participant.PermitID = dbo.Permit.PermitID " +
-                "WHERE dbo.Permit.Date BETWEEN @StartDate AND @EndDate " +
-                "GROUP BY dbo.Trail.TrailName, dbo.Trail.MaximumHikers";
+                "WHERE dbo.Permit.Date BETWEEN @StartDate AND @EndDate ";
+
+            // If a specific trail was selected, add the TrailID to the query
+            if (trailID.HasValue)
+            {
+                reportQuery = reportQuery +
+                    "AND dbo.Trail.TrailID = @TrailID ";
+            }
+
+            reportQuery = reportQuery +
+                "GROUP BY dbo.Trail.TrailName, dbo.Trail.MaximumHikers " +
+                "ORDER BY dbo.Trail.TrailName";
 
             DataTable resultTable = new DataTable();
 
@@ -179,26 +162,29 @@ namespace TrailGuard
             try
             {
                 conn = new SqlConnection(connString);
-                cmd = new SqlCommand(query, conn);
+                cmd = new SqlCommand(reportQuery, conn);
 
                 cmd.Parameters.AddWithValue("@StartDate", startDate.Date);
                 cmd.Parameters.AddWithValue("@EndDate", endDate.Date);
 
+                if (trailID.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@TrailID", trailID.Value);
+                }
+
                 conn.Open();
                 reader = cmd.ExecuteReader();
-
                 resultTable.Load(reader);
-
-
-                AddDecisionColumns(resultTable);
             }
             catch (SqlException ex)
             {
                 MessageBox.Show(
                     "Could not load report: " + ex.Message,
-                    "Database error",
+                    "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
+                return;
             }
             finally
             {
@@ -206,33 +192,91 @@ namespace TrailGuard
                 {
                     reader.Close();
                 }
+
                 if (conn != null)
                 {
                     conn.Close();
                 }
             }
 
+            // Add a column for the recommended action
+            resultTable.Columns.Add("RecommendedAction", typeof(string));
+
+            int underusedCount = 0;
+            int signageCount = 0;
+
+            // Go through each trail in the result
+            foreach (DataRow row in resultTable.Rows)
+            {
+                double onTimeRate;
+
+                if (row["OnTimeRate"] == DBNull.Value)
+                {
+                    onTimeRate = -1;
+                }
+                else
+                {
+                    onTimeRate = Convert.ToDouble(row["OnTimeRate"]);
+                }
+
+                double overdueRate;
+
+                if (row["OverdueRate"] == DBNull.Value)
+                {
+                    overdueRate = 0;
+                }
+                else
+                {
+                    overdueRate = Convert.ToDouble(row["OverdueRate"]);
+                }
+
+                if (overdueRate > 20)
+                {
+                    row["RecommendedAction"] = "Needs signage or closure review";
+                    signageCount = signageCount + 1;
+                }
+                else if (onTimeRate >= 0 && onTimeRate < 60)
+                {
+                    row["RecommendedAction"] = "Underused: Review promotion or resources";
+                    underusedCount = underusedCount + 1;
+                }
+                else
+                {
+                    row["RecommendedAction"] = "No action needed";
+                }
+            }
+
+            // Display the number of underused trails
+            lblUnderusedNotice.Text =
+                underusedCount.ToString() + " trail(s) Underused";
+
+            // Display the number of trails requiring attention
+            lblSignageNotice.Text =
+                signageCount.ToString() + " trail(s) need Signage or Closure";
+
             dgvReport.DataSource = resultTable;
+
+            FormatTrailUsageGrid(dgvReport);
+            AutoSizeGridColumns(dgvReport);
+            ColorizeTrailUsageGrid(dgvReport);
         }
 
-        private void RunSingleTrailReport(int trailID, DateTime startDate, DateTime endDate)
+        // A method for showing the second report
+        private void RunIncidentSummaryReport(DateTime startDate, DateTime endDate)
         {
-            const string query =
-                "SELECT dbo.Trail.TrailName, " +
-                "dbo.Trail.MaximumHikers, " +
-                "COUNT(DISTINCT dbo.Permit.PermitID) AS TotalPermits, " +
-                "COUNT(dbo.Permit_Participant.ParticipantID) AS TotalHikers, " +
-                "SUM(CASE WHEN dbo.Permit.CheckInTime IS NULL THEN 1 ELSE 0 END) AS StillOutPermits, " +
-                "SUM(CASE WHEN dbo.Permit.CheckInTime IS NULL AND DATEADD(SECOND, DATEDIFF(SECOND, 0, CAST(dbo.Permit.ExpectedReturnTime AS DATETIME)), CAST(dbo.Permit.Date AS DATETIME)) < GETDATE() THEN 1 ELSE 0 END) AS OverduePermits, " +
-                "AVG(DATEDIFF(minute, dbo.Permit.ExpectedReturnTime, dbo.Permit.CheckInTime)) AS AvgReturnDiffMinutes, " +
-                "CAST(ROUND(CAST(COUNT(dbo.Permit_Participant.ParticipantID) AS DECIMAL(10,2)) / NULLIF(COUNT(DISTINCT dbo.Permit.PermitID), 0), 2) AS DECIMAL(10,2)) AS AvgGroupSize, " +
-                "CAST(ROUND(CAST(COUNT(dbo.Permit_Participant.ParticipantID) AS DECIMAL(10,2)) / NULLIF(COUNT(DISTINCT dbo.Permit.PermitID), 0) / NULLIF(dbo.Trail.MaximumHikers, 0) * 100, 2) AS DECIMAL(10,2)) AS CapacityUtilizationPercent, " +
-                "CAST(ROUND(CAST(SUM(CASE WHEN dbo.Permit.CheckInTime IS NOT NULL AND dbo.Permit.CheckInTime <= dbo.Permit.ExpectedReturnTime THEN 1 ELSE 0 END) AS DECIMAL(10,2)) / NULLIF(SUM(CASE WHEN dbo.Permit.CheckInTime IS NOT NULL THEN 1 ELSE 0 END), 0) * 100, 2) AS DECIMAL(10,2)) AS OnTimeReturnRatePercent " +
-                "FROM dbo.Permit " +
+            string reportQuery =
+                "SELECT dbo.Park.ParkName, " +
+                "COUNT(dbo.IncidentReport.IncidentReportID) AS TotalIncidents, " +
+                "SUM(CASE WHEN dbo.IncidentReport.Status = 'Closed' THEN 1 ELSE 0 END) AS ClosedIncidents, " +
+                "SUM(CASE WHEN dbo.IncidentReport.Status <> 'Closed' THEN 1 ELSE 0 END) AS OpenIncidents " +
+                "FROM dbo.IncidentReport " +
+                "JOIN dbo.Permit ON dbo.Permit.PermitID = dbo.IncidentReport.PermitID " +
                 "JOIN dbo.Trail ON dbo.Trail.TrailID = dbo.Permit.TrailID " +
-                "LEFT JOIN dbo.Permit_Participant ON dbo.Permit_Participant.PermitID = dbo.Permit.PermitID " +
-                "WHERE dbo.Permit.TrailID = @TrailID AND dbo.Permit.Date BETWEEN @StartDate AND @EndDate " +
-                "GROUP BY dbo.Trail.TrailName, dbo.Trail.MaximumHikers";
+                "JOIN dbo.Park ON dbo.Park.ParkID = dbo.Trail.ParkID " +
+                "WHERE dbo.IncidentReport.DateReported >= @StartDate " +
+                "AND dbo.IncidentReport.DateReported < @EndDateExclusive " +
+                "GROUP BY dbo.Park.ParkName " +
+                "ORDER BY COUNT(dbo.IncidentReport.IncidentReportID) DESC";
 
             DataTable resultTable = new DataTable();
 
@@ -243,26 +287,24 @@ namespace TrailGuard
             try
             {
                 conn = new SqlConnection(connString);
-                cmd = new SqlCommand(query, conn);
+                cmd = new SqlCommand(reportQuery, conn);
 
-                cmd.Parameters.AddWithValue("@TrailID", trailID);
                 cmd.Parameters.AddWithValue("@StartDate", startDate.Date);
-                cmd.Parameters.AddWithValue("@EndDate", endDate.Date);
+                cmd.Parameters.AddWithValue("@EndDateExclusive", endDate.Date.AddDays(1));
 
                 conn.Open();
                 reader = cmd.ExecuteReader();
-
                 resultTable.Load(reader);
-
-                AddDecisionColumns(resultTable);
             }
             catch (SqlException ex)
             {
                 MessageBox.Show(
-                    "Could not load report: " + ex.Message,
-                    "Database error",
+                    "Could not load incident report: " + ex.Message,
+                    "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
+                return;
             }
             finally
             {
@@ -270,93 +312,23 @@ namespace TrailGuard
                 {
                     reader.Close();
                 }
+
                 if (conn != null)
                 {
                     conn.Close();
                 }
-
             }
 
-            dgvReport.DataSource = resultTable;
+            dgvIncidents.DataSource = resultTable;
+
+            FormatIncidentGrid(dgvIncidents);
+            AutoSizeGridColumns(dgvIncidents);
+            ColorizeIncidentGrid(dgvIncidents);
         }
 
-        // this method adds some extra colomns to the report and works out the overdue rate for each trail.
-        
-        private void AddDecisionColumns(DataTable table)
-        {
-            // add colomns for report purposes
-            table.Columns.Add("OverdueRatePercent", typeof(decimal));
-            table.Columns.Add("RecommendedAction", typeof(string));
-
-            foreach (DataRow row in table.Rows)
-            {
-                int totalPermits;
-                if (row["TotalPermits"] == DBNull.Value)
-                {
-                    totalPermits = 0;
-                }
-                else
-                {
-                    totalPermits = Convert.ToInt32(row["TotalPermits"]);
-                }
-
-                int overduePermits;
-                if (row["OverduePermits"] == DBNull.Value)
-                {
-                    overduePermits = 0;
-                }
-                else
-                {
-                    overduePermits = Convert.ToInt32(row["OverduePermits"]);
-                }
-
-                decimal overdueRate;
-                if (totalPermits == 0)
-                {
-                    overdueRate = 0m;
-                }
-                else
-                {
-                    overdueRate = Math.Round((decimal)overduePermits / totalPermits * 100m, 1);
-                }
-
-                row["OverdueRatePercent"] = overdueRate;
-
-                decimal capacityUtilization;
-                if (row["CapacityUtilizationPercent"] == DBNull.Value)
-                {
-                    capacityUtilization = 0m;
-                }
-                else
-                {
-                    capacityUtilization = Convert.ToDecimal(row["CapacityUtilizationPercent"]);
-                }
-
-
-                if (overdueRate >= OVERDUE_RATE_CRITICAL_THRESHOLD)
-                {
-                    row["RecommendedAction"] = ACTION_CLOSURE;
-                }
-                else if (overdueRate >= OVERDUE_RATE_WARNING_THRESHOLD)
-                {
-                    row["RecommendedAction"] = ACTION_SIGNAGE;
-                }
-                else if (capacityUtilization <= CAPACITY_UNDERUSE_THRESHOLD)
-                {
-                    row["RecommendedAction"] = ACTION_CAPACITY;
-                }
-                else
-                {
-                    row["RecommendedAction"] = ACTION_NONE;
-                }
-            }
-        }
-
-
+        // Button used to generate the reports
         private void button1_Click(object sender, EventArgs e)
         {
-            // validate the dates selected
-            // End date cannot be before the start date
             if (dateTimePickerSTARTDATE.Value > dateTimePickerENDDATE.Value)
             {
                 MessageBox.Show(
@@ -364,33 +336,51 @@ namespace TrailGuard
                     "Invalid Date",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+
                 return;
             }
 
-            // generate the report
             try
             {
-                // get trail ID
                 int trailID = GetSelectedTrailID();
+
+                Nullable<int> trailFilter;
 
                 if (trailID == -1)
                 {
-                    RunAllTrailsReport(dateTimePickerSTARTDATE.Value, dateTimePickerENDDATE.Value);
+                    trailFilter = null;
                 }
                 else
                 {
-                    RunSingleTrailReport(trailID, dateTimePickerSTARTDATE.Value, dateTimePickerENDDATE.Value);
+                    trailFilter = trailID;
                 }
 
-                // get peak usage date
-                string peakUsage = GetPeakUsageDate(trailID, dateTimePickerSTARTDATE.Value, dateTimePickerENDDATE.Value);
+                RunTrailUsageReport(
+                    trailFilter,
+                    dateTimePickerSTARTDATE.Value,
+                    dateTimePickerENDDATE.Value);
 
-                lblPeakUsage.Text = peakUsage;
-                label7.Visible = true;
-                lblPeakUsage.Visible = true;
+                RunIncidentSummaryReport(
+                    dateTimePickerSTARTDATE.Value,
+                    dateTimePickerENDDATE.Value);
 
-                // fill in the two alert panels based on what the report just found
-                UpdateSummaryPanels();
+                lblMostUsedTrail.Text =
+                    GetMostUsedTrail(
+                        dateTimePickerSTARTDATE.Value,
+                        dateTimePickerENDDATE.Value);
+
+                lblLeastUsedTrail.Text =
+                    GetLeastUsedTrail(
+                        dateTimePickerSTARTDATE.Value,
+                        dateTimePickerENDDATE.Value);
+
+                lblPeakUsage.Text =
+                    GetPeakUsageDate(
+                        trailID,
+                        dateTimePickerSTARTDATE.Value,
+                        dateTimePickerENDDATE.Value);
+
+                SetSummaryControlsVisible(true);
             }
             catch (Exception ex)
             {
@@ -398,83 +388,33 @@ namespace TrailGuard
             }
         }
 
-        // counts how many trails in the current report need attention and
-        // updates the two colored panels below the grid with those counts
-        private void UpdateSummaryPanels()
-        {
-            int underusedCount = 0;
-            int attentionCount = 0;
-
-            foreach (DataGridViewRow row in dgvReport.Rows)
-            {
-                if (row.IsNewRow)
-                {
-                    continue;
-                }
-
-                string action;
-
-                if (row.Cells["RecommendedAction"].Value == null)
-                {
-                    action = "";
-                }
-                else
-                {
-                    action = row.Cells["RecommendedAction"].Value.ToString();
-                }
-
-                if (action == ACTION_CAPACITY)
-                {
-                    underusedCount = underusedCount + 1;
-                }
-
-                if (action == ACTION_CLOSURE || action == ACTION_SIGNAGE)
-                {
-                    attentionCount = attentionCount + 1;
-                }
-            }
-
-            lblUnderusedCount.Text = underusedCount.ToString() + " trails underused";
-            lblAttentionCount.Text = attentionCount.ToString() + " trails need signage or closure";
-
-            //reveal the panels
-            pnlUnderused.Visible = true;
-            pnlAttention.Visible = true;
-        }
-
-        
+        // Load the trails into the ComboBox
         private void GenerateReportsForm_Load(object sender, EventArgs e)
         {
-            // hide the peak usage caption and value until a report has actually been generated
-            pnlUnderused.Visible = false;
-            pnlAttention.Visible = false;
-            label7.Visible = false;
-            lblPeakUsage.Visible = false;
-
-            
             cmbTrails.Items.Clear();
             cmbTrails.Items.Add("All");
 
-            // query string to select the trail names
-            query = "SELECT DISTINCT TrailName FROM Trail ORDER BY TrailName";
+            query =
+                "SELECT DISTINCT TrailName " +
+                "FROM Trail " +
+                "ORDER BY TrailName";
 
             SqlConnection conn = null;
-            SqlCommand cmd;
+            SqlCommand cmd = null;
             SqlDataReader reader = null;
 
             try
             {
-                // connect to the database
                 conn = new SqlConnection(connString);
                 cmd = new SqlCommand(query, conn);
 
                 conn.Open();
                 reader = cmd.ExecuteReader();
 
-                // read the trail names and add them to the combobox
                 while (reader.Read())
                 {
-                    cmbTrails.Items.Add(reader["TrailName"].ToString());
+                    cmbTrails.Items.Add(
+                        reader["TrailName"].ToString());
                 }
             }
             catch (SqlException ex)
@@ -487,93 +427,98 @@ namespace TrailGuard
             }
             finally
             {
-                // close reader and connection
                 if (reader != null)
                 {
                     reader.Close();
                 }
+
                 if (conn != null)
                 {
                     conn.Close();
                 }
             }
 
-            // default to "All trails"
             cmbTrails.SelectedIndex = 0;
+
+            SetSummaryControlsVisible(false);
         }
 
+        // Get the id of the selected trail
         private int GetSelectedTrailID()
         {
-            // guard against SelectedItem being null (e.g. combobox not yet populated)
-            if (cmbTrails.SelectedItem == null)
-            {
-                return -1;
-            }
+            string selectedTrail =
+                cmbTrails.SelectedItem.ToString();
 
-            // get the selected trail name
-            string selectedTrail = cmbTrails.SelectedItem.ToString();
             int trailID = -1;
 
-            // check if a specific trail was selected or "all" trails were selected
             if (selectedTrail == "All")
             {
                 return trailID;
             }
-            else
+
+            string lookupQuery =
+                "SELECT TrailID " +
+                "FROM Trail " +
+                "WHERE TrailName = @TrailName";
+
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            try
             {
-                const string query = "SELECT TrailID FROM Trail WHERE TrailName = @TrailName";
+                conn = new SqlConnection(connString);
+                cmd = new SqlCommand(lookupQuery, conn);
 
-                SqlConnection conn = null;
-                SqlCommand cmd = null;
-                SqlDataReader reader = null;
+                cmd.Parameters.AddWithValue(
+                    "@TrailName",
+                    selectedTrail);
 
-                try
+                conn.Open();
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    conn = new SqlConnection(connString);
-                    cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@TrailName", selectedTrail);
-
-                    conn.Open();
-                    reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        trailID = Convert.ToInt32(reader["TrailID"]);
-                    }
+                    trailID =
+                        Convert.ToInt32(reader["TrailID"]);
                 }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show(
-                        "Could not look up trail: " + ex.Message,
-                        "Database error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    if (reader != null)
-                    {
-                        reader.Close();
-                    }
-                    if (conn != null)
-                    {
-                        conn.Close();
-                    }
-                }
-
-                return trailID;
             }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(
+                    "Could not look up trail: " + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return trailID;
         }
 
-        private string GetPeakUsageDate(int trailID, DateTime startDate, DateTime endDate)
+        // Get the date with the highest number of permits
+        private string GetPeakUsageDate(
+            int trailID,
+            DateTime startDate,
+            DateTime endDate)
         {
             string peakDate = "No data";
-
-            string query;
+            string peakQuery;
 
             if (trailID == -1)
             {
-                query =
+                peakQuery =
                     "SELECT TOP 1 dbo.Permit.Date, COUNT(*) AS TotalPermits " +
                     "FROM dbo.Permit " +
                     "WHERE dbo.Permit.Date BETWEEN @StartDate AND @EndDate " +
@@ -582,7 +527,7 @@ namespace TrailGuard
             }
             else
             {
-                query =
+                peakQuery =
                     "SELECT TOP 1 dbo.Permit.Date, COUNT(*) AS TotalPermits " +
                     "FROM dbo.Permit " +
                     "WHERE dbo.Permit.TrailID = @TrailID " +
@@ -598,7 +543,7 @@ namespace TrailGuard
             try
             {
                 conn = new SqlConnection(connString);
-                cmd = new SqlCommand(query, conn);
+                cmd = new SqlCommand(peakQuery, conn);
 
                 if (trailID != -1)
                 {
@@ -623,7 +568,7 @@ namespace TrailGuard
             catch (SqlException ex)
             {
                 MessageBox.Show(
-                    "Could not determine peak usage date: " + ex.Message,
+                    "Could not determine peak usage: " + ex.Message,
                     "Database error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -634,6 +579,7 @@ namespace TrailGuard
                 {
                     reader.Close();
                 }
+
                 if (conn != null)
                 {
                     conn.Close();
@@ -643,15 +589,108 @@ namespace TrailGuard
             return peakDate;
         }
 
+        // Get the most used trail
+        private string GetMostUsedTrail(
+            DateTime startDate,
+            DateTime endDate)
+        {
+            return GetExtremeUsedTrail(
+                startDate,
+                endDate,
+                true);
+        }
 
-        
-       
+        // Get the least used trail
+        private string GetLeastUsedTrail(
+            DateTime startDate,
+            DateTime endDate)
+        {
+            return GetExtremeUsedTrail(
+                startDate,
+                endDate,
+                false);
+        }
+
+        // Method used to find the most or least used trail
+        private string GetExtremeUsedTrail(
+            DateTime startDate,
+            DateTime endDate,
+            bool descending)
+        {
+            string result = "No data";
+            string sortDirection;
+
+            if (descending)
+            {
+                sortDirection = "DESC";
+            }
+            else
+            {
+                sortDirection = "ASC";
+            }
+
+            string extremeQuery =
+                "SELECT TOP 1 dbo.Trail.TrailName, COUNT(dbo.Permit.PermitID) AS TotalPermits " +
+                "FROM dbo.Permit " +
+                "INNER JOIN dbo.Trail ON dbo.Permit.TrailID = dbo.Trail.TrailID " +
+                "WHERE dbo.Permit.Date BETWEEN @StartDate AND @EndDate " +
+                "GROUP BY dbo.Trail.TrailName " +
+                "ORDER BY COUNT(dbo.Permit.PermitID) " +
+                sortDirection;
+
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+
+            try
+            {
+                conn = new SqlConnection(connString);
+                cmd = new SqlCommand(extremeQuery, conn);
+
+                cmd.Parameters.AddWithValue("@StartDate", startDate.Date);
+                cmd.Parameters.AddWithValue("@EndDate", endDate.Date);
+
+                conn.Open();
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    result =
+                        reader["TrailName"].ToString() +
+                        " (" +
+                        reader["TotalPermits"].ToString() +
+                        " permits)";
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(
+                    "Could not determine trail usage: " + ex.Message,
+                    "Database error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return result;
+        }
 
         private void cmbTrails_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
 
-        // closes the form when the Close button is clicked
+        // Close the form
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -43,19 +43,31 @@
             label1 = new Label();
             panel1 = new Panel();
             btnClose = new ReaLTaiizor.Controls.ForeverButton();
-            pnlAttention = new Panel();
-            lblAttentionCount = new Label();
-            pnlUnderused = new Panel();
-            lblUnderusedCount = new Label();
             lblPeakUsage = new Label();
             label7 = new Label();
+            lblLeastUsedTrail = new Label();
+            lblMostUsedTrail = new Label();
+            label6 = new Label();
+            label5 = new Label();
+            tabReports = new TabControl();
+            tabPageTrailUsage = new TabPage();
             dgvReport = new DataGridView();
+            tabPageIncidents = new TabPage();
+            dgvIncidents = new DataGridView();
+            lblUnderusedNotice = new Label();
+            pnlSignageNotice = new Panel();
+            lblSignageNotice = new Label();
+            pnlUnderusedNotice = new Panel();
             pnlHeader.SuspendLayout();
             panelTOP.SuspendLayout();
             panel1.SuspendLayout();
-            pnlAttention.SuspendLayout();
-            pnlUnderused.SuspendLayout();
+            tabReports.SuspendLayout();
+            tabPageTrailUsage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReport).BeginInit();
+            tabPageIncidents.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvIncidents).BeginInit();
+            pnlSignageNotice.SuspendLayout();
+            pnlUnderusedNotice.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
@@ -73,7 +85,7 @@
             lblModeTitle.AutoSize = true;
             lblModeTitle.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblModeTitle.ForeColor = Color.White;
-            lblModeTitle.Location = new Point(582, 24);
+            lblModeTitle.Location = new Point(830, 24);
             lblModeTitle.Name = "lblModeTitle";
             lblModeTitle.Size = new Size(142, 30);
             lblModeTitle.TabIndex = 3;
@@ -110,7 +122,7 @@
             panelTOP.Controls.Add(label3);
             panelTOP.Controls.Add(label2);
             panelTOP.Controls.Add(label1);
-            panelTOP.Location = new Point(32, 123);
+            panelTOP.Location = new Point(32, 191);
             panelTOP.Margin = new Padding(3, 2, 3, 2);
             panelTOP.Name = "panelTOP";
             panelTOP.Size = new Size(941, 147);
@@ -195,105 +207,193 @@
             // panel1
             // 
             panel1.Controls.Add(btnClose);
-            panel1.Controls.Add(pnlAttention);
-            panel1.Controls.Add(pnlUnderused);
             panel1.Controls.Add(lblPeakUsage);
             panel1.Controls.Add(label7);
-            panel1.Controls.Add(dgvReport);
-            panel1.Location = new Point(32, 274);
+            panel1.Controls.Add(lblLeastUsedTrail);
+            panel1.Controls.Add(lblMostUsedTrail);
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(tabReports);
+            panel1.Location = new Point(32, 358);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(941, 298);
+            panel1.Size = new Size(941, 276);
             panel1.TabIndex = 4;
             // 
             // btnClose
             // 
             btnClose.BackColor = Color.Transparent;
-            btnClose.BaseColor = Color.FromArgb(35, 168, 109);
+            btnClose.BaseColor = Color.Green;
             btnClose.Font = new Font("Segoe UI", 12F);
-            btnClose.Location = new Point(799, 245);
+            btnClose.Location = new Point(799, 199);
             btnClose.Name = "btnClose";
             btnClose.Rounded = false;
             btnClose.Size = new Size(120, 40);
-            btnClose.TabIndex = 9;
+            btnClose.TabIndex = 7;
             btnClose.Text = "Close";
             btnClose.TextColor = Color.FromArgb(243, 243, 243);
             btnClose.Click += btnClose_Click;
             // 
-            // pnlAttention
-            // 
-            pnlAttention.BackColor = Color.Tomato;
-            pnlAttention.Controls.Add(lblAttentionCount);
-            pnlAttention.Location = new Point(247, 193);
-            pnlAttention.Name = "pnlAttention";
-            pnlAttention.Size = new Size(179, 83);
-            pnlAttention.TabIndex = 8;
-            // 
-            // lblAttentionCount
-            // 
-            lblAttentionCount.Dock = DockStyle.Fill;
-            lblAttentionCount.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblAttentionCount.Location = new Point(0, 0);
-            lblAttentionCount.Name = "lblAttentionCount";
-            lblAttentionCount.Size = new Size(179, 83);
-            lblAttentionCount.TabIndex = 10;
-            lblAttentionCount.Text = "-";
-            // 
-            // pnlUnderused
-            // 
-            pnlUnderused.BackColor = Color.PaleGoldenrod;
-            pnlUnderused.Controls.Add(lblUnderusedCount);
-            pnlUnderused.Location = new Point(21, 193);
-            pnlUnderused.Name = "pnlUnderused";
-            pnlUnderused.Size = new Size(179, 83);
-            pnlUnderused.TabIndex = 7;
-            // 
-            // lblUnderusedCount
-            // 
-            lblUnderusedCount.Dock = DockStyle.Fill;
-            lblUnderusedCount.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblUnderusedCount.Location = new Point(0, 0);
-            lblUnderusedCount.Name = "lblUnderusedCount";
-            lblUnderusedCount.Size = new Size(179, 83);
-            lblUnderusedCount.TabIndex = 9;
-            lblUnderusedCount.Text = "-";
-            // 
             // lblPeakUsage
             // 
             lblPeakUsage.AutoSize = true;
-            lblPeakUsage.Location = new Point(601, 212);
+            lblPeakUsage.Location = new Point(180, 238);
             lblPeakUsage.Name = "lblPeakUsage";
-            lblPeakUsage.Size = new Size(12, 15);
+            lblPeakUsage.Size = new Size(38, 15);
             lblPeakUsage.TabIndex = 6;
-            lblPeakUsage.Text = "-";
+            lblPeakUsage.Text = "label8";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(525, 212);
+            label7.Location = new Point(21, 238);
             label7.Name = "label7";
-            label7.Size = new Size(55, 15);
+            label7.Size = new Size(92, 15);
             label7.TabIndex = 5;
-            label7.Text = "Peak Day";
+            label7.Text = "Peak usage date";
+            // 
+            // lblLeastUsedTrail
+            // 
+            lblLeastUsedTrail.AutoSize = true;
+            lblLeastUsedTrail.Location = new Point(180, 212);
+            lblLeastUsedTrail.Name = "lblLeastUsedTrail";
+            lblLeastUsedTrail.Size = new Size(38, 15);
+            lblLeastUsedTrail.TabIndex = 4;
+            lblLeastUsedTrail.Text = "label8";
+            // 
+            // lblMostUsedTrail
+            // 
+            lblMostUsedTrail.AutoSize = true;
+            lblMostUsedTrail.Location = new Point(180, 188);
+            lblMostUsedTrail.Name = "lblMostUsedTrail";
+            lblMostUsedTrail.Size = new Size(38, 15);
+            lblMostUsedTrail.TabIndex = 3;
+            lblMostUsedTrail.Text = "label7";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(21, 212);
+            label6.Name = "label6";
+            label6.Size = new Size(85, 15);
+            label6.TabIndex = 2;
+            label6.Text = "Least used trail";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(21, 188);
+            label5.Name = "label5";
+            label5.Size = new Size(85, 15);
+            label5.TabIndex = 1;
+            label5.Text = "Most used trail";
+            // 
+            // tabReports
+            // 
+            tabReports.Controls.Add(tabPageTrailUsage);
+            tabReports.Controls.Add(tabPageIncidents);
+            tabReports.Location = new Point(21, 19);
+            tabReports.Margin = new Padding(3, 2, 3, 2);
+            tabReports.Name = "tabReports";
+            tabReports.SelectedIndex = 0;
+            tabReports.Size = new Size(898, 158);
+            tabReports.TabIndex = 0;
+            // 
+            // tabPageTrailUsage
+            // 
+            tabPageTrailUsage.Controls.Add(dgvReport);
+            tabPageTrailUsage.Location = new Point(4, 24);
+            tabPageTrailUsage.Margin = new Padding(3, 2, 3, 2);
+            tabPageTrailUsage.Name = "tabPageTrailUsage";
+            tabPageTrailUsage.Padding = new Padding(3, 2, 3, 2);
+            tabPageTrailUsage.Size = new Size(890, 130);
+            tabPageTrailUsage.TabIndex = 0;
+            tabPageTrailUsage.Text = "Trail Usage";
+            tabPageTrailUsage.UseVisualStyleBackColor = true;
             // 
             // dgvReport
             // 
             dgvReport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReport.Location = new Point(21, 19);
+            dgvReport.Dock = DockStyle.Fill;
+            dgvReport.Location = new Point(3, 2);
             dgvReport.Margin = new Padding(3, 2, 3, 2);
             dgvReport.Name = "dgvReport";
             dgvReport.RowHeadersWidth = 51;
-            dgvReport.Size = new Size(898, 152);
+            dgvReport.Size = new Size(884, 126);
             dgvReport.TabIndex = 0;
-            dgvReport.DataBindingComplete += dgvReport_DataBindingComplete;
+            // 
+            // tabPageIncidents
+            // 
+            tabPageIncidents.Controls.Add(dgvIncidents);
+            tabPageIncidents.Location = new Point(4, 24);
+            tabPageIncidents.Margin = new Padding(3, 2, 3, 2);
+            tabPageIncidents.Name = "tabPageIncidents";
+            tabPageIncidents.Padding = new Padding(3, 2, 3, 2);
+            tabPageIncidents.Size = new Size(890, 130);
+            tabPageIncidents.TabIndex = 1;
+            tabPageIncidents.Text = "Incident Summary";
+            tabPageIncidents.UseVisualStyleBackColor = true;
+            // 
+            // dgvIncidents
+            // 
+            dgvIncidents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvIncidents.Dock = DockStyle.Fill;
+            dgvIncidents.Location = new Point(3, 2);
+            dgvIncidents.Margin = new Padding(3, 2, 3, 2);
+            dgvIncidents.Name = "dgvIncidents";
+            dgvIncidents.RowHeadersWidth = 51;
+            dgvIncidents.Size = new Size(884, 126);
+            dgvIncidents.TabIndex = 0;
+            // 
+            // lblUnderusedNotice
+            // 
+            lblUnderusedNotice.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblUnderusedNotice.Location = new Point(31, 13);
+            lblUnderusedNotice.Name = "lblUnderusedNotice";
+            lblUnderusedNotice.Size = new Size(113, 56);
+            lblUnderusedNotice.TabIndex = 0;
+            lblUnderusedNotice.Text = "0 trail(s) Underused";
+            lblUnderusedNotice.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // pnlSignageNotice
+            // 
+            pnlSignageNotice.BackColor = Color.Tomato;
+            pnlSignageNotice.Controls.Add(lblSignageNotice);
+            pnlSignageNotice.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            pnlSignageNotice.Location = new Point(323, 86);
+            pnlSignageNotice.Margin = new Padding(3, 2, 3, 2);
+            pnlSignageNotice.Name = "pnlSignageNotice";
+            pnlSignageNotice.Size = new Size(170, 85);
+            pnlSignageNotice.TabIndex = 6;
+            // 
+            // lblSignageNotice
+            // 
+            lblSignageNotice.Location = new Point(3, 13);
+            lblSignageNotice.Name = "lblSignageNotice";
+            lblSignageNotice.Size = new Size(164, 42);
+            lblSignageNotice.TabIndex = 0;
+            lblSignageNotice.Text = "0 trail(s) need Signage or Closure";
+            lblSignageNotice.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // pnlUnderusedNotice
+            // 
+            pnlUnderusedNotice.BackColor = Color.Khaki;
+            pnlUnderusedNotice.Controls.Add(lblUnderusedNotice);
+            pnlUnderusedNotice.Location = new Point(551, 86);
+            pnlUnderusedNotice.Margin = new Padding(3, 2, 3, 2);
+            pnlUnderusedNotice.Name = "pnlUnderusedNotice";
+            pnlUnderusedNotice.Size = new Size(165, 85);
+            pnlUnderusedNotice.TabIndex = 5;
             // 
             // GenerateReportsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ScrollBar;
-            ClientSize = new Size(1004, 583);
+            ClientSize = new Size(1004, 645);
+            Controls.Add(pnlUnderusedNotice);
             Controls.Add(panel1);
+            Controls.Add(pnlSignageNotice);
             Controls.Add(panelTOP);
             Controls.Add(lblGenerateReportsTitle);
             Controls.Add(pnlHeader);
@@ -306,9 +406,13 @@
             panelTOP.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            pnlAttention.ResumeLayout(false);
-            pnlUnderused.ResumeLayout(false);
+            tabReports.ResumeLayout(false);
+            tabPageTrailUsage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvReport).EndInit();
+            tabPageIncidents.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvIncidents).EndInit();
+            pnlSignageNotice.ResumeLayout(false);
+            pnlUnderusedNotice.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -329,13 +433,21 @@
         private DateTimePicker dateTimePickerSTARTDATE;
         private ComboBox cmbTrails;
         private Button btnGenerateReport;
-        private DataGridView dgvReport;
+        private Label lblLeastUsedTrail;
+        private Label lblMostUsedTrail;
+        private Label label6;
+        private Label label5;
         private Label lblPeakUsage;
         private Label label7;
-        private Panel pnlAttention;
-        private Label lblAttentionCount;
-        private Panel pnlUnderused;
-        private Label lblUnderusedCount;
+        private TabControl tabReports;
+        private TabPage tabPageTrailUsage;
+        private DataGridView dgvReport;
+        private TabPage tabPageIncidents;
+        private DataGridView dgvIncidents;
+        private Label lblUnderusedNotice;
+        private Panel pnlSignageNotice;
+        private Label lblSignageNotice;
+        private Panel pnlUnderusedNotice;
         private ReaLTaiizor.Controls.ForeverButton btnClose;
     }
 }
