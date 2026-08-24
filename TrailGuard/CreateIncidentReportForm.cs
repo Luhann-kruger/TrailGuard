@@ -14,6 +14,7 @@ namespace TrailGuard
     public partial class CreateIncidentReportForm : Form
     {
         private int _permitId = 0;
+
         // connection string to use in the application
         string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=TrailGuardDB;Integrated Security=True;";
         SqlConnection conn = null;
@@ -21,21 +22,19 @@ namespace TrailGuard
         public CreateIncidentReportForm(int permitID)
         {
             InitializeComponent();
-            // assign permit ID to a variable to use in the form 
-            _permitId = permitID;
-            
 
+            // assign permit ID to a variable to use in the form
+            _permitId = permitID;
         }
 
         private void CreateIncidentReportForm_Load(object sender, EventArgs e)
         {
             //txtIncidentDescription.Hint = "Eg... Hikers got lost in the mountains. Has severe asthma allergy";
-           // txtActionsToBeTaken.Hint = "Deploy/Inform Rescue Unit ";
+            //txtActionsToBeTaken.Hint = "Deploy/Inform Rescue Unit";
 
             try
             {
                 conn = new SqlConnection(connString);
-            
 
                 string query = "SELECT Participant.FirstName, Participant.LastName, Participant.MedicalNotes, " +
                     "Trail.TrailName, Permit.ExpectedReturnTime, Permit.[Date] " +
@@ -43,11 +42,12 @@ namespace TrailGuard
                     "JOIN Permit_Participant ON Permit.PermitID = Permit_Participant.PermitID " +
                     "JOIN Participant ON Permit_Participant.ParticipantID = Participant.ParticipantID " +
                     "JOIN Trail ON Permit.TrailID = Trail.TrailID " +
-                    "WHERE Permit.PermitID = " + _permitId;
-
-
+                    "WHERE Permit.PermitID = @PermitID";
 
                 SqlCommand command = new SqlCommand(query, conn);
+
+                // add the permit ID as a parameter
+                command.Parameters.AddWithValue("@PermitID", _permitId);
 
                 conn.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -55,10 +55,11 @@ namespace TrailGuard
                 if (reader.Read())
                 {
                     string fullName = reader["FirstName"] + " " + reader["LastName"];
+
                     lblName.Text = "Name : " + fullName;
                     lblTrailName.Text = "Trail Name : " + reader["TrailName"].ToString();
 
-                    // a variable to contain any medical notes for emphasis 
+                    // a variable to contain any medical notes for emphasis
                     string medicalNotes;
 
                     // in the database the default value for the notes is null
@@ -68,29 +69,35 @@ namespace TrailGuard
                     }
                     else
                     {
-                        // if it has text then paste text 
+                        // if it has text then paste text
                         medicalNotes = reader["MedicalNotes"].ToString();
                     }
-                    // dsplay notes message
+
+                    // display notes message
                     lblMedicalNotes.Text = "Medical Notes : \n" + medicalNotes;
 
-                    // Timespan represents a length of time 
+                    // TimeSpan represents a length of time
                     TimeSpan expectedReturn = (TimeSpan)reader["ExpectedReturnTime"];
-                    lblExReturnTime.Text = "Expected Return Time : " + expectedReturn.ToString(@"hh\:mm");
 
-                    // the time elapsed accounts for days or hours longer than 24 not just hours in one day 
+                    lblExReturnTime.Text = "Expected Return Time : " +
+                        expectedReturn.ToString(@"hh\:mm");
+
+                    // the time elapsed accounts for days or hours longer than 24
+                    // not just hours in one day
                     DateTime permitDate = (DateTime)reader["Date"];
                     DateTime expectedReturnDateTime = permitDate.Date + expectedReturn;
+
                     TimeSpan overdueBy = DateTime.Now - expectedReturnDateTime;
 
-                    // the total number of hours overdue 
+                    // the total number of hours overdue
                     double hoursOverdue = overdueBy.TotalHours;
                     int wholeHoursOverdue = (int)hoursOverdue;
 
                     string severityLabel;
                     Color severityColor;
 
-                    // severity changes color relative to the severity of the number of hours elapsed
+                    // severity changes color relative to the severity
+                    // of the number of hours elapsed
                     if (hoursOverdue >= 10)
                     {
                         severityLabel = "Critical";
@@ -112,11 +119,13 @@ namespace TrailGuard
                         severityColor = Color.DarkGreen;
                     }
 
-                    // when a ranger clicks on a single permit he may not know which permit did what or when or how much buy this
-                    // gives a visual representation of whats needed where 
-                    lblSeverityOfSituation.Text = severityLabel + " : Overdue By " + wholeHoursOverdue + " hours";
-                    lblSeverityOfSituation.ForeColor = severityColor;
+                    // when a ranger clicks on a single permit he may not know
+                    // which permit did what or when or how much, but this gives
+                    // a visual representation of what is needed
+                    lblSeverityOfSituation.Text = severityLabel +
+                        " : Overdue By " + wholeHoursOverdue + " hours";
 
+                    lblSeverityOfSituation.ForeColor = severityColor;
                 }
                 else
                 {
@@ -134,7 +143,7 @@ namespace TrailGuard
             {
                 MessageBox.Show(
                     "Error Occured\n\nDetails: " + ex.Message,
-                    "Database Error",
+                    "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
@@ -154,10 +163,8 @@ namespace TrailGuard
                 {
                     conn.Close();
                 }
-                
             }
         }
-
 
         private void btnCreateIncidentReport_Click(object sender, EventArgs e)
         {
@@ -170,18 +177,28 @@ namespace TrailGuard
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
-                return; 
+
+                return;
             }
 
             try
             {
                 conn = new SqlConnection(connString);
                 conn.Open();
-                // check for duplicates if an incident is open or in progress then refuse to creat a new incident 
 
-                SqlCommand duplicateCheckCmd = new SqlCommand("SELECT COUNT(*) FROM IncidentReport " +
-                                     "WHERE PermitID = " + _permitId + " AND Status IN ('Open', 'In Progress')", conn);
-                int existingUnresolvedReports = (int)duplicateCheckCmd.ExecuteScalar();
+                // check for duplicates if an incident is open or in progress
+                // then refuse to create a new incident
+                SqlCommand duplicateCheckCmd = new SqlCommand(
+                    "SELECT COUNT(*) FROM IncidentReport " +
+                    "WHERE PermitID = @PermitID " +
+                    "AND Status IN ('Open', 'In Progress')",
+                    conn);
+
+                // add the permit ID as a parameter
+                duplicateCheckCmd.Parameters.AddWithValue("@PermitID", _permitId);
+
+                int existingUnresolvedReports =
+                    (int)duplicateCheckCmd.ExecuteScalar();
 
                 if (existingUnresolvedReports > 0)
                 {
@@ -191,7 +208,8 @@ namespace TrailGuard
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
-                    // do not create the incident report 
+
+                    // do not create the incident report
                     return;
                 }
 
@@ -199,20 +217,32 @@ namespace TrailGuard
 
                 string actionTaken;
 
-                // if action taken is blank that is fine the database allows for null values
+                // if action taken is blank that is fine
+                // the database allows for null values
                 if (string.IsNullOrWhiteSpace(txtActionsToBeTaken.Text))
                 {
                     actionTaken = "";
                 }
                 else
                 {
-                    // if there is any text assign it to the variable 
+                    // if there is any text assign it to the variable
                     actionTaken = txtActionsToBeTaken.Text.Trim();
                 }
 
-                // create a new incident report and save it 
-                SqlCommand command = new SqlCommand( "INSERT INTO IncidentReport (PermitID, Description, DateReported, ActionTaken, Status) " +
-                               "VALUES (" + _permitId + ", '" + description + "', GETDATE(), '" + actionTaken + "', 'Open')", conn);
+                // create a new incident report and save it
+                string insertQuery =
+                    "INSERT INTO IncidentReport " +
+                    "(PermitID, Description, DateReported, ActionTaken, Status) " +
+                    "VALUES (@PermitID, @Description, GETDATE(), @ActionTaken, 'Open')";
+
+                SqlCommand command = new SqlCommand(insertQuery, conn);
+
+                // add the values as parameters instead of directly
+                // putting them into the SQL query
+                command.Parameters.AddWithValue("@PermitID", _permitId);
+                command.Parameters.AddWithValue("@Description", description);
+                command.Parameters.AddWithValue("@ActionTaken", actionTaken);
+
                 command.ExecuteNonQuery();
 
                 MessageBox.Show(
@@ -228,7 +258,7 @@ namespace TrailGuard
             {
                 MessageBox.Show(
                     "Could not create incident report.\n\nDetails: " + ex.Message,
-                    "Database Error",
+                    "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
@@ -255,7 +285,5 @@ namespace TrailGuard
         {
             this.Close();
         }
-
-
     }
 }
