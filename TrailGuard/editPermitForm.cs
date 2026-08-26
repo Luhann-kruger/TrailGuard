@@ -482,12 +482,12 @@ namespace TrailGuard
             // 2. Call the Stored Procedure
             try
             {
-                using (SqlConnection conn = new SqlConnection(connString))
-                {
+                SqlConnection conn = new SqlConnection(connString);
+                
                     conn.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("sp_UpdatePermitWithParticipants", conn))
-                    {
+                SqlCommand cmd = new SqlCommand("sp_UpdatePermitWithParticipants", conn);
+                    
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         // Pass parameters
@@ -503,8 +503,8 @@ namespace TrailGuard
 
                         // Execute procedure
                         cmd.ExecuteNonQuery();
-                    }
-                }
+                    
+                
 
                 MessageBox.Show("Permit updated successfully.");
                 this.Close();
