@@ -303,3 +303,15 @@ BEGIN
     END CATCH
 END;
 GO
+
+--Stored procedure to delete Participants
+CREATE PROCEDURE sp_DeleteParticipant
+    @ParticipantID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM Participant
+    WHERE ParticipantID = @ParticipantID;
+END;
+GO
