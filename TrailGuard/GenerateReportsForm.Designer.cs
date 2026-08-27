@@ -130,13 +130,17 @@
             // 
             // btnGenerateReport
             // 
-            btnGenerateReport.Location = new Point(643, 63);
+            btnGenerateReport.Anchor = AnchorStyles.None;
+            btnGenerateReport.BackColor = Color.Green;
+            btnGenerateReport.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnGenerateReport.ForeColor = SystemColors.ButtonHighlight;
+            btnGenerateReport.Location = new Point(772, 56);
             btnGenerateReport.Margin = new Padding(3, 2, 3, 2);
             btnGenerateReport.Name = "btnGenerateReport";
-            btnGenerateReport.Size = new Size(142, 32);
+            btnGenerateReport.Size = new Size(140, 51);
             btnGenerateReport.TabIndex = 7;
             btnGenerateReport.Text = "Generate Report";
-            btnGenerateReport.UseVisualStyleBackColor = true;
+            btnGenerateReport.UseVisualStyleBackColor = false;
             btnGenerateReport.Click += button1_Click;
             // 
             // cmbTrails
@@ -146,7 +150,7 @@
             cmbTrails.Location = new Point(21, 107);
             cmbTrails.Margin = new Padding(3, 2, 3, 2);
             cmbTrails.Name = "cmbTrails";
-            cmbTrails.Size = new Size(515, 23);
+            cmbTrails.Size = new Size(502, 23);
             cmbTrails.TabIndex = 6;
             cmbTrails.Text = "<Select trail name>";
             cmbTrails.SelectedIndexChanged += cmbTrails_SelectedIndexChanged;
@@ -223,12 +227,12 @@
             // btnClose
             // 
             btnClose.BackColor = Color.Transparent;
-            btnClose.BaseColor = Color.Green;
+            btnClose.BaseColor = Color.FromArgb(255, 128, 128);
             btnClose.Font = new Font("Segoe UI", 12F);
-            btnClose.Location = new Point(799, 199);
+            btnClose.Location = new Point(844, 222);
             btnClose.Name = "btnClose";
             btnClose.Rounded = false;
-            btnClose.Size = new Size(120, 40);
+            btnClose.Size = new Size(94, 31);
             btnClose.TabIndex = 7;
             btnClose.Text = "Close";
             btnClose.TextColor = Color.FromArgb(243, 243, 243);

@@ -688,6 +688,33 @@ namespace TrailGuard
 
         private void cmbTrails_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DataTable table = null;
+
+            if (dgvReport.DataSource != null)
+            {
+                table = (DataTable)dgvReport.DataSource;
+            }
+
+            if (table == null)
+            {
+                return;
+            }
+
+            string selectedTrail = cmbTrails.SelectedItem.ToString();
+
+            if (selectedTrail == "All")
+            {
+                table.DefaultView.RowFilter = "";
+            }
+            else
+            {
+                string safeTrailName = selectedTrail.Replace("'", "''");
+
+                table.DefaultView.RowFilter =
+                    "TrailName = '" + safeTrailName + "'";
+            }
+
+            ColorizeTrailUsageGrid(dgvReport);
         }
 
         // Close the form
