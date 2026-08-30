@@ -137,6 +137,13 @@ namespace TrailGuard
 
             cmsHikerActions.Items.Add(viewItem);
 
+            //Add a delete button to the options:
+            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete");
+            deleteItem.ForeColor = Color.White;
+            deleteItem.BackColor = Color.Red;
+
+            cmsHikerActions.Items.Add(deleteItem);
+
             //show the context menu just below the button that was clicked
             if (cmsHikerActions.Items.Count > 0)
             {
@@ -169,6 +176,41 @@ namespace TrailGuard
                 case "View Details":
                     ViewHikerDetails(selectedParticipantID);
                     break;
+                case "Delete":
+                    DeleteHiker(selectedParticipantID);
+                    break;
+            }
+        }
+
+
+        private void DeleteHiker(int selectedParticipantID) {
+            //put code to call stored delete procedure
+            DialogResult result = MessageBox.Show(
+                    "Are you sure you want to delete this participant?", "Confirm Delete",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    conn = new SqlConnection(connString);
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("sp_DeleteParticipant", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ParticipantID", selectedParticipantID);
+
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                    MessageBox.Show("Participant deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    loadHikers();
+                }
+                catch (Exception ex) {
+                    MessageBox.Show("An error occured trying to delete the participant");
+                }
             }
         }
 

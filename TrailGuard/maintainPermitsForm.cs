@@ -192,7 +192,10 @@ namespace TrailGuard
                 setEdit.BackColor = Color.White;
 
                 cmsPermitActions.Items.Add(setEdit);
+
+                
             }
+
 
             // add the view details option to all regardless of status
             ToolStripMenuItem viewDetails = new ToolStripMenuItem("View Details");
