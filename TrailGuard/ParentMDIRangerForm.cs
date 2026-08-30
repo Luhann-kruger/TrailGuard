@@ -1,30 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
 namespace TrailGuard
 {
-    public partial class ParentMDIAdminForm : Form
+    public partial class ParentMDIRangerForm : Form
     {
 
         private ChatForm chatForm = null;
-        User loggedInUser;
-        public ParentMDIAdminForm(User loggedInUser)
+        
 
+        User loggedInUser;
+        public ParentMDIRangerForm(User loggedInUser)
         {
             InitializeComponent();
-            // declare form as MDI parent form
-            this.IsMdiContainer = true;
             this.loggedInUser = loggedInUser;
         }
 
-        private void ParentMDIAdminForm_Load(object sender, EventArgs e)
+        private void ParentMDIRangerForm_Load(object sender, EventArgs e)
         {
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Height = 70;
             pnlSidebarMenu.Width = 200;
             pnlSidebarMenu.Dock = DockStyle.Left;
 
-            //Also load the maintainTrails child form when the ParentMDIAdminForm loads
-            loadMaintainTrailsForm();
-
-
+            //Also load the maintainPermits child form when the ParentMDIRangerForm loads
+            loadMaintainPermitsForm();
         }
 
         //Function that helps with the opening and closing of MDI child forms.
@@ -45,35 +52,25 @@ namespace TrailGuard
 
         }
 
-        //Function that loads the maintainTrails child form into this ParentMDIAdminForm.
-        private void loadMaintainTrailsForm()
+        private void loadMaintainPermitsForm()
         {
-            OpenChild(new mantainTrailsForm());
-
+            OpenChild(new maintainPermitsForm());
         }
 
-        // Function that loads maintainParks child form into the ParentMDIAdmin Form
-        private void loadMaintainParksForm()
+        private void loadMaintainHikersForm()
         {
-            OpenChild(new maintainParksForm());
+            //Merge hikers form into this and implement
+            OpenChild(new MaintainHikersForm());
         }
 
-        // Implement the sidebar buttons to load these child forms
-        private void btnMaintainParks_Click(object sender, EventArgs e)
+        private void btnMaintainPermits_Click(object sender, EventArgs e)
         {
-            loadMaintainParksForm();
+            loadMaintainPermitsForm();
         }
 
-        private void btnMaintainTrails_Click(object sender, EventArgs e)
+        private void btnMaintainHikers_Click(object sender, EventArgs e)
         {
-            loadMaintainTrailsForm();
-        }
-
-        private void btnGenerateReport_Click(object sender, EventArgs e)
-        {
-            GenerateReportsForm form = new GenerateReportsForm();
-            form.ShowDialog();
-            //Add load data function later to reload the data once the form dialog closes.
+            loadMaintainHikersForm();
         }
 
         private void btnAskTrailGuardAI_Click(object sender, EventArgs e)
@@ -92,7 +89,13 @@ namespace TrailGuard
                 chatForm.Activate();
 
             }
-            }
+
+        }
+        private void pnlSidebarMenu_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         private void btnLogout_Click(object sender, EventArgs e)
         {
             loggedInUser = null;

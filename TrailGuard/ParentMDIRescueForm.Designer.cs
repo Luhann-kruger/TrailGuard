@@ -1,6 +1,6 @@
 ﻿namespace TrailGuard
 {
-    partial class ParentMDIAdminForm
+    partial class ParentMDIRescueForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -32,11 +32,11 @@
             lblModeTitle = new Label();
             lblTitle = new Label();
             pnlSidebarMenu = new Panel();
-            btnLogout = new ReaLTaiizor.Controls.ForeverButton();
-            btnGenerateReport = new ReaLTaiizor.Controls.ForeverButton();
-            btnMaintainParks = new ReaLTaiizor.Controls.ForeverButton();
-            btnMaintainTrails = new ReaLTaiizor.Controls.ForeverButton();
             btnAskTrailGuardAI = new ReaLTaiizor.Controls.ForeverButton();
+            btnLogout = new ReaLTaiizor.Controls.ForeverButton();
+            lblMenuOptions = new Label();
+            btnMaintainRescues = new ReaLTaiizor.Controls.ForeverButton();
+            btnOverduePermits = new ReaLTaiizor.Controls.ForeverButton();
             btnChangeMode = new ReaLTaiizor.Controls.ForeverButton();
             pnlHeader.SuspendLayout();
             pnlSidebarMenu.SuspendLayout();
@@ -60,9 +60,9 @@
             lblModeTitle.ForeColor = Color.White;
             lblModeTitle.Location = new Point(582, 24);
             lblModeTitle.Name = "lblModeTitle";
-            lblModeTitle.Size = new Size(142, 30);
+            lblModeTitle.Size = new Size(143, 30);
             lblModeTitle.TabIndex = 3;
-            lblModeTitle.Text = "Admin Mode";
+            lblModeTitle.Text = "Rescue Mode";
             // 
             // lblTitle
             // 
@@ -80,13 +80,27 @@
             pnlSidebarMenu.BackColor = Color.FromArgb(14, 76, 39);
             pnlSidebarMenu.Controls.Add(btnAskTrailGuardAI);
             pnlSidebarMenu.Controls.Add(btnLogout);
-            pnlSidebarMenu.Controls.Add(btnGenerateReport);
-            pnlSidebarMenu.Controls.Add(btnMaintainParks);
-            pnlSidebarMenu.Controls.Add(btnMaintainTrails);
+            pnlSidebarMenu.Controls.Add(lblMenuOptions);
+            pnlSidebarMenu.Controls.Add(btnMaintainRescues);
+            pnlSidebarMenu.Controls.Add(btnOverduePermits);
             pnlSidebarMenu.Location = new Point(0, 71);
             pnlSidebarMenu.Name = "pnlSidebarMenu";
             pnlSidebarMenu.Size = new Size(203, 581);
             pnlSidebarMenu.TabIndex = 1;
+            // 
+            // btnAskTrailGuardAI
+            // 
+            btnAskTrailGuardAI.BackColor = Color.Transparent;
+            btnAskTrailGuardAI.BaseColor = Color.FromArgb(14, 76, 39);
+            btnAskTrailGuardAI.Font = new Font("Segoe UI", 12F);
+            btnAskTrailGuardAI.Location = new Point(-3, 440);
+            btnAskTrailGuardAI.Name = "btnAskTrailGuardAI";
+            btnAskTrailGuardAI.Rounded = false;
+            btnAskTrailGuardAI.Size = new Size(203, 40);
+            btnAskTrailGuardAI.TabIndex = 6;
+            btnAskTrailGuardAI.Text = "Ask TrailGuard AI";
+            btnAskTrailGuardAI.TextColor = Color.FromArgb(243, 243, 243);
+            btnAskTrailGuardAI.Click += btnAskTrailGuardAI_Click;
             // 
             // btnLogout
             // 
@@ -102,76 +116,60 @@
             btnLogout.TextColor = Color.FromArgb(243, 243, 243);
             btnLogout.Click += btnLogout_Click;
             // 
-            // btnGenerateReport
+            // lblMenuOptions
             // 
-            btnGenerateReport.BackColor = Color.Transparent;
-            btnGenerateReport.BaseColor = Color.FromArgb(14, 76, 39);
-            btnGenerateReport.Font = new Font("Segoe UI", 12F);
-            btnGenerateReport.Location = new Point(0, 162);
-            btnGenerateReport.Name = "btnGenerateReport";
-            btnGenerateReport.Rounded = false;
-            btnGenerateReport.Size = new Size(203, 40);
-            btnGenerateReport.TabIndex = 4;
-            btnGenerateReport.Text = "Generate Reports";
-            btnGenerateReport.TextColor = Color.FromArgb(243, 243, 243);
-            btnGenerateReport.Click += btnGenerateReport_Click;
+            lblMenuOptions.AutoSize = true;
+            lblMenuOptions.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMenuOptions.ForeColor = Color.White;
+            lblMenuOptions.Location = new Point(12, 8);
+            lblMenuOptions.Name = "lblMenuOptions";
+            lblMenuOptions.Size = new Size(118, 21);
+            lblMenuOptions.TabIndex = 5;
+            lblMenuOptions.Text = "Menu Options";
             // 
-            // btnMaintainParks
+            // btnMaintainRescues
             // 
-            btnMaintainParks.BackColor = Color.Transparent;
-            btnMaintainParks.BaseColor = Color.FromArgb(14, 76, 39);
-            btnMaintainParks.Font = new Font("Segoe UI", 12F);
-            btnMaintainParks.Location = new Point(-3, 99);
-            btnMaintainParks.Name = "btnMaintainParks";
-            btnMaintainParks.Rounded = false;
-            btnMaintainParks.Size = new Size(203, 40);
-            btnMaintainParks.TabIndex = 3;
-            btnMaintainParks.Text = "Maintain Parks";
-            btnMaintainParks.TextColor = Color.FromArgb(243, 243, 243);
-            btnMaintainParks.Click += btnMaintainParks_Click;
+            btnMaintainRescues.BackColor = Color.Transparent;
+            btnMaintainRescues.BaseColor = Color.FromArgb(14, 76, 39);
+            btnMaintainRescues.Font = new Font("Segoe UI", 12F);
+            btnMaintainRescues.Location = new Point(-3, 99);
+            btnMaintainRescues.Name = "btnMaintainRescues";
+            btnMaintainRescues.Rounded = false;
+            btnMaintainRescues.Size = new Size(203, 40);
+            btnMaintainRescues.TabIndex = 3;
+            btnMaintainRescues.Text = "Maintain Rescues";
+            btnMaintainRescues.TextColor = Color.FromArgb(243, 243, 243);
+            btnMaintainRescues.Click += btnMaintainRescues_Click;
             // 
-            // btnMaintainTrails
+            // btnOverduePermits
             // 
-            btnMaintainTrails.BackColor = Color.Transparent;
-            btnMaintainTrails.BaseColor = Color.FromArgb(14, 76, 39);
-            btnMaintainTrails.Font = new Font("Segoe UI", 12F);
-            btnMaintainTrails.Location = new Point(-3, 37);
-            btnMaintainTrails.Name = "btnMaintainTrails";
-            btnMaintainTrails.Rounded = false;
-            btnMaintainTrails.Size = new Size(203, 40);
-            btnMaintainTrails.TabIndex = 2;
-            btnMaintainTrails.Text = "Maintain Trails";
-            btnMaintainTrails.TextColor = Color.FromArgb(243, 243, 243);
-            btnMaintainTrails.Click += btnMaintainTrails_Click;
+            btnOverduePermits.BackColor = Color.Transparent;
+            btnOverduePermits.BaseColor = Color.FromArgb(14, 76, 39);
+            btnOverduePermits.Font = new Font("Segoe UI", 12F);
+            btnOverduePermits.Location = new Point(-3, 37);
+            btnOverduePermits.Name = "btnOverduePermits";
+            btnOverduePermits.Rounded = false;
+            btnOverduePermits.Size = new Size(203, 40);
+            btnOverduePermits.TabIndex = 2;
+            btnOverduePermits.Text = "Overdue Permits";
+            btnOverduePermits.TextColor = Color.FromArgb(243, 243, 243);
+            btnOverduePermits.Click += btnOverduePermits_Click;
             // 
-            // btnAskTrailGuardAI
-            // 
-            btnAskTrailGuardAI.BackColor = Color.Transparent;
-            btnAskTrailGuardAI.BaseColor = Color.FromArgb(14, 76, 39);
-            btnAskTrailGuardAI.Font = new Font("Segoe UI", 12F);
-            btnAskTrailGuardAI.Location = new Point(0, 438);
-            btnAskTrailGuardAI.Name = "btnAskTrailGuardAI";
-            btnAskTrailGuardAI.Rounded = false;
-            btnAskTrailGuardAI.Size = new Size(203, 40);
-            btnAskTrailGuardAI.TabIndex = 5;
-            btnAskTrailGuardAI.Text = "Ask TrailGaurd AI";
-            btnAskTrailGuardAI.TextColor = Color.FromArgb(243, 243, 243);
-            btnAskTrailGuardAI.Click += btnAskTrailGuardAI_Click;
             // btnChangeMode
             // 
             btnChangeMode.BackColor = Color.Transparent;
             btnChangeMode.BaseColor = Color.FromArgb(14, 76, 39);
             btnChangeMode.Font = new Font("Segoe UI", 12F);
-            btnChangeMode.Location = new Point(1267, 14);
+            btnChangeMode.Location = new Point(1224, 18);
             btnChangeMode.Name = "btnChangeMode";
             btnChangeMode.Rounded = false;
             btnChangeMode.Size = new Size(120, 40);
-            btnChangeMode.TabIndex = 5;
+            btnChangeMode.TabIndex = 6;
             btnChangeMode.Text = "Change Mode";
             btnChangeMode.TextColor = Color.FromArgb(243, 243, 243);
             btnChangeMode.Click += btnChangeMode_Click;
             // 
-            // ParentMDIAdminForm
+            // ParentMDIRescueForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -179,12 +177,13 @@
             Controls.Add(pnlSidebarMenu);
             Controls.Add(pnlHeader);
             IsMdiContainer = true;
-            Name = "ParentMDIAdminForm";
+            Name = "ParentMDIRescueForm";
             Text = "TrailGuard";
-            Load += ParentMDIAdminForm_Load;
+            Load += ParentMDIRescueForm_Load;
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();
             pnlSidebarMenu.ResumeLayout(false);
+            pnlSidebarMenu.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -193,10 +192,10 @@
         private Panel pnlHeader;
         private Label lblTitle;
         private Panel pnlSidebarMenu;
-        private ReaLTaiizor.Controls.ForeverButton btnMaintainParks;
-        private ReaLTaiizor.Controls.ForeverButton btnMaintainTrails;
-        private ReaLTaiizor.Controls.ForeverButton btnGenerateReport;
+        private ReaLTaiizor.Controls.ForeverButton btnOverduePermits;
+        private ReaLTaiizor.Controls.ForeverButton btnMaintainRescues;
         private Label lblModeTitle;
+        private Label lblMenuOptions;
         private ReaLTaiizor.Controls.ForeverButton btnLogout;
         private ReaLTaiizor.Controls.ForeverButton btnAskTrailGuardAI;
         private ReaLTaiizor.Controls.ForeverButton btnChangeMode;
